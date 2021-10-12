@@ -27,6 +27,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 Log.d(LOG_SMS_CONTENT, "MSG RECEIVED");
                 Bundle messageBundle = new Bundle();
                 for (SmsMessage msg : messages) {
+                    messageBundle.putString("pdus", msg.getPdu().toString());
                     messageBundle.putString("caller", msg.getDisplayOriginatingAddress());
                     messageBundle.putString("content",msg.getDisplayMessageBody());
                     Log.d(LOG_SMS_CONTENT, msg.getDisplayMessageBody());
