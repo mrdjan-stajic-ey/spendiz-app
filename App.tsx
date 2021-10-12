@@ -1,9 +1,9 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {SafeAreaView, AppRegistry, StyleSheet} from 'react-native';
+import NotificationHandlerInstance from './src/app-resources/notificationHanler';
 import {BACKGROUND_COLOR} from './src/components/CONSTS';
 import AppStack from './src/routing/BasicRouting';
-import messaging from '@react-native-firebase/messaging';
 
 AppRegistry.registerHeadlessTask('SmsTransfer', () =>
   require('./src/Sms_Handler'),
@@ -18,11 +18,7 @@ const root_style = StyleSheet.create({
 
 const App = () => {
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
-
-    return unsubscribe;
+    NotificationHandlerInstance.setForegroundMessageHanled();
   }, []);
   return (
     <NavigationContainer>
