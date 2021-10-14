@@ -36,7 +36,13 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
           headerTitleAlign: 'center',
           headerTintColor: DEFAULT_TEXT_COLOR,
         }}>
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Parser" component={Parser} />
       </Stack.Navigator>
