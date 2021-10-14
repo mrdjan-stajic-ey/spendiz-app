@@ -1,12 +1,20 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Button, Card} from 'react-native-elements';
 import AppText from '../components/Text/AppText';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {TRootNavigation} from '../routing/BasicRouting';
+import AppPage from '../components/page/AppPage';
+import AppButton from '../components/button/AppButton';
+import getTextByLocale from '../app-resources/Language';
 
 const styles = StyleSheet.create({
   innerContent: {
+    flex: 5,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
@@ -25,15 +33,17 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
     navigation.navigate('Parser');
   };
   return (
-    <Card containerStyle={styles.innerContent}>
-      <Card.Title>
-        <AppText>Welcome to spendzi</AppText>
-      </Card.Title>
-      <View style={styles.innerContent}>
-        <Button raised onPress={onPresHandler} title="Test navigation" />
-        <Button raised onPress={onParserPress} title="To Parser" />
-      </View>
-    </Card>
+    <>
+      <AppPage>
+        <View style={styles.header}>
+          <AppText type="TITLE" text={getTextByLocale().welcomeTitle} />
+        </View>
+        <View style={styles.innerContent}>
+          <AppButton onPress={onPresHandler} text="Test navigation" />
+          <AppButton onPress={onParserPress} text="To Parser" />
+        </View>
+      </AppPage>
+    </>
   );
 };
 

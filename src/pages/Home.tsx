@@ -1,6 +1,7 @@
 import React from 'react';
-import {Button, Card} from 'react-native-elements';
-import NotificationHandlerInstance from '../app-resources/notificationHanler';
+import NotificationHandlerInstance from '../app-resources/notificationHandler';
+import AppButton from '../components/button/AppButton';
+import AppPage from '../components/page/AppPage';
 
 const Home: React.FC<{}> = (): JSX.Element => {
   const handleTokenRegistration = async () => {
@@ -13,11 +14,10 @@ const Home: React.FC<{}> = (): JSX.Element => {
   };
   return (
     <>
-      <Card>
-        <Card.Title>Home screen</Card.Title>
-        <Button title="Hello" />
-        <Button title="Get token" onPress={handleTokenRegistration} />
-      </Card>
+      <AppPage>
+        <AppButton text="Hello" onPress={() => {}} />
+        <AppButton text="Get token" onPress={handleTokenRegistration} />
+      </AppPage>
     </>
   );
 };

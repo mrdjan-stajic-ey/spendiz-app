@@ -1,9 +1,16 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {DEFAULT_TEXT_COLOR, DEFAULT_TEXT_SIZE} from '../CONSTS';
+import {
+  DEFAULT_HEADING_SIZE,
+  DEFAULT_SUB_HEADER_SIZE,
+  DEFAULT_TEXT_COLOR,
+  DEFAULT_TEXT_SIZE,
+} from '../CONSTS';
 
+type TTextType = 'NORMAL' | 'TITLE' | 'SUBTITLE';
 interface AppText {
   text?: string;
+  type?: TTextType;
 }
 
 const styles = StyleSheet.create({
@@ -13,8 +20,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppText: React.FC<AppText> = ({text, children}): JSX.Element => {
-  return <Text style={styles.text}>{children || text}</Text>;
+const getTextStyleByType = (type?: TTextType) => {
+  switch (type) {
+    case 'NORMAL':
+      return DEFAULT_TEXT_SIZE;
+    case 'TITLE':
+      return DEFAULT_HEADING_SIZE;
+    case 'SUBTITLE':
+      return DEFAULT_SUB_HEADER_SIZE;
+    default: {
+      return DEFAULT_TEXT_SIZE;
+    }
+  }
 };
 
-export default AppText;
+const AppText: React.FC<AppText> = ({text, type}): JSX.Element => {
+  const font_size = useMemo(() => {
+    return getTextStyleByType(type);
+  }, [type]);
+  return <Text style={[styles.text, {fontSize: font_size}]}>{text}</Text>;
+};
+
+export default React.memo(AppText);

@@ -1,0 +1,3 @@
+interface IReactProps {
+  children?: any;
+}
