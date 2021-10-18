@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, ViewProps} from 'react-native';
 import {
   DEFAULT_HEADING_SIZE,
   DEFAULT_SUB_HEADER_SIZE,
@@ -8,7 +8,7 @@ import {
 } from '../CONSTS';
 
 type TTextType = 'NORMAL' | 'TITLE' | 'SUBTITLE';
-interface AppText {
+interface AppText extends ViewProps {
   text?: string;
   type?: TTextType;
 }
@@ -34,11 +34,13 @@ const getTextStyleByType = (type?: TTextType) => {
   }
 };
 
-const AppText: React.FC<AppText> = ({text, type}): JSX.Element => {
+const AppText: React.FC<AppText> = ({text, type, style}): JSX.Element => {
   const font_size = useMemo(() => {
     return getTextStyleByType(type);
   }, [type]);
-  return <Text style={[styles.text, {fontSize: font_size}]}>{text}</Text>;
+  return (
+    <Text style={[styles.text, {fontSize: font_size}, style]}>{text}</Text>
+  );
 };
 
 export default React.memo(AppText);

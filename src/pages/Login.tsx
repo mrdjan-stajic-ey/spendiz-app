@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 40,
   },
 });
 
@@ -37,16 +38,17 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
         <View style={styles.header}>
           <AppText type="TITLE" text={getTextByLocale().welcomeTitle} />
           <AppLogo />
+          <AppText type="SUBTITLE" text={getTextByLocale().welcomeSubtitle} />
         </View>
         <View style={styles.innerContent}>
           <Stack
             direction="column"
             width={{
               base: 200,
-              lg: 400,
+              lg: 600,
             }}>
             <UserForm />
-            <AppButton onPress={onPresHandler} text="Login" />
+            <AppButton variant="solid" onPress={onPresHandler} text="Login" />
           </Stack>
         </View>
       </AppPage>

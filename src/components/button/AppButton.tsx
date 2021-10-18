@@ -19,7 +19,6 @@ const style = StyleSheet.create({
   holder: {
     margin: 10,
     padding: 5,
-    backgroundColor: BUTTON_PRIMARY,
   },
 });
 
@@ -45,14 +44,19 @@ const AppButton: React.FC<IAppButton> = ({
   type,
 }): JSX.Element => {
   const buttonColor = useMemo(() => {
-    return getColorByType(type);
-  }, [type]);
+    if (variant !== 'outline' || variant !== 'ghost') {
+      return getColorByType(type);
+    }
+  }, [type, variant]);
   return (
     <Button
-      variant={variant || 'solid'}
-      style={[style.holder, {backgroundColor: buttonColor}]}
+      variant={variant ? variant : 'solid'}
+      style={[style.holder, {backgroundColor: buttonColor || ''}]}
       onPress={onPress}
       size={size}
+      _pressed={{
+        opacity: 0.5,
+      }}
       color={color}>
       <Text
         style={{
@@ -64,4 +68,4 @@ const AppButton: React.FC<IAppButton> = ({
   );
 };
 
-export default React.memo(AppButton);
+export default AppButton;

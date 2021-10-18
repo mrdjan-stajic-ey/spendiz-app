@@ -18,7 +18,7 @@ const Parser: React.FC<T_Message_Parser_Props> = (): JSX.Element => {
   return (
     <>
       <View style={styles.content}>
-        <AppText> Message parser </AppText>
+        <AppText text="AAAAAAAAA PARSER!" />
       </View>
     </>
   );

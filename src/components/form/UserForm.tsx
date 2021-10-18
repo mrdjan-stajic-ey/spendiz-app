@@ -6,7 +6,7 @@ import getTextByLocale from '../../app-resources/Language';
 interface IUserForm {
   onError?(name: string): any;
 }
-
+//TODO: Make a generic form
 const UserForm: React.FC<IUserForm> = (): JSX.Element => {
   return (
     <FormControl isRequired>
@@ -20,7 +20,7 @@ const UserForm: React.FC<IUserForm> = (): JSX.Element => {
         backgroundColor="white"
         type="text"
         value="Mrdjan"
-        placeholder="Username"
+        placeholder={getTextByLocale().formLabels.usernamePlaceholder}
       />
       <FormControl.HelperText
         _text={{
@@ -39,7 +39,7 @@ const UserForm: React.FC<IUserForm> = (): JSX.Element => {
         backgroundColor="white"
         type="password"
         value="mrdjan"
-        placeholder="password"
+        placeholder={getTextByLocale().formLabels.passwordPlaceholder}
       />
       <FormControl.HelperText
         _text={{
