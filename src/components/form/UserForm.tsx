@@ -2,11 +2,9 @@ import React from 'react';
 import {FormControl, Input} from 'native-base';
 import {DEFAULT_TEXT_COLOR} from '../CONSTS';
 import getTextByLocale from '../../app-resources/Language';
+import {IUserForm} from './types';
 
-interface IUserForm {
-  onError?(name: string): any;
-}
-//TODO: Make a generic form
+console.warn('//TODO: Make a generic form');
 const UserForm: React.FC<IUserForm> = (): JSX.Element => {
   return (
     <FormControl isRequired>

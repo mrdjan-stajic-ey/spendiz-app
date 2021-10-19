@@ -1,19 +1,8 @@
-import {Button, IButtonProps} from 'native-base';
+import {Button} from 'native-base';
 import React, {useMemo} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {
-  BUTTON_DANGER,
-  BUTTON_PRIMARY,
-  BUTTON_SECONDARY,
-  BUTTON_TEXT_COLOR,
-} from '../CONSTS';
-
-type TButtonType = 'PRIMARY' | 'SECONDARY' | 'DANGER';
-
-interface IAppButton extends IButtonProps {
-  text: string;
-  type?: TButtonType;
-}
+import {BUTTON_TEXT_COLOR} from '../CONSTS';
+import {getColorByType, IAppButton} from './type';
 
 const style = StyleSheet.create({
   holder: {
@@ -21,20 +10,6 @@ const style = StyleSheet.create({
     padding: 5,
   },
 });
-
-const getColorByType = (type?: TButtonType): string => {
-  switch (type) {
-    case 'DANGER':
-      return BUTTON_DANGER;
-    case 'PRIMARY':
-      return BUTTON_PRIMARY;
-    case 'SECONDARY':
-      return BUTTON_SECONDARY;
-    default:
-      return BUTTON_PRIMARY;
-  }
-};
-
 const AppButton: React.FC<IAppButton> = ({
   size,
   color,
@@ -44,6 +19,7 @@ const AppButton: React.FC<IAppButton> = ({
   type,
 }): JSX.Element => {
   const buttonColor = useMemo(() => {
+    console.warn('//TODO: Button color must be tied to variant type;');
     if (variant !== 'outline' || variant !== 'ghost') {
       return getColorByType(type);
     }

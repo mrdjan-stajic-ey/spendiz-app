@@ -8,6 +8,8 @@ import Expense from '../../components/expense/ExpenseItem';
 import {faAirbnb, faFacebook} from '@fortawesome/free-brands-svg-icons';
 import {faFilm} from '@fortawesome/free-solid-svg-icons';
 import {Divider, IScrollViewProps, ScrollView} from 'native-base';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {TRootNavigation} from '../../routing/BasicRouting';
 
 const styles = StyleSheet.create({
   chartContent: {
@@ -90,8 +92,14 @@ const DEFAULT_SCROLLVIEW_STYLES: IScrollViewProps = {
   flexDirection: 'row',
   flexGrow: 1,
 };
-
-const Expenses: React.FC<{}> = ({}): JSX.Element => {
+type T_Expenses_Props = NativeStackScreenProps<TRootNavigation, 'Expenses'>;
+type IExpenseProps = T_Expenses_Props & {
+  //other props here needed -  needed to go type route since navigation is passed like that
+};
+const Expenses: React.FC<IExpenseProps> = ({navigation}): JSX.Element => {
+  const onExpenseTypeHandlerClick = (type: string) => {
+    navigation.navigate('BalanceOverview', {type});
+  };
   return (
     <AppPage>
       <View style={styles.chartContent}>
@@ -108,10 +116,14 @@ const Expenses: React.FC<{}> = ({}): JSX.Element => {
         _contentContainerStyle={DEFAULT_SCROLLVIEW_STYLES}
         style={styles.categoryContent}>
         {MOCK_EXPENSE_TYPES.map(({amount, displayName, icon, type}, index) => {
+          //TODO :there will be and ID here (be creation)
           return (
-            <>
+            <React.Fragment key={'expanse' + type + amount + index}>
               <Expense
-                key={type + amount}
+                navigationHandler={() => {
+                  onExpenseTypeHandlerClick(type);
+                }}
+                key={'expanse' + type + amount + index}
                 amount={amount}
                 displayName={displayName}
                 icon={icon}
@@ -123,7 +135,7 @@ const Expenses: React.FC<{}> = ({}): JSX.Element => {
                   key={'divider' + type + amount}
                 />
               )}
-            </>
+            </React.Fragment>
           );
         })}
       </ScrollView>

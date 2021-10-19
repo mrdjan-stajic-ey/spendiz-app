@@ -2,27 +2,36 @@ import {Box} from 'native-base';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BACKGROUND_GRADIENT_ARRAY} from '../CONSTS';
-interface IAppPage extends IReactProps {}
+import {IAppPage} from './types';
 
 const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
 });
+//Default settings for lineargradient
+const BoxHolderDefaultProps = {
+  linearGradient: {
+    colors: BACKGROUND_GRADIENT_ARRAY,
+    start: [0, 0],
+    end: [0, 1],
+  },
+};
+
+//native base box as a basic page content holder
+const AppPageContentHolder: React.FC<{}> = ({children}): JSX.Element => {
+  return (
+    <Box bg={BoxHolderDefaultProps} flex={1} padding={5}>
+      {children}
+    </Box>
+  );
+};
+
 const AppPage: React.FC<IAppPage> = ({children}): JSX.Element => {
   return (
-    <Box
-      bg={{
-        linearGradient: {
-          colors: BACKGROUND_GRADIENT_ARRAY,
-          start: [0, 0],
-          end: [0, 1],
-        },
-      }}
-      flex={1}
-      padding={5}>
+    <AppPageContentHolder>
       <View style={styles.content}>{children}</View>
-    </Box>
+    </AppPageContentHolder>
   );
 };
 

@@ -5,6 +5,7 @@ import NotificationHandlerInstance from './src/app-resources/notificationHandler
 import AppStack from './src/routing/BasicRouting';
 import {NativeBaseProvider} from 'native-base';
 
+//Headlless js registration needs to be here;
 AppRegistry.registerHeadlessTask('SmsTransfer', () =>
   require('./src/Sms_Handler'),
 );
@@ -14,7 +15,7 @@ const root_style = StyleSheet.create({
     flex: 1,
   },
 });
-
+//Linear gradient needs to be required here since there is no out of the box solution for linear gradient for android/ios
 const nb_config = {
   dependencies: {
     'linear-gradient': require('react-native-linear-gradient').default,
