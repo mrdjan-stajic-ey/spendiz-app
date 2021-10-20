@@ -29,7 +29,7 @@ const SplashScreen: React.FC<TSplashScreenProps> = ({}): JSX.Element => {
           size="large"
           color={DEFAULT_TEXT_COLOR}
         />
-        <AppText> {getTextByLocale().loading} </AppText>
+        <AppText text={getTextByLocale().loading} />
       </View>
     </AppPage>
   );

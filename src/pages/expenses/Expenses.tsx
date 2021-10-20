@@ -5,11 +5,11 @@ import AppChart from '../../components/chart/AppChart';
 import AppPage from '../../components/page/AppPage';
 import AppText from '../../components/Text/AppText';
 import Expense from '../../components/expense/ExpenseItem';
-import {faAirbnb, faFacebook} from '@fortawesome/free-brands-svg-icons';
-import {faFilm} from '@fortawesome/free-solid-svg-icons';
-import {Divider, IScrollViewProps, ScrollView} from 'native-base';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TRootNavigation} from '../../routing/BasicRouting';
+import {Divider} from 'native-base';
+import {MOCK_EXPENSE_TYPES} from './_mock';
+import {IExpenseProps} from './types';
+import AppScrollableView from '../../components/scrollableView/ScrollableView';
+import {DEFAULT_SCROLLVIEW_STYLES} from '../../components/scrollableView/type';
 
 const styles = StyleSheet.create({
   chartContent: {
@@ -27,75 +27,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
-//TODO: this must be moved from here as it creates dependencies to font awesome;
-const MOCK_EXPENSE_TYPES = [
-  {
-    amount: 200,
-    icon: faFacebook,
-    type: 'FOOD',
-    displayName: 'Giros',
-  },
-  {
-    amount: 150,
-    icon: faAirbnb,
-    type: 'TRAVEL',
-    displayName: 'Grcka',
-  },
-  {
-    amount: 200,
-    icon: faFilm,
-    type: 'ENTERTAINMENT',
-    displayName: 'Movies',
-  },
-  {
-    amount: 256.63,
-    icon: faFilm,
-    type: 'ENTERTAINMENT',
-    displayName: 'Type#23',
-  },
-  {
-    amount: 256.63,
-    icon: faFilm,
-    type: 'ENTERTAINMENT',
-    displayName: 'Type#32',
-  },
-  {
-    amount: 256.63,
-    icon: faFilm,
-    type: 'ENTERTAINMENT',
-    displayName: 'Type#32',
-  },
-  {
-    amount: 256.63,
-    icon: faFilm,
-    type: 'ENTERTAINMENT',
-    displayName: 'Type#32',
-  },
-  {
-    amount: 256.63,
-    icon: faFilm,
-    type: 'ENTERTAINMENT',
-    displayName: 'Type#32',
-  },
-  {
-    amount: 256.63,
-    icon: faFilm,
-    type: 'ENTERTAINMENT',
-    displayName: 'Type#32',
-  },
-];
-//TODO: make a scrollview component;
-const DEFAULT_SCROLLVIEW_STYLES: IScrollViewProps = {
-  mb: '4',
-  minW: '72',
-  flexDirection: 'row',
-  flexGrow: 1,
-};
-type T_Expenses_Props = NativeStackScreenProps<TRootNavigation, 'Expenses'>;
-type IExpenseProps = T_Expenses_Props & {
-  //other props here needed -  needed to go type route since navigation is passed like that
-};
 const Expenses: React.FC<IExpenseProps> = ({navigation}): JSX.Element => {
   const onExpenseTypeHandlerClick = (type: string) => {
     navigation.navigate('BalanceOverview', {type});
@@ -111,7 +42,7 @@ const Expenses: React.FC<IExpenseProps> = ({navigation}): JSX.Element => {
         <AppChart />
       </View>
       <AppText type="SUBTITLE" text={getTextByLocale().categoriesSubtitle} />
-      <ScrollView
+      <AppScrollableView
         horizontal={true}
         _contentContainerStyle={DEFAULT_SCROLLVIEW_STYLES}
         style={styles.categoryContent}>
@@ -138,7 +69,7 @@ const Expenses: React.FC<IExpenseProps> = ({navigation}): JSX.Element => {
             </React.Fragment>
           );
         })}
-      </ScrollView>
+      </AppScrollableView>
     </AppPage>
   );
 };

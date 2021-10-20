@@ -13,6 +13,16 @@ const BACGROUND_GRADIENT = {
   SECONDARY: '#4d4b73',
   TERIATRY: '#805fc1',
 };
+//background: linear-gradient(90deg, rgba(41,40,69,1) 0%, rgba(163,42,194,1) 34%, rgba(212,207,222,1) 100%);
+
+const BACKGROUND_GRADIENT_COLOR = {
+  PRIMARY: 'rgba(41,40,69,1)',
+  SECONDARY: 'rgba(163,42,194,1)',
+  TERIATRY: 'rgba(212,207,222,1)',
+};
+
+const BACKGROUND_COLORS_V2 = [...Object.values(BACKGROUND_GRADIENT_COLOR)];
+
 const BACKGROUND_GRADIENT_ARRAY = [...Object.values(BACGROUND_GRADIENT)];
 const DEFAULT_ICON_SIZE = 25;
 //END_APPS_CONST
@@ -28,6 +38,7 @@ const BUTTON_TEXT_COLOR = '#30251f';
 export type T_IconType = 'FOOD' | 'TRAVEL' | 'ENTERTAINMENT';
 //END ICONs CONSTS
 export {
+  BACKGROUND_COLORS_V2,
   DEFAULT_ICON_SIZE,
   BACKGROUND_GRADIENT_ARRAY,
   DEFAULT_TEXT_SIZE,

@@ -14,7 +14,7 @@ const getMoney = (amount: number, currency?: Currency): string => {
   if (!currency) {
     return `${amount}${Currency.EUR}`;
   }
-  return `${amount}${CurrencyText[currency]}`;
+  return `${amount} ${CurrencyText[currency]}`;
 };
 
 export default getMoney;

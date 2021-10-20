@@ -2,23 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../pages/Login';
 import SplashScreen from '../pages/SplashScreen';
-import Home from '../pages/Home';
+// import Home from '../pages/Home';
 import Parser from '../pages/message/MessageParser';
 import Expenses from '../pages/expenses/Expenses';
 import BalanceOverview from '../pages/overview/BalanceOverview';
 import {DEFAULT_TEXT_COLOR} from '../components/CONSTS';
-//ROUTER Exports for type checking
-export interface BalanceOverviewRouteProps {
-  type: string;
-}
-//END Router Exports for type checking
-export type TRootNavigation = {
-  Home: undefined;
-  Login: undefined;
-  Parser: undefined;
-  Expenses: undefined;
-  BalanceOverview: BalanceOverviewRouteProps | undefined;
-};
+import {TRootNavigation} from './types';
+import AccountSettings from '../pages/account-settings/AccountSettings';
 
 const Stack = createNativeStackNavigator<TRootNavigation>();
 
@@ -51,7 +41,7 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
         />
         <Stack.Screen
           name="Home"
-          component={Home}
+          component={BalanceOverview}
           options={{
             headerShown: false,
           }}
@@ -66,6 +56,7 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
           component={Expenses}
         />
         <Stack.Screen name="BalanceOverview" component={BalanceOverview} />
+        <Stack.Screen name="AccountSettings" component={AccountSettings} />
       </Stack.Navigator>
     </>
   );

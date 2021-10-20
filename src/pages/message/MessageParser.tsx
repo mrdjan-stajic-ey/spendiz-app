@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TRootNavigation} from '../../routing/BasicRouting';
 import AppText from '../../components/Text/AppText';
+import {TRootNavigation} from '../../routing/types';
 
 type T_Message_Parser_Props = NativeStackScreenProps<TRootNavigation, 'Parser'>;
 

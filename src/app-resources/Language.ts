@@ -19,6 +19,7 @@ interface APP_TEXTS {
   };
   expenseChartHeading: string;
   categoriesSubtitle: string;
+  balanceOverview: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -37,7 +38,8 @@ const ENGB_LANGUAGE: APP_TEXTS = {
     usernamePlaceholder: 'Username',
   },
   expenseChartHeading: 'Chart view of your balance',
-  categoriesSubtitle: 'Most used categories',
+  categoriesSubtitle: 'Most frequent',
+  balanceOverview: 'Ballance overview',
 };
 
 const LANGUAGES = {

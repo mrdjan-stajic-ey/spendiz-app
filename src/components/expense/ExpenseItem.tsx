@@ -23,7 +23,9 @@ const style = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
+console.warn('TODO://check comments bellow EXPENSE ITEM');
+// Expense TYPE by category! needs icons and sumed up category stuff
+// maybe replace the icons with .transparent pngs in the app-resources/pictures
 const Expense: React.FC<IExpenseType> = ({
   amount,
   type,

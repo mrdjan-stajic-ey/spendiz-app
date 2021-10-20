@@ -1,4 +1,4 @@
-import {ViewProps} from 'react-native';
+import {TextProps} from 'react-native';
 import {
   DEFAULT_HEADING_SIZE,
   DEFAULT_SUB_HEADER_SIZE,
@@ -6,7 +6,7 @@ import {
 } from '../CONSTS';
 
 export type TTextType = 'NORMAL' | 'TITLE' | 'SUBTITLE';
-export interface IAppText extends ViewProps {
+export interface IAppText extends TextProps {
   text?: string;
   type?: TTextType;
 }

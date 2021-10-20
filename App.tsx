@@ -4,11 +4,15 @@ import {SafeAreaView, AppRegistry, StyleSheet} from 'react-native';
 import NotificationHandlerInstance from './src/app-resources/notificationHandler';
 import AppStack from './src/routing/BasicRouting';
 import {NativeBaseProvider} from 'native-base';
+import {configureIconLibrary} from './src/components/icons-library/library';
 
 //Headlless js registration needs to be here;
 AppRegistry.registerHeadlessTask('SmsTransfer', () =>
   require('./src/Sms_Handler'),
 );
+
+//icon library creation
+configureIconLibrary();
 
 const root_style = StyleSheet.create({
   root: {

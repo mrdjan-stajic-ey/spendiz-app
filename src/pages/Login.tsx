@@ -2,13 +2,13 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import AppText from '../components/Text/AppText';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TRootNavigation} from '../routing/BasicRouting';
 import AppPage from '../components/page/AppPage';
 import AppButton from '../components/button/AppButton';
 import getTextByLocale from '../app-resources/Language';
 import {Stack} from 'native-base';
 import UserForm from '../components/form/UserForm';
 import AppLogo from '../components/Logo';
+import {TRootNavigation} from '../routing/types';
 
 const styles = StyleSheet.create({
   innerContent: {

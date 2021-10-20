@@ -3,7 +3,7 @@ import React from 'react';
 import NotificationHandlerInstance from '../app-resources/notificationHandler';
 import AppButton from '../components/button/AppButton';
 import AppPage from '../components/page/AppPage';
-import {TRootNavigation} from '../routing/BasicRouting';
+import {TRootNavigation} from '../routing/types';
 
 type TExpensesProps = NativeStackScreenProps<TRootNavigation, 'Expenses'>;
 
