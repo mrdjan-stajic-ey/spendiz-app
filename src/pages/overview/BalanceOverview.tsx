@@ -40,6 +40,12 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 10,
   },
+  expenseModuleChartHolder: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 });
 const BalanceOverview: React.FC<T_Expenses_Props> = ({
   navigation,
@@ -55,13 +61,7 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
     switch (currentModule) {
       case 'Balance': {
         return (
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}>
+          <View style={styles.expenseModuleChartHolder}>
             <AppChart />
           </View>
         );
