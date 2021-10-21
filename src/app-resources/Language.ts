@@ -20,6 +20,11 @@ interface APP_TEXTS {
   expenseChartHeading: string;
   categoriesSubtitle: string;
   balanceOverview: string;
+  noSmsPermTitle: string;
+  smsPermRequestTitle: string;
+  smsRequestAcceptCTA: string;
+  smsRequestDeclineCTA: string;
+  smsRequestMessage: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -40,6 +45,11 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   expenseChartHeading: 'Chart view of your balance',
   categoriesSubtitle: 'Most frequent',
   balanceOverview: 'Ballance overview',
+  noSmsPermTitle: 'The app requires the permissions for sms readings',
+  smsPermRequestTitle: 'The app requires permission to read your Sms inbox',
+  smsRequestAcceptCTA: 'Grant',
+  smsRequestDeclineCTA: 'Reject',
+  smsRequestMessage: '',
 };
 
 const LANGUAGES = {

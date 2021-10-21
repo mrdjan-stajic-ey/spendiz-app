@@ -154,10 +154,10 @@ android {
             keyPassword 'android'
         }
 	  release {
-      	storeFile file('mrdjaney.keystore')
-      	storePassword 'smederevo026'
-      	keyAlias 'mrdjaney'
-      	keyPassword 'smederevo026'
+      		storeFile file('mrdjaney.keystore')
+      		storePassword 'smederevo026'
+      		keyAlias 'mrdjaney'
+      		keyPassword 'smederevo026'
         }
     }
     buildTypes {
