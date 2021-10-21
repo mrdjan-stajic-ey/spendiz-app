@@ -37,10 +37,15 @@ public class SmsFetcher extends ReactContextBaseJavaModule {
             while (cur.moveToNext()){
                 String sender = cur.getString(cur.getColumnIndex("address"));
                 String body = cur.getString(cur.getColumnIndexOrThrow(("body")));
-                Log.d("SMS_COLUMNS" , cur.getColumnNames().toString());
+                String _id = cur.getString(cur.getColumnIndexOrThrow("_id"));
+                String date =  cur.getString(cur.getColumnIndexOrThrow("date"));
+                String date_sent =  cur.getString(cur.getColumnIndexOrThrow("date_sent"));
                 WritableMap smsMap = new WritableNativeMap();
                 smsMap.putString("sender", sender.toString());
                 smsMap.putString("body", body.toString());
+                smsMap.putString("id", _id.toString());
+                smsMap.putString("date", date.toString());
+                smsMap.putString("date_sent", date_sent.toString());
                 result.pushMap(smsMap);
             }
             nativePromise.resolve(result);

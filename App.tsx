@@ -7,6 +7,14 @@ import {NativeBaseProvider} from 'native-base';
 import {configureIconLibrary} from './src/components/icons-library/library';
 import ErrorBoundary from 'react-native-error-boundary';
 import ErrorScreen from './src/pages/ErrorScreen';
+
+if (!__DEV__) {
+  //stop all the logs for performance since we can`t see them in prod
+  console.log = () => {};
+  console.warn = () => {};
+  console.error = () => {};
+}
+
 //Headlless js registration needs to be here;
 AppRegistry.registerHeadlessTask('SmsTransfer', () =>
   require('./src/Sms_Handler'),

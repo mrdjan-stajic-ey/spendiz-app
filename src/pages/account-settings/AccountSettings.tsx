@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AppPage from '../../components/page/AppPage';
 import AppText from '../../components/Text/AppText';
-import {PermissionsAndroid, TouchableOpacity, View} from 'react-native';
+import {PermissionsAndroid, View} from 'react-native';
 import AppList from '../../components/List/AppList';
 import getTextByLocale from '../../app-resources/Language';
 import {SMSAppList} from './types';
@@ -26,26 +26,29 @@ const AccountSettings: React.FC<{}> = (): JSX.Element => {
         setSmsPermGranted(true);
       } else {
         setSmsPermGranted(false);
+        return Promise.reject('NO_PERMS');
       }
       setAskedSmsPerm(true);
+      return Promise.resolve();
     };
-    requestReadPerm();
+    requestReadPerm().then(() => {
+      fetchSmsclientData();
+    });
   }, []);
 
-  const handleSmsInboxRequest = (): void => {
+  const fetchSmsclientData = (): void => {
     TypedSmsFetcher.getSmsInbox()
       .then((res: any) => {
         setSmsInbox(res);
+        console.log(res);
       })
-      .catch((err: any) => {
-        console.error('Sms fetch faiiled', err);
+      .catch(() => {
+        throw 'Cannot read messages';
       });
   };
   return (
     <AppPage>
-      <TouchableOpacity onPress={handleSmsInboxRequest}>
-        <AppText text="Application settings will be here" />
-      </TouchableOpacity>
+      <AppText type="SUBTITLE" text={getTextByLocale().accountSettingsTitle} />
       {smsInbox && smsPermGranted && (
         <AppList
           data={smsInbox}

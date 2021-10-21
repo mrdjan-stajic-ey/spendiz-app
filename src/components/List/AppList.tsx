@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
   listHolder: {
     padding: 5,
   },
+  listContent: {
+    marginRight: 15,
+  },
 });
 
 const AppList: React.FC<IAppListProps> = ({
@@ -17,6 +20,7 @@ const AppList: React.FC<IAppListProps> = ({
   return (
     <View style={styles.listHolder}>
       <FlatList
+        contentContainerStyle={styles.listContent}
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
