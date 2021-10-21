@@ -25,6 +25,7 @@ interface APP_TEXTS {
   smsRequestAcceptCTA: string;
   smsRequestDeclineCTA: string;
   smsRequestMessage: string;
+  errorScreenMessage: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -50,6 +51,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   smsRequestAcceptCTA: 'Grant',
   smsRequestDeclineCTA: 'Reject',
   smsRequestMessage: '',
+  errorScreenMessage: 'Something went wrong, contact the developer.',
 };
 
 const LANGUAGES = {

@@ -37,7 +37,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
       <AppPage>
         <View style={styles.header}>
           <AppText type="TITLE" text={getTextByLocale().welcomeTitle} />
-          <AppLogo />
+          <AppLogo type="MAIN" />
           <AppText type="SUBTITLE" text={getTextByLocale().welcomeSubtitle} />
         </View>
         <View style={styles.innerContent}>

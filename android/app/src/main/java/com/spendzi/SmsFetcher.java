@@ -2,6 +2,7 @@ package com.spendzi;
 
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -28,7 +29,6 @@ public class SmsFetcher extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void getSmsInbox(Promise nativePromise) {
-//        List<String> result = new ArrayList<>();
         WritableArray result = new WritableNativeArray();
         try {
 
@@ -37,6 +37,7 @@ public class SmsFetcher extends ReactContextBaseJavaModule {
             while (cur.moveToNext()){
                 String sender = cur.getString(cur.getColumnIndex("address"));
                 String body = cur.getString(cur.getColumnIndexOrThrow(("body")));
+                Log.d("SMS_COLUMNS" , cur.getColumnNames().toString());
                 WritableMap smsMap = new WritableNativeMap();
                 smsMap.putString("sender", sender.toString());
                 smsMap.putString("body", body.toString());

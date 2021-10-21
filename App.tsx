@@ -5,7 +5,8 @@ import NotificationHandlerInstance from './src/app-resources/notificationHandler
 import AppStack from './src/routing/BasicRouting';
 import {NativeBaseProvider} from 'native-base';
 import {configureIconLibrary} from './src/components/icons-library/library';
-
+import ErrorBoundary from 'react-native-error-boundary';
+import ErrorScreen from './src/pages/ErrorScreen';
 //Headlless js registration needs to be here;
 AppRegistry.registerHeadlessTask('SmsTransfer', () =>
   require('./src/Sms_Handler'),
@@ -32,11 +33,13 @@ const App = () => {
   }, []);
   return (
     <NativeBaseProvider config={nb_config}>
-      <NavigationContainer>
-        <SafeAreaView style={root_style.root}>
-          <AppStack />
-        </SafeAreaView>
-      </NavigationContainer>
+      <ErrorBoundary FallbackComponent={ErrorScreen}>
+        <NavigationContainer>
+          <SafeAreaView style={root_style.root}>
+            <AppStack />
+          </SafeAreaView>
+        </NavigationContainer>
+      </ErrorBoundary>
     </NativeBaseProvider>
   );
 };
