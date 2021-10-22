@@ -3,12 +3,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../pages/Login';
 import SplashScreen from '../pages/SplashScreen';
 // import Home from '../pages/Home';
-import Parser from '../pages/message/MessageParser';
 import Expenses from '../pages/expenses/Expenses';
 import BalanceOverview from '../pages/overview/BalanceOverview';
 import {DEFAULT_TEXT_COLOR} from '../components/CONSTS';
 import {TRootNavigation} from './types';
 import AccountSettings from '../pages/account-settings/AccountSettings';
+import MessageParser from '../components/message/MessageDataParser';
 
 const Stack = createNativeStackNavigator<TRootNavigation>();
 
@@ -46,7 +46,7 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="Parser" component={Parser} />
+        <Stack.Screen name="Parser" component={MessageParser} />
         <Stack.Screen
           name="Expenses"
           options={{

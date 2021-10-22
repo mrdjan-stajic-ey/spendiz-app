@@ -17,6 +17,7 @@ const AppButton: React.FC<IAppButton> = ({
   onPress,
   variant,
   type,
+  borderRadius,
 }): JSX.Element => {
   const buttonColor = useMemo(() => {
     console.warn('//TODO: Button color must be tied to variant type;');
@@ -27,6 +28,7 @@ const AppButton: React.FC<IAppButton> = ({
   return (
     <Button
       variant={variant ? variant : 'solid'}
+      borderRadius={borderRadius}
       style={[style.holder, {backgroundColor: buttonColor || ''}]}
       onPress={onPress}
       size={size}

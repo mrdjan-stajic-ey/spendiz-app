@@ -10,12 +10,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppText: React.FC<IAppText> = ({text, type, style}): JSX.Element => {
+const AppText: React.FC<IAppText> = ({
+  text,
+  type,
+  style,
+  numberOfLines,
+  ellipsizeMode,
+}): JSX.Element => {
   const font_size = useMemo(() => {
     return getTextStyleByType(type);
   }, [type]);
   return (
-    <Text style={[styles.text, {fontSize: font_size}, style]}>{text}</Text>
+    <Text
+      style={[styles.text, {fontSize: font_size}, style]}
+      numberOfLines={numberOfLines}
+      ellipsizeMode={ellipsizeMode}>
+      {text}
+    </Text>
   );
 };
 

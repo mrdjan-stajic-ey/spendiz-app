@@ -13,6 +13,7 @@ import {MODULE_TYPES, T_Expenses_Props} from './type';
 import {listData as expenseData, MODULES_INFO} from './data';
 import AppList from '../../components/List/AppList';
 import AppChart from '../../components/chart/AppChart';
+import {BACKGROUND_ITEM_DEFAULT} from '../../components/CONSTS';
 
 const styles = StyleSheet.create({
   scrollContent: {
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   balanceBox: {
-    backgroundColor: 'rgba(220,220,220,0.4)',
+    backgroundColor: BACKGROUND_ITEM_DEFAULT,
     marginBottom: 10,
   },
   balanceBoxMyBalance: {
@@ -52,7 +53,7 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
 }): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [incomingMessage, setIncomingMessage] = useState<boolean>(false);
-  const messageStyle = incomingMessage ? 'red' : 'blue'; // get better indicator colors
+  const messageStyle = incomingMessage ? 'red' : 'blue'; //TODO: get better indicator colors
 
   const [currentModule, setCurrentModule] = useState<MODULE_TYPES>(
     MODULE_TYPES.BALANCE,

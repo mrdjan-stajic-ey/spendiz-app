@@ -27,6 +27,7 @@ interface APP_TEXTS {
   smsRequestMessage: string;
   errorScreenMessage: string;
   accountSettingsTitle: string;
+  parserKeywordsTitle: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -54,6 +55,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   smsRequestMessage: '',
   errorScreenMessage: 'Something went wrong, contact the developer.',
   accountSettingsTitle: 'Select sms to start configuring',
+  parserKeywordsTitle: 'Choose your keywords to start',
 };
 
 const LANGUAGES = {
