@@ -1,58 +1,85 @@
 import React, {useRef} from 'react';
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {Dimensions, StyleSheet, View, Animated} from 'react-native';
+import {Button} from 'native-base';
+import {} from 'react-native-gesture-handler';
 import {BUTTON_PRIMARY} from '../CONSTS';
 import {IPillButton} from './type';
 
 const windowWidth = Dimensions.get('window').width;
-// const windowHeight = Dimensions.get('window').height;
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(Button);
 
 const styles = StyleSheet.create({
   content: {
     alignSelf: 'center',
-    padding: 12,
+    padding: 10,
     borderRadius: 50,
     backgroundColor: BUTTON_PRIMARY,
     marginRight: 10,
     width: windowWidth / 4 - 25, //paddingz
-    marginBottom: 5,
+    height: 35,
+    marginBottom: 10,
     alignItems: 'center',
   },
   text: {
     fontSize: 12,
   },
 });
-console.log('TODO: Align this to the other buttons');
 const PillButton: React.FC<IPillButton> = ({text}): JSX.Element => {
-  const ref = useRef(null);
+  const pillScale = useRef(new Animated.Value(1)).current;
+  const pillOpacity = useRef(new Animated.Value(1)).current;
+
   const handlePillOnPress = () => {
-    if (!ref) {
-      return;
-    }
-    if (ref && ref.current) {
-      //@ts-ignore
-      ref.current.setNativeProps({
-        // transform(sc), https://iwritecodesometimes.net/2019/04/17/react-native-scale-on-press-animations-made-easy/
-      });
-    }
+    // Animated.parallel([
+    //   Animated.timing(pillScale, {
+    //     toValue: 1.5,
+    //     duration: 300,
+    //     useNativeDriver: false,
+    //   }),
+    //   Animated.timing(pillOpacity, {
+    //     toValue: 0.8,
+    //     duration: 100,
+    //     useNativeDriver: false,
+    //   }),
+    // ]).start();
   };
+
+  const handlePillOnPressOut = () => {
+    // Animated.parallel([
+    //   Animated.timing(pillScale, {
+    //     toValue: 1,
+    //     duration: 100,
+    //     useNativeDriver: false,
+    //   }),
+    //   Animated.timing(pillOpacity, {
+    //     toValue: 1,
+    //     duration: 100,
+    //     useNativeDriver: false,
+    //   }),
+    // ]).start();
+  };
+
   return (
-    <TouchableOpacity style={styles.content} onPress={handlePillOnPress}>
+    <AnimatedTouchableOpacity
+      style={[
+        styles.content,
+        {
+          backgroundColor: BUTTON_PRIMARY,
+          transform: [{scale: pillScale}],
+          opacity: pillOpacity,
+        },
+      ]}
+      onPressOut={handlePillOnPressOut}
+      onPressIn={handlePillOnPress}>
       <View>
-        <Text
-          ref={ref}
-          style={styles.text}
+        <Animated.Text
+          style={[styles.text]}
           numberOfLines={1}
           ellipsizeMode={'tail'}>
           {text}
-        </Text>
+        </Animated.Text>
       </View>
-    </TouchableOpacity>
+    </AnimatedTouchableOpacity>
   );
 };
 

@@ -1,3 +1,4 @@
+import {NavigatorScreenParams} from '@react-navigation/core';
 import {ISmsState} from '../native-wrappers/types';
 
 //ROUTER Exports for type checking
@@ -8,8 +9,13 @@ export interface BalanceOverviewRouteProps {
 export type TRootNavigation = {
   Home: undefined;
   Login: undefined;
-  Parser: ISmsState;
   Expenses: undefined;
   BalanceOverview: BalanceOverviewRouteProps | undefined;
   AccountSettings: undefined;
+  Configuration: NavigatorScreenParams<TConfigurationNavigation>;
+};
+
+export type TConfigurationNavigation = {
+  Parser: ISmsState;
+  Phrase: undefined;
 };

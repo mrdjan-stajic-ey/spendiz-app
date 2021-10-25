@@ -71,7 +71,10 @@ const AccountSettings: React.FC<T_Account_Settins> = ({
           keyExtractor={SMSAppList.keyExtractor}
           renderItem={({item}) =>
             renderSmsItem(item, () => {
-              navigation.navigate('Parser', item);
+              navigation.navigate('Configuration', {
+                screen: 'Parser',
+                params: item,
+              });
             })
           }
         />

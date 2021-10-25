@@ -2,15 +2,30 @@ import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../pages/Login';
 import SplashScreen from '../pages/SplashScreen';
-// import Home from '../pages/Home';
 import Expenses from '../pages/expenses/Expenses';
 import BalanceOverview from '../pages/overview/BalanceOverview';
 import {DEFAULT_TEXT_COLOR} from '../components/CONSTS';
-import {TRootNavigation} from './types';
+import {TConfigurationNavigation, TRootNavigation} from './types';
 import AccountSettings from '../pages/account-settings/AccountSettings';
 import MessageParser from '../components/message/MessageDataParser';
+import {createStackNavigator} from '@react-navigation/stack';
+import PhraseConfiguration from '../pages/account-settings/PhraseConfiguration';
 
 const Stack = createNativeStackNavigator<TRootNavigation>();
+
+const ConfigurationStack = createStackNavigator<TConfigurationNavigation>();
+
+const AppConfigurationRoutes = () => {
+  return (
+    <ConfigurationStack.Navigator initialRouteName="Parser">
+      <ConfigurationStack.Screen name="Parser" component={MessageParser} />
+      <ConfigurationStack.Screen
+        name="Phrase"
+        component={PhraseConfiguration}
+      />
+    </ConfigurationStack.Navigator>
+  );
+};
 
 const AppStack: React.FC<{}> = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,7 +61,6 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
             headerShown: false,
           }}
         />
-        <Stack.Screen name="Parser" component={MessageParser} />
         <Stack.Screen
           name="Expenses"
           options={{
@@ -57,6 +71,7 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
         />
         <Stack.Screen name="BalanceOverview" component={BalanceOverview} />
         <Stack.Screen name="AccountSettings" component={AccountSettings} />
+        <Stack.Screen name="Configuration" component={AppConfigurationRoutes} />
       </Stack.Navigator>
     </>
   );

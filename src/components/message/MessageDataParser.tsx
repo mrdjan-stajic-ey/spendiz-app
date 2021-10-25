@@ -13,10 +13,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
-
 const MessageParser: React.FC<T_Parser_Props> = ({route}): JSX.Element => {
   const {body, date_sent, id, sender}: ISmsState = route.params;
-  console.log('Body parts', body.split(' '));
+  //   console.log('Body parts', body.split(' '));
   return (
     <AppPage>
       <Center>
