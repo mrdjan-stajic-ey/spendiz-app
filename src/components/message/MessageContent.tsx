@@ -1,7 +1,10 @@
-import React from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import React, {useMemo, useState} from 'react';
+import {StyleSheet, View, ScrollView} from 'react-native';
+import getTextByLocale from '../../app-resources/Language';
 import {tokenize} from '../../utils/main';
+import AppButton from '../button/AppButton';
 import PillButton from '../pill/Pill';
+import {PhrasePart} from './types';
 
 const styles = StyleSheet.create({
   content: {
@@ -18,31 +21,69 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     overflow: 'hidden',
   },
-  nextStepHolder: {
+  ctaHolder: {
     flex: 1,
   },
 });
-//getting ID and date since i have no chance of generating some bullet proof ids of array elements;
+
 const MessageContent: React.FC<{
   body: string;
   id: string;
   date: string;
   sender: string;
 }> = ({body}): JSX.Element => {
-  const bodyParts: string[] = tokenize(body);
+  const bodyParts: PhrasePart[] = useMemo(() => {
+    return tokenize(body);
+  }, [body]);
+
+  const [selectedWords, setSelectedWords] = useState<PhrasePart[]>([]);
+
+  const buttonText =
+    selectedWords.length === 0
+      ? getTextByLocale().phrasesNextStepDisabled
+      : getTextByLocale().phrasesNextStep;
+
+  const handlePillClick = (item: PhrasePart) => {
+    const {id} = item;
+    if (selectedWords.find(sw => sw.id === id)) {
+      setSelectedWords(() => {
+        return selectedWords.filter(f => f.id !== id);
+      });
+    } else {
+      setSelectedWords(() => {
+        return [...selectedWords, item];
+      });
+    }
+  };
+
   return (
     <View style={styles.content}>
       <View style={styles.pillScrollViewContent}>
         <ScrollView>
           <View style={styles.pillContent}>
             {bodyParts.map(stringPart => {
-              return <PillButton text={stringPart} />;
+              const isSelected = !!selectedWords.filter(
+                sw => sw.id === stringPart.id,
+              )[0];
+              return (
+                <PillButton
+                  key={stringPart.id}
+                  selected={isSelected}
+                  onSelect={handlePillClick}
+                  text={stringPart.text}
+                  data={stringPart}
+                />
+              );
             })}
           </View>
         </ScrollView>
       </View>
-      <View style={styles.nextStepHolder}>
-        <Text>AAAAAAAA</Text>
+      <View style={styles.ctaHolder}>
+        <AppButton
+          disabled={selectedWords.length === 0}
+          borderRadius={50}
+          text={buttonText}
+        />
       </View>
     </View>
   );

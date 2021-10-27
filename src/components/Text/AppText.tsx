@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
   text: {
     color: DEFAULT_TEXT_COLOR,
     fontSize: DEFAULT_TEXT_SIZE,
+    fontFamily: 'Poppins-Light',
   },
 });
 

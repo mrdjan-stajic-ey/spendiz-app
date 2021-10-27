@@ -1,13 +1,10 @@
-import React, {useRef} from 'react';
-import {Dimensions, StyleSheet, View, Animated} from 'react-native';
-import {Button} from 'native-base';
-import {} from 'react-native-gesture-handler';
+import React from 'react';
+import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {BUTTON_PRIMARY} from '../CONSTS';
-import {IPillButton} from './type';
+import AppText from '../Text/AppText';
+import {PillAppButton} from './types';
 
 const windowWidth = Dimensions.get('window').width;
-
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(Button);
 
 const styles = StyleSheet.create({
   content: {
@@ -23,63 +20,36 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
+    color: 'black', //TODO fonts generaly
   },
 });
-const PillButton: React.FC<IPillButton> = ({text}): JSX.Element => {
-  const pillScale = useRef(new Animated.Value(1)).current;
-  const pillOpacity = useRef(new Animated.Value(1)).current;
 
-  const handlePillOnPress = () => {
-    // Animated.parallel([
-    //   Animated.timing(pillScale, {
-    //     toValue: 1.5,
-    //     duration: 300,
-    //     useNativeDriver: false,
-    //   }),
-    //   Animated.timing(pillOpacity, {
-    //     toValue: 0.8,
-    //     duration: 100,
-    //     useNativeDriver: false,
-    //   }),
-    // ]).start();
+const SELECTED_PILL_COLOR = '#7f03fc';
+const NOT_SELECTED_PILL_COLOR = '#a30029';
+
+const PillButton: React.FC<PillAppButton> = ({
+  text,
+  onSelect,
+  selected,
+  data,
+}): JSX.Element => {
+  const onPressHandler = () => {
+    onSelect(data || text);
   };
-
-  const handlePillOnPressOut = () => {
-    // Animated.parallel([
-    //   Animated.timing(pillScale, {
-    //     toValue: 1,
-    //     duration: 100,
-    //     useNativeDriver: false,
-    //   }),
-    //   Animated.timing(pillOpacity, {
-    //     toValue: 1,
-    //     duration: 100,
-    //     useNativeDriver: false,
-    //   }),
-    // ]).start();
-  };
-
   return (
-    <AnimatedTouchableOpacity
-      style={[
-        styles.content,
-        {
-          backgroundColor: BUTTON_PRIMARY,
-          transform: [{scale: pillScale}],
-          opacity: pillOpacity,
-        },
-      ]}
-      onPressOut={handlePillOnPressOut}
-      onPressIn={handlePillOnPress}>
+    <TouchableOpacity onPress={onPressHandler} style={[styles.content]}>
       <View>
-        <Animated.Text
-          style={[styles.text]}
+        <AppText
+          text={text}
+          style={[
+            styles.text,
+            {color: selected ? SELECTED_PILL_COLOR : NOT_SELECTED_PILL_COLOR},
+          ]}
           numberOfLines={1}
-          ellipsizeMode={'tail'}>
-          {text}
-        </Animated.Text>
+          ellipsizeMode={'tail'}
+        />
       </View>
-    </AnimatedTouchableOpacity>
+    </TouchableOpacity>
   );
 };
 

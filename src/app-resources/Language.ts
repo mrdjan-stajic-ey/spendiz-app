@@ -28,6 +28,10 @@ interface APP_TEXTS {
   errorScreenMessage: string;
   accountSettingsTitle: string;
   parserKeywordsTitle: string;
+  phraseCTA: string;
+  phrasesListTitle: string;
+  phrasesNextStep: string;
+  phrasesNextStepDisabled: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -56,6 +60,10 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   errorScreenMessage: 'Something went wrong, contact the developer.',
   accountSettingsTitle: 'Select sms to start configuring',
   parserKeywordsTitle: 'Choose your keywords to start',
+  phraseCTA: 'Select a few words to create a phrase',
+  phrasesListTitle: 'Selected phrases',
+  phrasesNextStep: 'Define rules',
+  phrasesNextStepDisabled: 'Please select at least one word',
 };
 
 const LANGUAGES = {

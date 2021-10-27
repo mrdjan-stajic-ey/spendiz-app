@@ -1,13 +1,16 @@
 import {Button} from 'native-base';
 import React, {useMemo} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {BUTTON_TEXT_COLOR} from '../CONSTS';
+import AppText from '../Text/AppText';
 import {getColorByType, IAppButton} from './type';
 
 const style = StyleSheet.create({
   holder: {
     margin: 10,
     padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 const AppButton: React.FC<IAppButton> = ({
@@ -16,6 +19,7 @@ const AppButton: React.FC<IAppButton> = ({
   text,
   onPress,
   variant,
+  disabled,
   type,
   borderRadius,
 }): JSX.Element => {
@@ -27,6 +31,7 @@ const AppButton: React.FC<IAppButton> = ({
   }, [type, variant]);
   return (
     <Button
+      disabled={disabled}
       variant={variant ? variant : 'solid'}
       borderRadius={borderRadius}
       style={[style.holder, {backgroundColor: buttonColor || ''}]}
@@ -36,12 +41,12 @@ const AppButton: React.FC<IAppButton> = ({
         opacity: 0.5,
       }}
       color={color}>
-      <Text
+      <AppText
+        text={text}
         style={{
           color: BUTTON_TEXT_COLOR,
-        }}>
-        {text}
-      </Text>
+        }}
+      />
     </Button>
   );
 };

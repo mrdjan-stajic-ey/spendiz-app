@@ -1,5 +1,5 @@
 //I copied this from interwebz
-export const tokenize = (str: string): string[] => {
+export const tokenize = (str: string): {id: string; text: string}[] => {
   const punct =
       '\\[' +
       '\\!' +
@@ -57,7 +57,13 @@ export const tokenize = (str: string): string[] => {
   // add non-empty tokens to result
   for (let i = 0, len = tokens.length; i++ < len; ) {
     if (tokens[i]) {
-      result.push(tokens[i]);
+      const removePunctiatonSigns = tokens[i].replace(
+        /[.,\/#!$%\^&\*;:{}=\-_`~()]/g,
+        '',
+      );
+      if (removePunctiatonSigns.length > 0) {
+        result.push({id: `${i}_index_${tokens[i]}`, text: tokens[i]});
+      }
     }
   }
 

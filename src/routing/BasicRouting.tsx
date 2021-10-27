@@ -4,7 +4,6 @@ import Login from '../pages/Login';
 import SplashScreen from '../pages/SplashScreen';
 import Expenses from '../pages/expenses/Expenses';
 import BalanceOverview from '../pages/overview/BalanceOverview';
-import {DEFAULT_TEXT_COLOR} from '../components/CONSTS';
 import {TConfigurationNavigation, TRootNavigation} from './types';
 import AccountSettings from '../pages/account-settings/AccountSettings';
 import MessageParser from '../components/message/MessageDataParser';
@@ -17,7 +16,12 @@ const ConfigurationStack = createStackNavigator<TConfigurationNavigation>();
 
 const AppConfigurationRoutes = () => {
   return (
-    <ConfigurationStack.Navigator initialRouteName="Parser">
+    <ConfigurationStack.Navigator
+      initialRouteName="Parser"
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}>
       <ConfigurationStack.Screen name="Parser" component={MessageParser} />
       <ConfigurationStack.Screen
         name="Phrase"
@@ -44,31 +48,11 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
         initialRouteName="Login"
         screenOptions={{
           headerShown: false,
-          headerTitleAlign: 'center',
-          headerTintColor: DEFAULT_TEXT_COLOR,
+          animation: 'none',
         }}>
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={BalanceOverview}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Expenses"
-          options={{
-            title: 'Breakdown',
-            headerShown: false,
-          }}
-          component={Expenses}
-        />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={BalanceOverview} />
+        <Stack.Screen name="Expenses" component={Expenses} />
         <Stack.Screen name="BalanceOverview" component={BalanceOverview} />
         <Stack.Screen name="AccountSettings" component={AccountSettings} />
         <Stack.Screen name="Configuration" component={AppConfigurationRoutes} />

@@ -5,3 +5,9 @@ export type T_Parser_Props = NativeStackScreenProps<
   TConfigurationNavigation,
   'Parser'
 >;
+
+export type PhrasePart = {
+  id: string;
+  text: string;
+  selected?: boolean;
+};
