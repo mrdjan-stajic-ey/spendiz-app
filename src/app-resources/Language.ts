@@ -32,6 +32,14 @@ interface APP_TEXTS {
   phrasesListTitle: string;
   phrasesNextStep: string;
   phrasesNextStepDisabled: string;
+  phrasesAttributionTitle: string;
+  phraseConfigurationTitle: string;
+  phraseConfigurationDescription: string;
+  phraseBalanceActionLabel: string;
+  phraseBankAccActionAdd: string;
+  phraseBankAccActionSubtract: string;
+  phraseBankAccTypeLabel: string;
+  phraseBalanceOverviewTitle: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -64,6 +72,15 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   phrasesListTitle: 'Selected phrases',
   phrasesNextStep: 'Define rules',
   phrasesNextStepDisabled: 'Please select at least one word',
+  phrasesAttributionTitle: 'Define rules for selcted keywords',
+  phraseConfigurationTitle: 'Map the phrase to balance account',
+  phraseConfigurationDescription:
+    'Map the colected phrase to the apropriate action on your bank account, then assing the category of expense or income',
+  phraseBankAccActionAdd: 'Add to balance',
+  phraseBankAccActionSubtract: 'Subtract from balance',
+  phraseBankAccTypeLabel: 'Transaction type',
+  phraseBalanceActionLabel: 'Add or subtract from balance',
+  phraseBalanceOverviewTitle: 'Overview',
 };
 
 const LANGUAGES = {

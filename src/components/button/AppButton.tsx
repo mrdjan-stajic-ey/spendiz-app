@@ -38,7 +38,7 @@ const AppButton: React.FC<IAppButton> = ({
     <Button
       disabled={disabled}
       variant={variant ? variant : 'solid'}
-      borderRadius={borderRadius}
+      borderRadius={borderRadius || 50}
       style={[style.holder, {backgroundColor: buttonColor || ''}]}
       onPress={onPress}
       size={size}

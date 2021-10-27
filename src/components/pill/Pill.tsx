@@ -13,10 +13,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: BUTTON_PRIMARY,
     marginRight: 10,
-    width: windowWidth / 4 - 25, //paddingz
+    width: windowWidth / 4 - 23, //paddingz and borderWidth
     height: 40,
     marginBottom: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
     borderColor: THIRD_BACKGROUND_COLOR,
     borderWidth: 2,
   },
@@ -39,14 +41,15 @@ const PillButton: React.FC<PillAppButton> = ({
   disabled,
 }): JSX.Element => {
   const onPressHandler = () => {
-    !disabled && onSelect(data || text);
+    !disabled && onSelect && onSelect(data || text);
   };
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={onPressHandler}
       style={[
         styles.content,
-        //need inline styles here
+        //need inline styles here dynamic stuff
         // eslint-disable-next-line react-native/no-inline-styles
         {
           backgroundColor: selected
