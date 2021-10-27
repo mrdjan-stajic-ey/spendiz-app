@@ -18,4 +18,5 @@ export type TRootNavigation = {
 export type TConfigurationNavigation = {
   Parser: ISmsState;
   Phrase: undefined;
+  Overview: undefined;
 };

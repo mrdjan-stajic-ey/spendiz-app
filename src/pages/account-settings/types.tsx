@@ -3,11 +3,16 @@ import React from 'react';
 import {IAppListProps} from '../../components/List/type';
 import AppSmsMessage from '../../components/message/Message';
 import {ISmsState} from '../../native-wrappers/types';
-import {TRootNavigation} from '../../routing/types';
+import {TConfigurationNavigation, TRootNavigation} from '../../routing/types';
 
 export type T_Account_Settins = NativeStackScreenProps<
   TRootNavigation,
   'AccountSettings'
+>;
+
+export type T_PhraseProps = NativeStackScreenProps<
+  TConfigurationNavigation,
+  'Phrase'
 >;
 
 export const SMSAppList: IAppListProps<ISmsState> = {

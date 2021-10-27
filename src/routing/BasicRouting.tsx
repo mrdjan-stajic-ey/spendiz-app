@@ -10,6 +10,7 @@ import MessageParser from '../pages/account-settings/MessageDataParser';
 import {createStackNavigator} from '@react-navigation/stack';
 import PhraseConfiguration from '../pages/account-settings/PhraseConfiguration';
 import PhraseWizard from '../data-management/PhraseWizard';
+import OverviewPage from '../pages/account-settings/Overview';
 
 const Stack = createNativeStackNavigator<TRootNavigation>();
 
@@ -29,6 +30,7 @@ const AppConfigurationRoutes = () => {
           name="Phrase"
           component={PhraseConfiguration}
         />
+        <ConfigurationStack.Screen name="Overview" component={OverviewPage} />
       </ConfigurationStack.Navigator>
     </PhraseWizard>
   );

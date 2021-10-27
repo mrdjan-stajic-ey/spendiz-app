@@ -7,6 +7,7 @@ import PhraseConfigurator from '../../components/configurator/PhraseConfigurator
 import AppDivider from '../../components/divider/AppDivider';
 import AppPage from '../../components/page/AppPage';
 import AppText from '../../components/Text/AppText';
+import {T_PhraseProps} from './types';
 
 const styles = StyleSheet.create({
   content: {
@@ -31,7 +32,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const PhraseConfiguration: React.FC<{}> = (): JSX.Element => {
+const PhraseConfiguration: React.FC<T_PhraseProps> = ({
+  navigation,
+}): JSX.Element => {
+  const toOverviewHandler = () => {
+    navigation.navigate('Overview');
+  };
   return (
     <AppPage>
       <View style={styles.content}>
@@ -40,7 +46,10 @@ const PhraseConfiguration: React.FC<{}> = (): JSX.Element => {
         </Center>
         <AppDivider />
         <PhraseConfigurator />
-        <AppButton text={getTextByLocale().phraseBalanceOverviewTitle} />
+        <AppButton
+          onPress={toOverviewHandler}
+          text={getTextByLocale().phraseBalanceOverviewTitle}
+        />
       </View>
     </AppPage>
   );
