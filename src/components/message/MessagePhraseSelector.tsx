@@ -1,10 +1,11 @@
-import React, {useMemo, useState} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
+import PhrasesContext from '../../data-management/PhraseContext';
 import {tokenize} from '../../utils/main';
 import AppButton from '../button/AppButton';
 import PillButton from '../pill/Pill';
-import {PhrasePart} from './types';
+import {IMessagePhraseSelector, PhrasePart} from './types';
 
 const styles = StyleSheet.create({
   content: {
@@ -26,34 +27,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const MessageContent: React.FC<{
-  body: string;
-  id: string;
-  date: string;
-  sender: string;
-}> = ({body}): JSX.Element => {
+const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
+  body,
+  onContinue,
+}): JSX.Element => {
   const bodyParts: PhrasePart[] = useMemo(() => {
     return tokenize(body);
   }, [body]);
 
-  const [selectedWords, setSelectedWords] = useState<PhrasePart[]>([]);
+  const {phrases: selectedWords, addPhrase} = useContext(PhrasesContext);
 
   const buttonText =
     selectedWords.length === 0
       ? getTextByLocale().phrasesNextStepDisabled
-      : getTextByLocale().phrasesNextStep;
+      : `${getTextByLocale().phrasesNextStep} for ${selectedWords.length} word${
+          selectedWords.length > 1 ? 's' : ''
+        }`;
 
   const handlePillClick = (item: PhrasePart) => {
-    const {id} = item;
-    if (selectedWords.find(sw => sw.id === id)) {
-      setSelectedWords(() => {
-        return selectedWords.filter(f => f.id !== id);
-      });
-    } else {
-      setSelectedWords(() => {
-        return [...selectedWords, item];
-      });
-    }
+    addPhrase(item);
   };
 
   return (
@@ -80,6 +72,7 @@ const MessageContent: React.FC<{
       </View>
       <View style={styles.ctaHolder}>
         <AppButton
+          onPress={onContinue}
           disabled={selectedWords.length === 0}
           borderRadius={50}
           text={buttonText}
@@ -89,4 +82,4 @@ const MessageContent: React.FC<{
   );
 };
 
-export default MessageContent;
+export default MessagePhraseSelector;

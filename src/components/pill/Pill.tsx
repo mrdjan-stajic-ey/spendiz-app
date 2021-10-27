@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {BUTTON_PRIMARY} from '../CONSTS';
+import {BUTTON_PRIMARY, THIRD_BACKGROUND_COLOR} from '../CONSTS';
 import AppText from '../Text/AppText';
 import {PillAppButton} from './types';
 
@@ -14,17 +14,21 @@ const styles = StyleSheet.create({
     backgroundColor: BUTTON_PRIMARY,
     marginRight: 10,
     width: windowWidth / 4 - 25, //paddingz
-    height: 35,
+    height: 40,
     marginBottom: 10,
     alignItems: 'center',
+    borderColor: THIRD_BACKGROUND_COLOR,
+    borderWidth: 2,
   },
   text: {
     fontSize: 12,
-    color: 'black', //TODO fonts generaly
+    color: 'white', //TODO fonts generaly
   },
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SELECTED_PILL_COLOR = '#7f03fc';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const NOT_SELECTED_PILL_COLOR = '#a30029';
 
 const PillButton: React.FC<PillAppButton> = ({
@@ -32,19 +36,29 @@ const PillButton: React.FC<PillAppButton> = ({
   onSelect,
   selected,
   data,
+  disabled,
 }): JSX.Element => {
   const onPressHandler = () => {
-    onSelect(data || text);
+    !disabled && onSelect(data || text);
   };
   return (
-    <TouchableOpacity onPress={onPressHandler} style={[styles.content]}>
+    <TouchableOpacity
+      onPress={onPressHandler}
+      style={[
+        styles.content,
+        //need inline styles here
+        // eslint-disable-next-line react-native/no-inline-styles
+        {
+          backgroundColor: selected
+            ? styles.content.backgroundColor
+            : 'transparent',
+          borderWidth: selected ? 0 : styles.content.borderWidth,
+        },
+      ]}>
       <View>
         <AppText
           text={text}
-          style={[
-            styles.text,
-            {color: selected ? SELECTED_PILL_COLOR : NOT_SELECTED_PILL_COLOR},
-          ]}
+          style={[styles.text]}
           numberOfLines={1}
           ellipsizeMode={'tail'}
         />

@@ -6,9 +6,10 @@ import Expenses from '../pages/expenses/Expenses';
 import BalanceOverview from '../pages/overview/BalanceOverview';
 import {TConfigurationNavigation, TRootNavigation} from './types';
 import AccountSettings from '../pages/account-settings/AccountSettings';
-import MessageParser from '../components/message/MessageDataParser';
+import MessageParser from '../pages/account-settings/MessageDataParser';
 import {createStackNavigator} from '@react-navigation/stack';
 import PhraseConfiguration from '../pages/account-settings/PhraseConfiguration';
+import PhraseWizard from '../data-management/PhraseWizard';
 
 const Stack = createNativeStackNavigator<TRootNavigation>();
 
@@ -16,18 +17,20 @@ const ConfigurationStack = createStackNavigator<TConfigurationNavigation>();
 
 const AppConfigurationRoutes = () => {
   return (
-    <ConfigurationStack.Navigator
-      initialRouteName="Parser"
-      screenOptions={{
-        headerShown: false,
-        animationEnabled: false,
-      }}>
-      <ConfigurationStack.Screen name="Parser" component={MessageParser} />
-      <ConfigurationStack.Screen
-        name="Phrase"
-        component={PhraseConfiguration}
-      />
-    </ConfigurationStack.Navigator>
+    <PhraseWizard>
+      <ConfigurationStack.Navigator
+        initialRouteName="Parser"
+        screenOptions={{
+          headerShown: false,
+          animationEnabled: false,
+        }}>
+        <ConfigurationStack.Screen name="Parser" component={MessageParser} />
+        <ConfigurationStack.Screen
+          name="Phrase"
+          component={PhraseConfiguration}
+        />
+      </ConfigurationStack.Navigator>
+    </PhraseWizard>
   );
 };
 

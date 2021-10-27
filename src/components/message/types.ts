@@ -11,3 +11,11 @@ export type PhrasePart = {
   text: string;
   selected?: boolean;
 };
+
+export interface IMessagePhraseSelector {
+  body: string;
+  id: string;
+  date: string;
+  sender: string;
+  onContinue: () => void;
+}

@@ -7,10 +7,15 @@ import {getColorByType, IAppButton} from './type';
 
 const style = StyleSheet.create({
   holder: {
+    display: 'flex',
     margin: 10,
     padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  textContent: {
+    color: BUTTON_TEXT_COLOR,
+    fontWeight: '600',
   },
 });
 const AppButton: React.FC<IAppButton> = ({
@@ -41,12 +46,7 @@ const AppButton: React.FC<IAppButton> = ({
         opacity: 0.5,
       }}
       color={color}>
-      <AppText
-        text={text}
-        style={{
-          color: BUTTON_TEXT_COLOR,
-        }}
-      />
+      <AppText text={text} style={style.textContent} />
     </Button>
   );
 };

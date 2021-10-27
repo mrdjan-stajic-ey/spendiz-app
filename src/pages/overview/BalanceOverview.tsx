@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Center, Divider} from 'native-base';
+import {Box, Center} from 'native-base';
 import {StyleSheet, View} from 'react-native';
 import getMoney, {Currency} from '../../app-resources/Currency';
 import getTextByLocale from '../../app-resources/Language';
@@ -14,6 +14,7 @@ import {listData as expenseData, MODULES_INFO} from './data';
 import AppList from '../../components/List/AppList';
 import AppChart from '../../components/chart/AppChart';
 import {BACKGROUND_ITEM_DEFAULT} from '../../components/CONSTS';
+import AppDivider from '../../components/divider/AppDivider';
 
 const styles = StyleSheet.create({
   scrollContent: {
@@ -136,7 +137,7 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
             </View>
           </View>
         </Box>
-        <Divider />
+        <AppDivider />
       </View>
       <View style={styles.moduleStyle}>{renderModule()}</View>
     </AppPage>
