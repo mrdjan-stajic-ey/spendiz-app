@@ -1,4 +1,3 @@
-import {Center} from 'native-base';
 import React, {useContext} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import AppButton from '../../components/button/AppButton';
