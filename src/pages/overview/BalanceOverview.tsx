@@ -98,6 +98,7 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
     <AppPage>
       <Center>
         <AppText type="TITLE" text={getTextByLocale().balanceOverview} />
+        <AppDivider />
       </Center>
       <View>
         <AppScrollableView horizontal={true}>

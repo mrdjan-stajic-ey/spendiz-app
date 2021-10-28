@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     overflow: 'hidden',
   },
-  ctaHolder: {
-    flex: 1,
-  },
+  ctaHolder: {},
 });
 
 const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({

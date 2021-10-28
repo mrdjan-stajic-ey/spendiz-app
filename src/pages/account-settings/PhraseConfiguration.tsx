@@ -42,7 +42,10 @@ const PhraseConfiguration: React.FC<T_PhraseProps> = ({
     <AppPage>
       <View style={styles.content}>
         <Center marginBottom={0}>
-          <AppText text={getTextByLocale().phraseConfigurationTitle} />
+          <AppText
+            type={'TITLE'}
+            text={getTextByLocale().phraseConfigurationTitle}
+          />
         </Center>
         <AppDivider />
         <PhraseConfigurator />

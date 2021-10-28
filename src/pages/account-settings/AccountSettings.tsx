@@ -8,6 +8,7 @@ import {ISmsState, TypedSmsFetcher} from '../../native-wrappers/types';
 import AppSmsMessage from '../../components/message/Message';
 import requirePerms from '../../permissions/SmsPerm';
 import {View} from 'react-native';
+import AppDivider from '../../components/divider/AppDivider';
 import {Center} from 'native-base';
 
 const AccountSettings: React.FC<T_Account_Settins> = ({
@@ -59,11 +60,9 @@ const AccountSettings: React.FC<T_Account_Settins> = ({
 
   return (
     <AppPage>
-      <Center>
-        <AppText
-          type="SUBTITLE"
-          text={getTextByLocale().accountSettingsTitle}
-        />
+      <Center marginBottom={5}>
+        <AppText type="TITLE" text={getTextByLocale().accountSettingsTitle} />
+        <AppDivider />
       </Center>
       {smsInbox && smsPermGranted && (
         <AppList
