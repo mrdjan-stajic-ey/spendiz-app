@@ -7,9 +7,16 @@ import {SMSAppList, T_Account_Settins} from './types';
 import {ISmsState, TypedSmsFetcher} from '../../native-wrappers/types';
 import AppSmsMessage from '../../components/message/Message';
 import requirePerms from '../../permissions/SmsPerm';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import AppDivider from '../../components/divider/AppDivider';
 import {Center} from 'native-base';
+
+const styles = StyleSheet.create({
+  holder: {
+    flex: 1,
+    marginBottom: 40,
+  },
+});
 
 const AccountSettings: React.FC<T_Account_Settins> = ({
   navigation,
@@ -60,29 +67,31 @@ const AccountSettings: React.FC<T_Account_Settins> = ({
 
   return (
     <AppPage>
-      <Center marginBottom={5}>
-        <AppText type="TITLE" text={getTextByLocale().accountSettingsTitle} />
-        <AppDivider />
-      </Center>
-      {smsInbox && smsPermGranted && (
-        <AppList
-          data={smsInbox}
-          keyExtractor={SMSAppList.keyExtractor}
-          renderItem={({item}) =>
-            renderSmsItem(item, () => {
-              navigation.navigate('Configuration', {
-                screen: 'Parser',
-                params: item,
-              });
-            })
-          }
-        />
-      )}
-      {!smsPermGranted && askedForSmsPerm && (
-        <View>
-          <AppText type="TITLE" text={getTextByLocale().noSmsPermTitle} />
-        </View>
-      )}
+      <View style={styles.holder}>
+        <Center>
+          <AppText type="TITLE" text={getTextByLocale().accountSettingsTitle} />
+          <AppDivider />
+        </Center>
+        {smsInbox && smsPermGranted && (
+          <AppList
+            data={smsInbox}
+            keyExtractor={SMSAppList.keyExtractor}
+            renderItem={({item}) =>
+              renderSmsItem(item, () => {
+                navigation.navigate('Configuration', {
+                  screen: 'Parser',
+                  params: item,
+                });
+              })
+            }
+          />
+        )}
+        {!smsPermGranted && askedForSmsPerm && (
+          <View>
+            <AppText type="TITLE" text={getTextByLocale().noSmsPermTitle} />
+          </View>
+        )}
+      </View>
     </AppPage>
   );
 };
