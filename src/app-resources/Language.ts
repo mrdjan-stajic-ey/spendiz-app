@@ -2,7 +2,7 @@ enum Language {
   EN_GB,
 }
 
-interface APP_TEXTS {
+export interface APP_TEXTS {
   loading: string;
   welcome: string;
   welcomeTitle: string;

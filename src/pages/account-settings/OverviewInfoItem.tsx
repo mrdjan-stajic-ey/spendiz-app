@@ -6,7 +6,7 @@ import {IOverviewInfoItem} from './types';
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: '#cafad7',
+    backgroundColor: '#b0b0b0',
     borderRadius: 50,
     marginBottom: 5,
   },
