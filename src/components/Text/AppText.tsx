@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {DEFAULT_TEXT_COLOR, DEFAULT_TEXT_SIZE} from '../CONSTS';
+import {BUTTON_PRIMARY, DEFAULT_TEXT_COLOR, DEFAULT_TEXT_SIZE} from '../CONSTS';
 import {getTextStyleByType, IAppText} from './type';
 
 const styles = StyleSheet.create({
@@ -17,13 +17,19 @@ const AppText: React.FC<IAppText> = ({
   style,
   numberOfLines,
   ellipsizeMode,
+  link,
 }): JSX.Element => {
   const font_size = useMemo(() => {
     return getTextStyleByType(type);
   }, [type]);
   return (
     <Text
-      style={[styles.text, {fontSize: font_size}, style]}
+      style={[
+        styles.text,
+        {fontSize: font_size},
+        style,
+        {color: `${link ? BUTTON_PRIMARY : styles.text.color}`},
+      ]}
       numberOfLines={numberOfLines}
       ellipsizeMode={ellipsizeMode}>
       {text}

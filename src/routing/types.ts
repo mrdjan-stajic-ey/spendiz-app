@@ -9,6 +9,7 @@ export interface BalanceOverviewRouteProps {
 export type TRootNavigation = {
   Home: undefined;
   Login: undefined;
+  Register: undefined;
   Expenses: undefined;
   BalanceOverview: BalanceOverviewRouteProps | undefined;
   AccountSettings: undefined;

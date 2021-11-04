@@ -10,6 +10,7 @@ export type TTextType = 'NORMAL' | 'TITLE' | 'SUBTITLE' | 'LABEL';
 export interface IAppText extends TextProps {
   text?: string;
   type?: TTextType;
+  link?: boolean;
 }
 export const getTextStyleByType = (type?: TTextType) => {
   switch (type) {

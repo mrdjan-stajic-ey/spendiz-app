@@ -16,6 +16,7 @@ import {
 } from '../CONSTS';
 import AppDivider from '../divider/AppDivider';
 import AppText from '../Text/AppText';
+
 const styles = StyleSheet.create({
   holder: {
     flex: 1,

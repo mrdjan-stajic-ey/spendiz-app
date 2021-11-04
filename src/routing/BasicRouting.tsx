@@ -11,6 +11,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import PhraseConfiguration from '../pages/account-settings/PhraseConfiguration';
 import PhraseWizard from '../data-management/PhraseWizard';
 import OverviewPage from '../pages/account-settings/Overview';
+import RegisterPage from '../pages/Register';
 
 const Stack = createNativeStackNavigator<TRootNavigation>();
 
@@ -56,6 +57,7 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
           animation: 'none',
         }}>
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen name="Home" component={BalanceOverview} />
         <Stack.Screen name="Expenses" component={Expenses} />
         <Stack.Screen name="BalanceOverview" component={BalanceOverview} />

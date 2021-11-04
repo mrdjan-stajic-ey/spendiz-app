@@ -4,8 +4,12 @@ import {DEFAULT_TEXT_COLOR} from '../CONSTS';
 import getTextByLocale from '../../app-resources/Language';
 import {IUserForm} from './types';
 
-console.warn('//TODO: Make a generic form');
-const UserForm: React.FC<IUserForm> = (): JSX.Element => {
+const UserForm: React.FC<IUserForm> = ({
+  username,
+  password,
+  onChangePasswordHandler,
+  onChangeUsernameHandler,
+}): JSX.Element => {
   return (
     <FormControl isRequired>
       <FormControl.Label
@@ -17,7 +21,8 @@ const UserForm: React.FC<IUserForm> = (): JSX.Element => {
       <Input
         backgroundColor="white"
         type="text"
-        value="Mrdjan"
+        onChange={onChangeUsernameHandler}
+        value={username}
         placeholder={getTextByLocale().formLabels.usernamePlaceholder}
       />
       <FormControl.HelperText
@@ -36,7 +41,8 @@ const UserForm: React.FC<IUserForm> = (): JSX.Element => {
       <Input
         backgroundColor="white"
         type="password"
-        value="mrdjan"
+        onChange={onChangePasswordHandler}
+        value={password}
         placeholder={getTextByLocale().formLabels.passwordPlaceholder}
       />
       <FormControl.HelperText

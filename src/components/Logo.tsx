@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import LottieView from 'lottie-react-native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 type TLottieIcon = 'MAIN' | 'ERROR';
 interface ILottieView {
@@ -16,15 +17,21 @@ const AppLogo: React.FC<ILottieView> = ({
   type = 'MAIN',
   style,
 }): JSX.Element => {
-  console.log('lottie view', type);
+  const ref = useRef(null);
   return (
-    <LottieView
-      source={Lottie_ICON_MAPING[type]}
-      autoPlay
-      loop
-      // eslint-disable-next-line react-native/no-inline-styles
-      style={[style || {width: 150, height: 150}]}
-    />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        console.log('ref', ref);
+      }}>
+      <LottieView
+        ref={ref}
+        source={Lottie_ICON_MAPING[type]}
+        autoPlay
+        loop
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={[style || {width: 150, height: 150}]}
+      />
+    </TouchableWithoutFeedback>
   );
 };
 

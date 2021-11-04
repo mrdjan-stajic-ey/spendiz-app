@@ -5,14 +5,24 @@ enum Language {
 export interface APP_TEXTS {
   loading: string;
   welcome: string;
+  loginCta: string;
+  registerCta: string;
   welcomeTitle: string;
   welcomeSubtitle: string;
   passwordLabel: string;
   usernameLabel: string;
+  welcomeRegisterSubtitle: string;
+  registerDontHaveAnAcc: string;
+  registerQuestion: string;
   loginLabel: string;
   formLabels: {
     usernamePlaceholder: string;
     passwordPlaceholder: string;
+    emailLabel: string;
+    usenameLabel: string;
+    passwordLabel: string;
+    confirmPasswordLabel: string;
+    registerButtonLabel: string;
   };
   formValidationErrors: {
     minLenght: string;
@@ -47,17 +57,25 @@ export interface APP_TEXTS {
 const ENGB_LANGUAGE: APP_TEXTS = {
   loading: 'Loading...',
   welcome: 'Welcome',
+  loginCta: 'Login',
+  registerCta: 'Register',
   welcomeTitle: 'Welcome to Spendzi',
   welcomeSubtitle: 'Track expenses, and spend money wisely!',
+  welcomeRegisterSubtitle: 'Sign up to maximise your savings',
   loginLabel: 'Login',
   passwordLabel: 'Password',
   usernameLabel: 'Username',
   formValidationErrors: {
-    minLenght: 'Must be atleast 6 characters.',
+    minLenght: 'Must be at least 6 characters.',
   },
   formLabels: {
     passwordPlaceholder: 'Password',
     usernamePlaceholder: 'Username',
+    emailLabel: 'Enter your email',
+    passwordLabel: 'Enter desired password',
+    confirmPasswordLabel: 'Confirm password',
+    registerButtonLabel: 'Register',
+    usenameLabel: 'Username',
   },
   expenseChartHeading: 'Chart view of your balance',
   categoriesSubtitle: 'Most frequent',
@@ -86,12 +104,14 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   overviewKeywords:
     'You have chosen the following phrases to manage your balance amount',
   overviewCategodies: 'And they are asociated with categories',
+  registerDontHaveAnAcc: 'Register here',
+  registerQuestion: 'Dont have an account',
 };
 
 const LANGUAGES = {
   [Language.EN_GB]: ENGB_LANGUAGE,
 };
-
+//TODO: handle this better, this should return only strings and not the whole object that needs to be deconstructed latter
 const getTextByLocale = (lang?: Language) =>
   lang ? LANGUAGES[lang] : LANGUAGES[Language.EN_GB];
 
