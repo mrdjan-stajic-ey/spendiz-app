@@ -52,7 +52,7 @@ export const tokenize = (str: string): {id: string; text: string}[] => {
         ')', // end capture group #1
     ),
     tokens = str.split(re), // split string using tokenizing regex
-    result = [];
+    result: {id: string; text: string}[] = [];
 
   // add non-empty tokens to result
   for (let i = 0, len = tokens.length; i++ < len; ) {
@@ -62,7 +62,13 @@ export const tokenize = (str: string): {id: string; text: string}[] => {
         '',
       );
       if (removePunctiatonSigns.length > 0) {
-        result.push({id: `${i}_index_${tokens[i]}`, text: tokens[i]});
+        if (
+          result
+            .map(r => r.text.toLowerCase())
+            .indexOf(tokens[i].toLowerCase()) === -1
+        ) {
+          result.push({id: `${i}_index_${tokens[i]}`, text: tokens[i]});
+        }
       }
     }
   }

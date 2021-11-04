@@ -40,6 +40,8 @@ interface APP_TEXTS {
   phraseBankAccActionSubtract: string;
   phraseBankAccTypeLabel: string;
   phraseBalanceOverviewTitle: string;
+  overviewKeywords: string;
+  overviewCategodies: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -81,6 +83,9 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   phraseBankAccTypeLabel: 'Transaction type',
   phraseBalanceActionLabel: 'Add or subtract from balance',
   phraseBalanceOverviewTitle: 'Overview',
+  overviewKeywords:
+    'You have chosen the following phrases to manage your balance amount',
+  overviewCategodies: 'And they are asociated with categories',
 };
 
 const LANGUAGES = {

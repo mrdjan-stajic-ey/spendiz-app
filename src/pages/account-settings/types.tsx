@@ -1,5 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {IAppListProps} from '../../components/List/type';
 import AppSmsMessage from '../../components/message/Message';
 import {ISmsState} from '../../native-wrappers/types';
@@ -14,6 +15,11 @@ export type T_PhraseProps = NativeStackScreenProps<
   TConfigurationNavigation,
   'Phrase'
 >;
+
+export interface IOverviewInfoItem extends Partial<TouchableOpacity> {
+  content?: string;
+  onPress?: () => void;
+}
 
 export const SMSAppList: IAppListProps<ISmsState> = {
   data: [],

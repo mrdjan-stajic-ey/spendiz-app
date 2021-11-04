@@ -16,6 +16,7 @@ const style = StyleSheet.create({
   textContent: {
     color: BUTTON_TEXT_COLOR,
     fontWeight: '600',
+    fontSize: 15,
   },
 });
 const AppButton: React.FC<IAppButton> = ({

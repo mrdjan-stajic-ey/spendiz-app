@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   pillContent: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    overflow: 'hidden',
   },
   ctaHolder: {},
 });

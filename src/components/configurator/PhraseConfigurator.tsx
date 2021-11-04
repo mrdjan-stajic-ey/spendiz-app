@@ -8,16 +8,21 @@ import {
 } from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import PhrasesContext from '../../data-management/PhraseContext';
+import {
+  TRACK_SWITCH_COLOR_FALSE,
+  TRACK_SWITCH_COLOR_TRUE,
+  TRACK_THUMB_COLOR_FALSE,
+  TRACK_THUMB_COLOR_TRUE,
+} from '../CONSTS';
 import AppDivider from '../divider/AppDivider';
 import AppText from '../Text/AppText';
 const styles = StyleSheet.create({
   holder: {
     flex: 1,
     marginTop: 10,
-    // flexDirection: 'column',
-    // justifyContent: 'center',
   },
   controls: {
+    marginTop: 5,
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -26,9 +31,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
   balanceType: {
     flex: 1,
+    marginTop: 5,
   },
 });
 const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
@@ -42,25 +49,49 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
   };
   return (
     <View style={styles.holder}>
-      <AppText text={getTextByLocale().phraseConfigurationDescription} />
+      <AppText
+        type="SUBTITLE"
+        text={getTextByLocale().phraseConfigurationDescription}
+      />
       <View style={styles.controls}>
         <AppText
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{marginBottom: 5}}
           type="LABEL"
           text={getTextByLocale().phraseBalanceActionLabel}
         />
         <View style={styles.toggleAction}>
-          <AppText text={'Add'} />
-          <Switch onValueChange={toggleSwitchHandler} value={isSubtract} />
-          <AppText text={'Subtract'} />
+          <AppText type="LABEL" text={'Add'} />
+          <Switch
+            trackColor={{
+              true: TRACK_SWITCH_COLOR_TRUE,
+              false: TRACK_SWITCH_COLOR_FALSE,
+            }}
+            thumbColor={`${
+              isSubtract ? TRACK_THUMB_COLOR_FALSE : TRACK_THUMB_COLOR_TRUE
+            }`}
+            onValueChange={toggleSwitchHandler}
+            value={isSubtract}
+          />
+          <AppText type="LABEL" text={'Subtract'} />
         </View>
         <AppDivider />
-        <AppText text={getTextByLocale().phraseBankAccTypeLabel} type="LABEL" />
+        <AppText
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={{marginBottom: 5, marginTop: 5}}
+          text={getTextByLocale().phraseBankAccTypeLabel}
+          type="LABEL"
+        />
       </View>
       <ScrollView>
         <View style={styles.balanceType}>
           {categories.map(t => (
             <TouchableOpacity>
-              <AppText text={t} />
+              <AppText
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{fontSize: 14}}
+                text={t}
+              />
             </TouchableOpacity>
           ))}
         </View>
