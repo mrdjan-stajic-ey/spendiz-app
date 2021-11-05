@@ -1,5 +1,4 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Stack} from 'native-base';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -16,6 +15,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   innerContent: {
     flex: 1,
@@ -29,32 +29,28 @@ const styles = StyleSheet.create({
 type T_Reg_Props = NativeStackScreenProps<TRootNavigation, 'Register'>;
 
 const RegisterPage: React.FC<T_Reg_Props> = ({navigation}): JSX.Element => {
+  const handleRegister = () => {
+    navigation.navigate('Home');
+  };
   return (
     <AppPage>
-      <View style={{}}>
+      <View style={styles.content}>
         <AppText
-          type="TITLE"
+          type="SUBTITLE"
           text={getTextByLocale().welcomeRegisterSubtitle}
         />
         <AppDivider />
       </View>
-      <View style={styles.innerContent}>
-        <ScrollView>
-          <Stack
-            direction="row"
-            width={{
-              base: 200,
-              lg: 600,
-            }}>
-            <RegisterForm />
-          </Stack>
-        </ScrollView>
-        <AppButton
-          variant="solid"
-          onPress={() => {}}
-          text={getTextByLocale().loginCta}
-        />
-      </View>
+      <ScrollView>
+        <View style={styles.innerContent}>
+          <RegisterForm />
+        </View>
+      </ScrollView>
+      <AppButton
+        variant="solid"
+        onPress={handleRegister}
+        text={getTextByLocale().registerCta}
+      />
     </AppPage>
   );
 };

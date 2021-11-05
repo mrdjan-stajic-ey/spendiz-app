@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Keyboard,
   NativeSyntheticEvent,
+  ScrollView,
   StyleSheet,
   TextInputChangeEventData,
   View,
@@ -15,8 +16,12 @@ import {Button, Stack} from 'native-base';
 import UserForm from '../components/form/UserForm';
 import AppLogo from '../components/Logo';
 import {TRootNavigation} from '../routing/types';
+import PageAppHeader from '../components/header/AppPageHeader';
 
 const styles = StyleSheet.create({
+  content: {
+    flex: 1,
+  },
   innerContent: {
     flex: 1,
     paddingBottom: 10,
@@ -25,7 +30,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -98,7 +102,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
     <>
       <AppPage>
         <View style={styles.header}>
-          <AppText type="TITLE" text={getTextByLocale().welcomeTitle} />
+          <PageAppHeader text={getTextByLocale().welcomeTitle} />
           {!isKeyboardShowm && (
             <>
               <AppLogo type="MAIN" />
@@ -109,38 +113,42 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
             </>
           )}
         </View>
-        <View style={styles.innerContent}>
-          <Stack
-            direction="column"
-            width={{
-              base: 200,
-              lg: 600,
-            }}>
-            <UserForm
-              onChangePasswordHandler={handlePasswrod}
-              onChangeUsernameHandler={handleUsername}
-              username={username}
-              password={password}
-            />
-            {!isKeyboardShowm && (
-              <View style={styles.register}>
-                <AppText text={getTextByLocale().registerQuestion} />
-                <Button variant="link" onPress={onRegisterHandler}>
-                  <AppText
-                    style={styles.register.link}
-                    link
-                    text={getTextByLocale().registerDontHaveAnAcc}
-                  />
-                </Button>
-              </View>
-            )}
-            <AppButton
-              variant="solid"
-              onPress={onPresHandler}
-              text={getTextByLocale().loginCta}
-            />
-          </Stack>
-        </View>
+        <ScrollView>
+          <View style={styles.content}>
+            <View style={styles.innerContent}>
+              <Stack
+                direction="column"
+                width={{
+                  base: 200,
+                  lg: 600,
+                }}>
+                <UserForm
+                  onChangePasswordHandler={handlePasswrod}
+                  onChangeUsernameHandler={handleUsername}
+                  username={username}
+                  password={password}
+                />
+                {!isKeyboardShowm && (
+                  <View style={styles.register}>
+                    <AppText text={getTextByLocale().registerQuestion} />
+                    <Button variant="link" onPress={onRegisterHandler}>
+                      <AppText
+                        style={styles.register.link}
+                        link
+                        text={getTextByLocale().registerDontHaveAnAcc}
+                      />
+                    </Button>
+                  </View>
+                )}
+              </Stack>
+            </View>
+          </View>
+        </ScrollView>
+        <AppButton
+          variant="solid"
+          onPress={onPresHandler}
+          text={getTextByLocale().loginCta}
+        />
       </AppPage>
     </>
   );

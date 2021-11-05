@@ -1,9 +1,9 @@
-import {Center} from 'native-base';
 import React, {useContext} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import AppButton from '../../components/button/AppButton';
 import AppDivider from '../../components/divider/AppDivider';
+import PageAppHeader from '../../components/header/AppPageHeader';
 import AppPage from '../../components/page/AppPage';
 import AppText from '../../components/Text/AppText';
 import PhrasesContext from '../../data-management/PhraseContext';
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   },
   balanceType: {
     flex: 1,
+    padding: 10,
   },
   header: {},
   overviewKeywordsHolder: {
@@ -32,14 +33,7 @@ const OverviewPage: React.FC<{}> = (): JSX.Element => {
   return (
     <AppPage>
       <View style={styles.content}>
-        <Center marginBottom={0}>
-          <AppText
-            style={styles.header}
-            type="TITLE"
-            text={getTextByLocale().phraseBalanceOverviewTitle}
-          />
-        </Center>
-        <AppDivider />
+        <PageAppHeader text={getTextByLocale().phraseBalanceOverviewTitle} />
         <View style={styles.overviewKeywordsHolder}>
           <AppText type="LABEL" text={getTextByLocale().overviewKeywords} />
           <ScrollView>
@@ -52,6 +46,7 @@ const OverviewPage: React.FC<{}> = (): JSX.Element => {
         </View>
         <View style={styles.overviewCategoriesHolder}>
           <AppText type="LABEL" text={getTextByLocale().overviewCategodies} />
+          <AppDivider />
           <ScrollView>
             <View style={styles.balanceType}>
               {categories.map(p => {

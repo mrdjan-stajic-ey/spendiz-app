@@ -1,21 +1,18 @@
-import {Center} from 'native-base';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import {ISmsState} from '../../native-wrappers/types';
 import AppDivider from '../../components/divider/AppDivider';
 import AppPage from '../../components/page/AppPage';
-import AppText from '../../components/Text/AppText';
 import MessagePhraseSelector from '../../components/message/MessagePhraseSelector';
 import {T_Parser_Props} from '../../components/message/types';
+import PageAppHeader from '../../components/header/AppPageHeader';
 
 const styles = StyleSheet.create({
   holder: {
     flex: 1,
   },
-  title: {
-    marginBottom: 5,
-  },
+  title: {},
 });
 const MessageParser: React.FC<T_Parser_Props> = ({
   route,
@@ -28,14 +25,7 @@ const MessageParser: React.FC<T_Parser_Props> = ({
   return (
     <AppPage>
       <View style={styles.holder}>
-        <Center>
-          <AppText
-            style={styles.title}
-            type="TITLE"
-            text={getTextByLocale().parserKeywordsTitle}
-          />
-        </Center>
-        <AppDivider />
+        <PageAppHeader text={getTextByLocale().parserKeywordsTitle} />
         <MessagePhraseSelector
           onContinue={onContinueHandler}
           date={date_sent}
