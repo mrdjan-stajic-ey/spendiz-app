@@ -55,7 +55,13 @@ const OverviewPage: React.FC<{}> = (): JSX.Element => {
             </View>
           </ScrollView>
         </View>
-        <AppButton text={'Finish'} />
+        <AppButton
+          type="PRIMARY"
+          onPress={() => {
+            //todo implement
+          }}
+          text={'Finish'}
+        />
       </View>
     </AppPage>
   );

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../pages/Login';
 import SplashScreen from '../pages/SplashScreen';
@@ -12,6 +12,7 @@ import PhraseConfiguration from '../pages/account-settings/PhraseConfiguration';
 import PhraseWizard from '../data-management/PhraseWizard';
 import OverviewPage from '../pages/account-settings/Overview';
 import RegisterPage from '../pages/Register';
+import UserContext from '../data-management/user/UserContext';
 
 const Stack = createNativeStackNavigator<TRootNavigation>();
 
@@ -38,14 +39,8 @@ const AppConfigurationRoutes = () => {
 };
 
 const AppStack: React.FC<{}> = (): JSX.Element => {
-  const [isLoading, setIsLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-  }, []);
-
-  if (isLoading) {
+  const {loading} = useContext(UserContext);
+  if (loading) {
     return <SplashScreen />;
   }
   return (

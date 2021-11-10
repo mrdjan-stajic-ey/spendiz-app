@@ -7,6 +7,7 @@ import {NativeBaseProvider} from 'native-base';
 import {configureIconLibrary} from './src/components/icons-library/library';
 import ErrorBoundary from 'react-native-error-boundary';
 import ErrorScreen from './src/pages/ErrorScreen';
+import UserWrapper from './src/data-management/user/UserHoc';
 
 if (!__DEV__) {
   //stop all the logs for performance since we can`t see them in prod
@@ -44,7 +45,9 @@ const App = () => {
       <ErrorBoundary FallbackComponent={ErrorScreen}>
         <NavigationContainer>
           <SafeAreaView style={root_style.root}>
-            <AppStack />
+            <UserWrapper>
+              <AppStack />
+            </UserWrapper>
           </SafeAreaView>
         </NavigationContainer>
       </ErrorBoundary>

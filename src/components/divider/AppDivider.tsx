@@ -13,6 +13,7 @@ interface IAppDivider {
   paddingTop?: number;
   paddingBottom?: number;
   padding?: number;
+  color?: string;
 }
 
 const AppDivider: React.FC<IAppDivider> = ({
@@ -26,6 +27,7 @@ const AppDivider: React.FC<IAppDivider> = ({
   marginLeft,
   marginRight,
   marginTop,
+  color,
 }): JSX.Element => {
   return (
     <Divider
@@ -39,7 +41,7 @@ const AppDivider: React.FC<IAppDivider> = ({
       paddingTop={paddingTop || null}
       marginLeft={marginLeft || null}
       marginRight={marginRight || null}
-      backgroundColor={THIRD_BACKGROUND_COLOR}
+      backgroundColor={color ? color : THIRD_BACKGROUND_COLOR}
     />
   );
 };

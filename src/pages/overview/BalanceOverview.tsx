@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Box, Center} from 'native-base';
 import {StyleSheet, View} from 'react-native';
 import getMoney, {Currency} from '../../app-resources/Currency';
@@ -15,6 +15,8 @@ import AppList from '../../components/List/AppList';
 import AppChart from '../../components/chart/AppChart';
 import {BACKGROUND_ITEM_DEFAULT} from '../../components/CONSTS';
 import AppDivider from '../../components/divider/AppDivider';
+// import HttpReq from '../../http/axios-wrapper';
+import UserContext from '../../data-management/user/UserContext';
 
 const styles = StyleSheet.create({
   scrollContent: {
@@ -52,9 +54,19 @@ const styles = StyleSheet.create({
 const BalanceOverview: React.FC<T_Expenses_Props> = ({
   navigation,
 }): JSX.Element => {
+  const {user} = useContext(UserContext);
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [incomingMessage, setIncomingMessage] = useState<boolean>(false);
   const messageStyle = incomingMessage ? 'red' : 'blue'; //TODO: get better indicator colors
+
+  useEffect(() => {
+    // HttpReq.get<{_id: string; name: string; description: string}>('/expense') //TODO:Remove this, was for testing purposes only
+    //   .then(data => {
+    //     console.log(data);
+    //   })
+    //   .catch(err => console.log('what', err));
+  }, []);
 
   const [currentModule, setCurrentModule] = useState<MODULE_TYPES>(
     MODULE_TYPES.BALANCE,
@@ -120,7 +132,10 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
         <Box style={styles.balanceBox} rounded={'xl'} padding={5} marginTop={5}>
           <View style={styles.balanceBoxMyBalance}>
             <View>
-              <AppText type="SUBTITLE" text={'My balance'} />
+              <AppText
+                type="SUBTITLE"
+                text={`${user?.user.username}'s balance'`}
+              />
               <AppText type="NORMAL" text={getMoney(25877.99, Currency.RSD)} />
             </View>
             <View style={styles.balanceMessage}>

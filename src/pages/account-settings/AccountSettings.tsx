@@ -44,7 +44,6 @@ const AccountSettings: React.FC<T_Account_Settins> = ({
     TypedSmsFetcher.getSmsInbox()
       .then((res: any) => {
         setSmsInbox(res);
-        console.log(res);
       })
       .catch(() => {
         throw 'Cannot read messages';

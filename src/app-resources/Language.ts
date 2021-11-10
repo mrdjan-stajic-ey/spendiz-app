@@ -52,6 +52,9 @@ export interface APP_TEXTS {
   phraseBalanceOverviewTitle: string;
   overviewKeywords: string;
   overviewCategodies: string;
+  errorText: {
+    localStorageErr: string;
+  };
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -106,6 +109,10 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   overviewCategodies: 'And they are asociated with categories',
   registerDontHaveAnAcc: 'Register here',
   registerQuestion: 'Dont have an account',
+  errorText: {
+    localStorageErr:
+      'Local storage operation failed, clear local storage and try running the app again',
+  },
 };
 
 const LANGUAGES = {
@@ -114,5 +121,9 @@ const LANGUAGES = {
 //TODO: handle this better, this should return only strings and not the whole object that needs to be deconstructed latter
 const getTextByLocale = (lang?: Language) =>
   lang ? LANGUAGES[lang] : LANGUAGES[Language.EN_GB];
+
+export const getErrorTextByLocal = (lang?: Language) => {
+  return getTextByLocale(lang).errorText;
+};
 
 export default getTextByLocale;

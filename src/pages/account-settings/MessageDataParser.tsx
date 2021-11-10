@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import {ISmsState} from '../../native-wrappers/types';
-import AppDivider from '../../components/divider/AppDivider';
 import AppPage from '../../components/page/AppPage';
 import MessagePhraseSelector from '../../components/message/MessagePhraseSelector';
 import {T_Parser_Props} from '../../components/message/types';

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Keyboard,
   NativeSyntheticEvent,
@@ -17,6 +17,8 @@ import UserForm from '../components/form/UserForm';
 import AppLogo from '../components/Logo';
 import {TRootNavigation} from '../routing/types';
 import PageAppHeader from '../components/header/AppPageHeader';
+import userAuth from '../auth/userAuth';
+import UserContext from '../data-management/user/UserContext';
 
 const styles = StyleSheet.create({
   content: {
@@ -50,7 +52,7 @@ type T_Login_Props = NativeStackScreenProps<TRootNavigation, 'Login'>;
 
 const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
   const [isKeyboardShowm, setIskeyboardShown] = useState<boolean>(false);
-
+  const {setUser} = useContext(UserContext);
   useEffect(() => {
     const keyboardShowSub = Keyboard.addListener(
       'keyboardDidShow',
@@ -78,8 +80,17 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const onPresHandler = () => {
-    navigation.navigate('Home');
+  const onPresHandler = async () => {
+    return userAuth
+      .login({username, password})
+      .then(async data => {
+        console.log('Login result', data);
+        setUser(data);
+        setTimeout(() => {
+          navigation.navigate('Home');
+        }, 300);
+      })
+      .catch(err => console.log(err));
   };
 
   const handlePasswrod = (
@@ -146,6 +157,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
         </ScrollView>
         <AppButton
           variant="solid"
+          type="PRIMARY"
           onPress={onPresHandler}
           text={getTextByLocale().loginCta}
         />
