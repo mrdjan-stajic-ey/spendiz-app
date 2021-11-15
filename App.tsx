@@ -2,12 +2,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {SafeAreaView, AppRegistry, StyleSheet} from 'react-native';
 import NotificationHandlerInstance from './src/app-resources/notificationHandler';
-import AppStack from './src/routing/BasicRouting';
 import {NativeBaseProvider} from 'native-base';
 import {configureIconLibrary} from './src/components/icons-library/library';
 import ErrorBoundary from 'react-native-error-boundary';
 import ErrorScreen from './src/pages/ErrorScreen';
 import UserWrapper from './src/data-management/user/UserHoc';
+import AuthStack from './src/routing/BasicRouting';
 
 if (!__DEV__) {
   //stop all the logs for performance since we can`t see them in prod
@@ -46,7 +46,7 @@ const App = () => {
         <NavigationContainer>
           <SafeAreaView style={root_style.root}>
             <UserWrapper>
-              <AppStack />
+              <AuthStack />
             </UserWrapper>
           </SafeAreaView>
         </NavigationContainer>

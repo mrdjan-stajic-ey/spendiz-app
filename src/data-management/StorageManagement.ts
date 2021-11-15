@@ -1,14 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert} from 'react-native';
 import {getErrorTextByLocal} from '../app-resources/Language';
-import {IAppUser} from './type';
-
-export enum StorageKeys {
-  USER = 'USER',
-  JWT_TOKEN = 'JWT',
-  REMEMBER_ME_CODE = 'REMEBER_ME_CODE',
-  expiration_date = 'exp_date',
-}
+import {IAppUser, StorageKeys} from './type';
 
 export const clearUser = async () => {
   try {
@@ -18,7 +11,7 @@ export const clearUser = async () => {
     Alert.alert(getErrorTextByLocal().localStorageErr);
   }
 };
-export const addUser = async (user: IAppUser) => {
+export const setUserToAsyncStorage = async (user: IAppUser) => {
   try {
     await AsyncStorage.setItem(StorageKeys.USER, JSON.stringify(user));
   } catch (error) {

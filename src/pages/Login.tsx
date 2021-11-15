@@ -19,6 +19,7 @@ import {TRootNavigation} from '../routing/types';
 import PageAppHeader from '../components/header/AppPageHeader';
 import userAuth from '../auth/userAuth';
 import UserContext from '../data-management/user/UserContext';
+import {setUserToAsyncStorage} from '../data-management/StorageManagement';
 
 const styles = StyleSheet.create({
   content: {
@@ -86,9 +87,8 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
       .then(async data => {
         console.log('Login result', data);
         setUser(data);
-        setTimeout(() => {
-          navigation.navigate('Home');
-        }, 300);
+        await setUserToAsyncStorage(data);
+        navigation.navigate('Home');
       })
       .catch(err => console.log(err));
   };
@@ -156,6 +156,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
           </View>
         </ScrollView>
         <AppButton
+          disableAsyncBehaviour
           variant="solid"
           type="PRIMARY"
           onPress={onPresHandler}

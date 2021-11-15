@@ -4,7 +4,7 @@ import Login from '../pages/Login';
 import SplashScreen from '../pages/SplashScreen';
 import Expenses from '../pages/expenses/Expenses';
 import BalanceOverview from '../pages/overview/BalanceOverview';
-import {TConfigurationNavigation, TRootNavigation} from './types';
+import {TConfigurationNavigation, TRootNavigation, T_Auth_Stack} from './types';
 import AccountSettings from '../pages/account-settings/AccountSettings';
 import MessageParser from '../pages/account-settings/MessageDataParser';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -14,8 +14,8 @@ import OverviewPage from '../pages/account-settings/Overview';
 import RegisterPage from '../pages/Register';
 import UserContext from '../data-management/user/UserContext';
 
-const Stack = createNativeStackNavigator<TRootNavigation>();
-
+const AuthStackNavigator = createStackNavigator<T_Auth_Stack>(); //auth stack
+const Stack = createNativeStackNavigator<TRootNavigation>(); //app stack so back button exits the app if the user is logged in
 const ConfigurationStack = createStackNavigator<TConfigurationNavigation>();
 
 const AppConfigurationRoutes = () => {
@@ -39,19 +39,14 @@ const AppConfigurationRoutes = () => {
 };
 
 const AppStack: React.FC<{}> = (): JSX.Element => {
-  const {loading} = useContext(UserContext);
-  if (loading) {
-    return <SplashScreen />;
-  }
   return (
     <>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
           animation: 'none',
         }}>
-        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen name="Home" component={BalanceOverview} />
         <Stack.Screen name="Expenses" component={Expenses} />
@@ -62,4 +57,28 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
     </>
   );
 };
-export default AppStack;
+
+const AuthStack: React.FC<{}> = (): JSX.Element => {
+  const {userData} = useContext(UserContext);
+  return (
+    <AuthStackNavigator.Navigator
+      initialRouteName="Splash"
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+      }}>
+      {!userData?.user && (
+        <>
+          <AuthStackNavigator.Screen name="Splash" component={SplashScreen} />
+          <AuthStackNavigator.Screen name="Login" component={Login} />
+        </>
+      )}
+
+      {userData?.user && (
+        <AuthStackNavigator.Screen name="App" component={AppStack} />
+      )}
+    </AuthStackNavigator.Navigator>
+  );
+};
+
+export default AuthStack;

@@ -54,6 +54,7 @@ export interface APP_TEXTS {
   overviewCategodies: string;
   errorText: {
     localStorageErr: string;
+    noJwtTokenFound: string;
   };
 }
 
@@ -112,6 +113,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   errorText: {
     localStorageErr:
       'Local storage operation failed, clear local storage and try running the app again',
+    noJwtTokenFound: 'Jwt token not found, redirecting to login',
   },
 };
 

@@ -28,6 +28,7 @@ const AppButton: React.FC<IAppButton> = ({
   disabled,
   type,
   borderRadius,
+  disableAsyncBehaviour = false,
 }): JSX.Element => {
   const [isDisabled, setIsDisabled] = useState(disabled);
 
@@ -38,7 +39,8 @@ const AppButton: React.FC<IAppButton> = ({
     }
   }, [type, variant, isDisabled]);
 
-  const onPressHandler = () => {
+  //se comments for syncPressHandler;
+  const asyncPressHandler = () => {
     if (onPress) {
       const _f = onPress();
       if (_f?.then) {
@@ -52,6 +54,13 @@ const AppButton: React.FC<IAppButton> = ({
       });
     }
   };
+  //15.11.2021
+  //Since there can be navigation that will remove the screen from the navigation options,
+  //disable and enable of the button can it can  cause 'cannot update state on unmounted component'
+  // "fix" (read. Hack is to manualy disable that on the buttons that navigate off the screen) bug found when the navigation was spilt into Auth and App navigation;
+  const syncPressHandler = () => {
+    onPress();
+  };
 
   return (
     <Button
@@ -59,7 +68,7 @@ const AppButton: React.FC<IAppButton> = ({
       variant={variant ? variant : 'solid'}
       borderRadius={borderRadius || 50}
       style={[style.holder, {backgroundColor: buttonColor || ''}]}
-      onPress={onPressHandler}
+      onPress={disableAsyncBehaviour ? syncPressHandler : asyncPressHandler}
       size={size}
       _pressed={{
         opacity: 0.5,

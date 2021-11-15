@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {Alert} from 'react-native';
 import {getErrorTextByLocal} from '../app-resources/Language';
-import {StorageKeys} from '../data-management/StorageManagement';
+import {StorageKeys} from '../data-management/type';
 
 interface IAuthToken {
   access_token?: string;
@@ -14,9 +14,14 @@ type TAxiosSuper<T> = {
 const baseUrl = 'http://10.0.2.2:3000';
 
 abstract class HttpReq {
-  static async getAuthorisationToken(): Promise<IAuthToken> {
+  static async getAuthorisationToken(
+    allowAnon: boolean = false,
+  ): Promise<IAuthToken> {
     try {
       const jwt_token = await AsyncStorage.getItem(StorageKeys.JWT_TOKEN);
+      if (!jwt_token && !allowAnon) {
+        return Promise.reject(getErrorTextByLocal().noJwtTokenFound);
+      }
       const remeberMeCode = await AsyncStorage.getItem(
         StorageKeys.REMEMBER_ME_CODE,
       );
@@ -51,8 +56,9 @@ abstract class HttpReq {
   public static async post<TReturn, Tbody extends any = any>(
     servicePath: string,
     body?: Tbody,
+    allowAnon: boolean = false,
   ): Promise<TReturn> {
-    const {access_token} = await this.getAuthorisationToken();
+    const {access_token} = await this.getAuthorisationToken(allowAnon);
     return axios
       .post<Tbody, TAxiosSuper<TReturn>>(
         `${baseUrl}/${this.alignServicePath(servicePath)}`,

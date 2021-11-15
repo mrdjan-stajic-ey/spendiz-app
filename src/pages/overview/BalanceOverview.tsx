@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 const BalanceOverview: React.FC<T_Expenses_Props> = ({
   navigation,
 }): JSX.Element => {
-  const {user} = useContext(UserContext);
+  const {userData} = useContext(UserContext);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [incomingMessage, setIncomingMessage] = useState<boolean>(false);
@@ -134,7 +134,7 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
             <View>
               <AppText
                 type="SUBTITLE"
-                text={`${user?.user.username}'s balance'`}
+                text={`${userData?.user.username}'s balance'`}
               />
               <AppText type="NORMAL" text={getMoney(25877.99, Currency.RSD)} />
             </View>

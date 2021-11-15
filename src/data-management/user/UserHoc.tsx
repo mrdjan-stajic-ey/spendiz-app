@@ -11,11 +11,9 @@ const dummyPromise = async () => {
     }, 500);
   });
 };
-
 const UserWrapper: React.FC<{}> = ({children}): JSX.Element => {
   const [appUser, setAppUser] = useState<IAppUser | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   useEffect(() => {
     const _getUser = async () => {
       const _user = await getUserFromStorage();
@@ -29,7 +27,7 @@ const UserWrapper: React.FC<{}> = ({children}): JSX.Element => {
   return (
     <UserContext.Provider
       value={{
-        user: appUser,
+        userData: appUser,
         clearUser: async () => {
           return clearUser();
         },
