@@ -1,5 +1,5 @@
 import {Button} from 'native-base';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {BUTTON_TEXT_COLOR} from '../CONSTS';
 import AppText from '../Text/AppText';
@@ -38,6 +38,10 @@ const AppButton: React.FC<IAppButton> = ({
       return getColorByType(type, isDisabled || false);
     }
   }, [type, variant, isDisabled]);
+
+  useEffect(() => {
+    setIsDisabled(disabled);
+  }, [disabled]);
 
   //se comments for syncPressHandler;
   const asyncPressHandler = () => {

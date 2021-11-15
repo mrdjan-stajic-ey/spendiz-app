@@ -56,6 +56,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
               )[0];
               return (
                 <PillButton
+                  onPress={() => {}}
                   key={stringPart.id}
                   selected={isSelected}
                   onSelect={handlePillClick}
