@@ -11,6 +11,7 @@ export interface IAppText extends TextProps {
   text?: string;
   type?: TTextType;
   link?: boolean;
+  color?: string;
 }
 export const getTextStyleByType = (type?: TTextType) => {
   switch (type) {

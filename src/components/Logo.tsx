@@ -19,10 +19,7 @@ const AppLogo: React.FC<ILottieView> = ({
 }): JSX.Element => {
   const ref = useRef(null);
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        console.log('ref', ref);
-      }}>
+    <TouchableWithoutFeedback>
       <LottieView
         ref={ref}
         source={Lottie_ICON_MAPING[type]}

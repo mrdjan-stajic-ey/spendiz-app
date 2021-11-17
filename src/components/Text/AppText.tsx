@@ -18,17 +18,31 @@ const AppText: React.FC<IAppText> = ({
   numberOfLines,
   ellipsizeMode,
   link,
+  color,
 }): JSX.Element => {
   const font_size = useMemo(() => {
     return getTextStyleByType(type);
   }, [type]);
+
+  const getTextColor = () => {
+    if (link) {
+      //if the button is link type it will override the color props if present
+      return BUTTON_PRIMARY;
+    } else {
+      if (color) {
+        return color;
+      }
+    }
+    return `${link ? BUTTON_PRIMARY : styles.text.color}`;
+  };
+
   return (
     <Text
       style={[
         styles.text,
         {fontSize: font_size},
         style,
-        {color: `${link ? BUTTON_PRIMARY : styles.text.color}`},
+        {color: getTextColor()},
       ]}
       numberOfLines={numberOfLines}
       ellipsizeMode={ellipsizeMode}>

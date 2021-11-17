@@ -1,3 +1,5 @@
+import {TransactionType} from '../data-management/type';
+
 enum Language {
   EN_GB,
 }
@@ -50,11 +52,14 @@ export interface APP_TEXTS {
   phraseBankAccActionSubtract: string;
   phraseBankAccTypeLabel: string;
   phraseBalanceOverviewTitle: string;
-  overviewKeywords: string;
-  overviewCategodies: string;
+  overviewKeywords: (transactionType: TransactionType) => string;
+  overviewCategories: string;
+  noCategoriesMessage: string;
   errorText: {
     localStorageErr: string;
     noJwtTokenFound: string;
+    axiosTimeoutExceptionText: string;
+    apiServiceFailed(path: string, error: string): string;
   };
 }
 
@@ -105,16 +110,23 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   phraseBankAccTypeLabel: 'Transaction type',
   phraseBalanceActionLabel: 'Add or subtract from balance',
   phraseBalanceOverviewTitle: 'Overview',
-  overviewKeywords:
-    'You have chosen the following phrases to manage your balance amount',
-  overviewCategodies: 'And they are asociated with categories',
+  overviewKeywords: (transactionType: TransactionType) => {
+    return `You have chosen the following phrases to ${
+      transactionType === 'INBOUND' ? ' increase' : 'lower'
+    } your balance amount`;
+  },
+  overviewCategories: 'And they are asociated with categories',
   registerDontHaveAnAcc: 'Register here',
   registerQuestion: 'Dont have an account',
   errorText: {
     localStorageErr:
       'Local storage operation failed, clear local storage and try running the app again',
     noJwtTokenFound: 'Jwt token not found, redirecting to login',
+    axiosTimeoutExceptionText: 'Http client timeout exceded',
+    apiServiceFailed: (path: string, error: string) =>
+      `Api service on path ${path} failed with error ${error}`,
   },
+  noCategoriesMessage: 'No categories found',
 };
 
 const LANGUAGES = {

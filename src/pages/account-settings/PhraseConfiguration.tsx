@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import AppButton from '../../components/button/AppButton';
 import PhraseConfigurator from '../../components/configurator/PhraseConfigurator';
 import PageAppHeader from '../../components/header/AppPageHeader';
 import AppPage from '../../components/page/AppPage';
+import PhrasesContext from '../../data-management/PhraseContext';
 import {T_PhraseProps} from './types';
 
 const styles = StyleSheet.create({
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
 const PhraseConfiguration: React.FC<T_PhraseProps> = ({
   navigation,
 }): JSX.Element => {
+  const {getSelectedCategories} = useContext(PhrasesContext);
   const toOverviewHandler = () => {
     navigation.navigate('Overview');
   };
@@ -40,9 +42,9 @@ const PhraseConfiguration: React.FC<T_PhraseProps> = ({
     <AppPage>
       <View style={styles.content}>
         <PageAppHeader text={getTextByLocale().phraseConfigurationTitle} />
-
         <PhraseConfigurator />
         <AppButton
+          disabled={getSelectedCategories().length === 0}
           onPress={toOverviewHandler}
           text={getTextByLocale().phraseBalanceOverviewTitle}
         />

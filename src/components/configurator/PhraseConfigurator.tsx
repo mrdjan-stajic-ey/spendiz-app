@@ -1,11 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  Switch,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, Switch, ScrollView} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import PhrasesContext from '../../data-management/PhraseContext';
 import {
@@ -16,6 +10,7 @@ import {
 } from '../CONSTS';
 import AppDivider from '../divider/AppDivider';
 import AppText from '../Text/AppText';
+import CategoryExpenseItem from './expense/CategoryExpenseItem';
 
 const styles = StyleSheet.create({
   holder: {
@@ -38,15 +33,29 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 5,
   },
+  transactionTypeHeader: {
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  transactionTypeLabel: {
+    marginBottom: 5,
+  },
 });
 const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
-  const [isSubtract, setIsSubtract] = useState<boolean>(true);
-  const {categories} = useContext(PhrasesContext);
+  const {
+    categories,
+    toggleCategorySelection,
+    transactionType,
+    setTransactionType,
+  } = useContext(PhrasesContext);
 
-  const toggleSwitchHandler = () => {
-    setIsSubtract(() => {
-      return !isSubtract;
-    });
+  const [isSubtract, setIsSubtractAction] = useState<boolean>(
+    transactionType === 'OUTBOUND' ? true : false,
+  );
+
+  const toggleSwitchHandler = (value: boolean) => {
+    setIsSubtractAction(value);
+    setTransactionType(value ? 'OUTBOUND' : 'INBOUND');
   };
   return (
     <View style={styles.holder}>
@@ -56,8 +65,7 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
       />
       <View style={styles.controls}>
         <AppText
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{marginBottom: 5}}
+          style={styles.transactionTypeLabel}
           type="LABEL"
           text={getTextByLocale().phraseBalanceActionLabel}
         />
@@ -78,23 +86,32 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
         </View>
         <AppDivider />
         <AppText
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={{marginBottom: 5, marginTop: 5}}
+          style={styles.transactionTypeHeader}
           text={getTextByLocale().phraseBankAccTypeLabel}
           type="LABEL"
         />
       </View>
       <ScrollView>
         <View style={styles.balanceType}>
-          {categories.map(t => (
-            <TouchableOpacity>
-              <AppText
-                // eslint-disable-next-line react-native/no-inline-styles
-                style={{fontSize: 14}}
-                text={t}
+          {categories.length > 0 &&
+            categories.map(t => (
+              <CategoryExpenseItem
+                key={t.id}
+                description={t.description}
+                id={t.id}
+                name={t.name}
+                selected={t.selected || false}
+                onPress={toggleCategorySelection}
               />
-            </TouchableOpacity>
-          ))}
+            ))}
+          {categories.length === 0 && (
+            <View>
+              <AppText
+                text={getTextByLocale().noCategoriesMessage}
+                type="SUBTITLE"
+              />
+            </View>
+          )}
         </View>
       </ScrollView>
     </View>

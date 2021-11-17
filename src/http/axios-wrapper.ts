@@ -12,13 +12,29 @@ type TAxiosSuper<T> = {
   data: T;
 };
 const baseUrl = 'http://10.0.2.2:3000';
-
+const defaultTimeoutInMS = 1000 * 60 * 2;
+// const defaultTimeoutInMS = 1000 * 2;
+const timeoutErrorMessage = getErrorTextByLocal().axiosTimeoutExceptionText;
 abstract class HttpReq {
+  static logErrToBackend = (error: string) => {
+    return new Promise((resolve, _) => {
+      setTimeout(() => {
+        console.log('Error logged to backend', error); //TODO; connect with bakcend;
+        resolve(null);
+      }, 200);
+    });
+  };
+
+  static errorHandlingMsg = (path: string, error: string): void => {
+    console.log(getErrorTextByLocal().apiServiceFailed(path, error));
+  };
+
   static async getAuthorisationToken(
     allowAnon: boolean = false,
   ): Promise<IAuthToken> {
     try {
       const jwt_token = await AsyncStorage.getItem(StorageKeys.JWT_TOKEN);
+      console.log(`Access token value ${jwt_token}`);
       if (!jwt_token && !allowAnon) {
         return Promise.reject(getErrorTextByLocal().noJwtTokenFound);
       }
@@ -45,12 +61,18 @@ abstract class HttpReq {
     return axios
       .get(`${baseUrl}/${this.alignServicePath(servicePath)}`, {
         method: 'GET',
+        timeout: defaultTimeoutInMS,
+        timeoutErrorMessage,
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
       .then(data => {
         return Promise.resolve(data.data);
+      })
+      .catch(err => {
+        this.errorHandlingMsg(`GET-${baseUrl}/${servicePath}`, err);
+        return err;
       });
   }
   public static async post<TReturn, Tbody extends any = any>(
@@ -64,6 +86,8 @@ abstract class HttpReq {
         `${baseUrl}/${this.alignServicePath(servicePath)}`,
         body,
         {
+          timeout: defaultTimeoutInMS,
+          timeoutErrorMessage,
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
@@ -71,6 +95,10 @@ abstract class HttpReq {
       )
       .then(data => {
         return Promise.resolve(data.data);
+      })
+      .catch(err => {
+        this.errorHandlingMsg(`POST - ${baseUrl}/${servicePath}`, err);
+        return err;
       });
   }
 }

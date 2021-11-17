@@ -4,6 +4,10 @@ const PhrasesContext = React.createContext<IPhraseContext>({
   phrases: [],
   addPhrase: () => {},
   categories: [],
+  toggleCategorySelection: () => {},
+  getSelectedCategories: () => [],
+  setTransactionType: () => {},
+  transactionType: 'OUTBOUND',
 });
 
 export default PhrasesContext;

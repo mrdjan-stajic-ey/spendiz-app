@@ -12,6 +12,13 @@ export type PhrasePart = {
   selected?: boolean;
 };
 
+export interface Category {
+  name: string;
+  description: string;
+  id: string;
+  selected?: boolean;
+}
+
 export interface IMessagePhraseSelector {
   body: string;
   id: string;

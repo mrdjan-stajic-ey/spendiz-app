@@ -36,6 +36,7 @@ export const getUserFromStorage = async () => {
 export const setToken = async (token: string) => {
   try {
     await AsyncStorage.setItem(StorageKeys.JWT_TOKEN, token);
+    console.log('Jwt token set');
   } catch (error) {
     console.error('JWT token set failed', error);
     Alert.alert(getErrorTextByLocal().localStorageErr);

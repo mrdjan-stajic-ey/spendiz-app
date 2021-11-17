@@ -19,7 +19,10 @@ import {TRootNavigation} from '../routing/types';
 import PageAppHeader from '../components/header/AppPageHeader';
 import userAuth from '../auth/userAuth';
 import UserContext from '../data-management/user/UserContext';
-import {setUserToAsyncStorage} from '../data-management/StorageManagement';
+import {
+  setToken,
+  setUserToAsyncStorage,
+} from '../data-management/StorageManagement';
 
 const styles = StyleSheet.create({
   content: {
@@ -88,6 +91,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
         console.log('Login result', data);
         setUser(data);
         await setUserToAsyncStorage(data);
+        await setToken(data.access_token);
         navigation.navigate('Home');
       })
       .catch(err => console.log(err));
