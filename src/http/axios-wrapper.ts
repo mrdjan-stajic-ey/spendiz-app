@@ -37,8 +37,8 @@ export const LOG_TO_BACKEND = (logType: T_LOG_Type, data: ILogData) => {
     });
 };
 
-// const defaultTimeoutInMS = 1000 * 60 * 2;
-const defaultTimeoutInMS = 1000 * 5;
+const defaultTimeoutInMS = 1000 * 60 * 2;
+// const defaultTimeoutInMS = 1000 * 5;
 const timeoutErrorMessage = getErrorTextByLocal().axiosTimeoutExceptionText;
 abstract class HttpReq {
   static logErrToBackend = (error: string) => {
