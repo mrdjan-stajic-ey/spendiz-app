@@ -123,6 +123,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
       <AppPage>
         <View style={styles.header}>
           <PageAppHeader text={getTextByLocale().welcomeTitle} />
+          {__DEV__ && <AppText type="SUBTITLE" text="Development version" />}
           {!isKeyboardShowm && (
             <>
               <AppLogo type="MAIN" />
