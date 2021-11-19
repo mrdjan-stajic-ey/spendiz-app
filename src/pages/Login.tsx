@@ -89,11 +89,13 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
     return userAuth
       .login({username, password})
       .then(async data => {
-        console.log('Login result', data);
-        setUser(data);
-        await setUserToAsyncStorage(data);
-        await setToken(data.access_token);
-        navigation.navigate('App');
+        if (data) {
+          console.log('Login result', data);
+          setUser(data);
+          await setUserToAsyncStorage(data);
+          await setToken(data.access_token);
+          navigation.navigate('App');
+        }
       })
       .catch(err => {
         console.log('Login failed', err);

@@ -7,7 +7,7 @@ interface IAuthToken {
   access_token?: string;
   remember_me_code?: string;
 }
-type TAxiosSuper<T> = {
+type TAxiosSuper<T extends any = null> = {
   data: T;
 };
 
@@ -101,7 +101,7 @@ abstract class HttpReq {
     servicePath: string,
     body?: Tbody,
     allowAnon: boolean = false,
-  ): Promise<TReturn> {
+  ): Promise<TReturn | null> {
     let access_token = null;
     try {
       access_token = await this.getAuthorisationToken(allowAnon);
@@ -124,9 +124,7 @@ abstract class HttpReq {
         if (data) {
           return Promise.resolve(data.data);
         } else {
-          const axiosData = data as unknown as TReturn;
-          //   const _data = data?.data;
-          return axiosData;
+          return Promise.resolve(null);
         }
       })
       .catch(err => {
