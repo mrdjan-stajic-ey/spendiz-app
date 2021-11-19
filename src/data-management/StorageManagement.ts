@@ -1,22 +1,19 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Alert} from 'react-native';
-import {getErrorTextByLocal} from '../app-resources/Language';
+import {LOG_TO_BACKEND} from '../http/axios-wrapper';
 import {IAppUser, StorageKeys} from './type';
 
 export const clearUser = async () => {
   try {
     await AsyncStorage.removeItem(StorageKeys.USER);
   } catch (error) {
-    console.error('Clear local storage error', error);
-    Alert.alert(getErrorTextByLocal().localStorageErr);
+    LOG_TO_BACKEND('ERROR', {msg: 'Async storage user clear failed', error});
   }
 };
 export const setUserToAsyncStorage = async (user: IAppUser) => {
   try {
     await AsyncStorage.setItem(StorageKeys.USER, JSON.stringify(user));
   } catch (error) {
-    console.error('Seting user to local storage failed', error);
-    Alert.alert(getErrorTextByLocal().localStorageErr);
+    LOG_TO_BACKEND('ERROR', {msg: 'Async storage SET user failed', error});
   }
 };
 
@@ -28,18 +25,24 @@ export const getUserFromStorage = async () => {
     }
     return null;
   } catch (error) {
-    console.error('Fetching user from local storage failed', error);
-    Alert.alert(getErrorTextByLocal().localStorageErr);
+    LOG_TO_BACKEND('ERROR', {msg: 'Async storage GET user failed', error});
   }
 };
 
 export const setToken = async (token: string) => {
   try {
     await AsyncStorage.setItem(StorageKeys.JWT_TOKEN, token);
-    console.log('Jwt token set');
   } catch (error) {
-    console.error('JWT token set failed', error);
-    Alert.alert(getErrorTextByLocal().localStorageErr);
+    LOG_TO_BACKEND('ERROR', {msg: 'Async storage token SET failed', error});
+  }
+};
+
+export const getToken = async () => {
+  try {
+    const jwt_token = await AsyncStorage.getItem(StorageKeys.JWT_TOKEN);
+    return jwt_token;
+  } catch (error) {
+    LOG_TO_BACKEND('ERROR', {msg: 'Async storage token GET failed', error});
   }
 };
 
@@ -47,8 +50,7 @@ export const clearToken = async () => {
   try {
     await AsyncStorage.removeItem(StorageKeys.JWT_TOKEN);
   } catch (error) {
-    console.error('Removing jwt token failed', error);
-    Alert.alert(getErrorTextByLocal().localStorageErr);
+    LOG_TO_BACKEND('ERROR', {msg: 'Async storage token CLEAR failed', error});
   }
 };
 
@@ -64,8 +66,13 @@ export const setToAsyncStorage = async (
     };
     await AsyncStorage.setItem(key, JSON.stringify(objectToSet));
   } catch (error) {
-    console.error('Setting the data into local storage failed', error);
-    Alert.alert(getErrorTextByLocal().localStorageErr);
+    LOG_TO_BACKEND('ERROR', {
+      msg: 'Async storage SET ITEM',
+      error,
+      key,
+      value,
+      expirationTime,
+    });
   }
 };
 
@@ -85,5 +92,11 @@ export const getFromAsyncStorage = async (key: string) => {
       const {exp_date, ...result} = objectData;
       return result;
     }
-  } catch (error) {}
+  } catch (error) {
+    LOG_TO_BACKEND('ERROR', {
+      msg: 'Async storage GET ITEM',
+      error,
+      key,
+    });
+  }
 };

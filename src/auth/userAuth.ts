@@ -9,11 +9,13 @@ class UserAuth {
   constructor() {}
 
   public login({password, username}: TLoginParams) {
-    return HttpReq.post<IAppUser>('login', {username, password}, true).then(
-      data => {
+    return HttpReq.post<IAppUser>('login', {username, password}, true)
+      .then(data => {
         return data;
-      },
-    );
+      })
+      .catch(err => {
+        return Promise.reject(err);
+      });
   }
 }
 

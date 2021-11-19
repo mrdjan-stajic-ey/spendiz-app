@@ -47,7 +47,6 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
           headerShown: false,
           animation: 'none',
         }}>
-        <Stack.Screen name="Register" component={RegisterPage} />
         <Stack.Screen name="Home" component={BalanceOverview} />
         <Stack.Screen name="Expenses" component={Expenses} />
         <Stack.Screen name="BalanceOverview" component={BalanceOverview} />
@@ -71,6 +70,7 @@ const AuthStack: React.FC<{}> = (): JSX.Element => {
         <>
           <AuthStackNavigator.Screen name="Splash" component={SplashScreen} />
           <AuthStackNavigator.Screen name="Login" component={Login} />
+          <AuthStackNavigator.Screen name="Register" component={RegisterPage} />
         </>
       )}
 

@@ -16,13 +16,13 @@ export type T_Auth_Stack = {
   Splash: SplashScreenRouteProps;
   App: undefined;
   Login: undefined;
+  Register: undefined;
 };
 
 //END Router Exports for type checking
 export type TRootNavigation = {
   Home: undefined;
   Login: undefined;
-  Register: undefined;
   Expenses: undefined;
   BalanceOverview: BalanceOverviewRouteProps | undefined;
   AccountSettings: undefined;

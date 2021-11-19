@@ -15,7 +15,7 @@ import getTextByLocale from '../app-resources/Language';
 import {Button, Stack} from 'native-base';
 import UserForm from '../components/form/UserForm';
 import AppLogo from '../components/Logo';
-import {TRootNavigation} from '../routing/types';
+import {T_Auth_Stack} from '../routing/types';
 import PageAppHeader from '../components/header/AppPageHeader';
 import userAuth from '../auth/userAuth';
 import UserContext from '../data-management/user/UserContext';
@@ -52,11 +52,12 @@ const styles = StyleSheet.create({
   },
 });
 
-type T_Login_Props = NativeStackScreenProps<TRootNavigation, 'Login'>;
+type T_Login_Props = NativeStackScreenProps<T_Auth_Stack, 'Login'>;
 
 const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
   const [isKeyboardShowm, setIskeyboardShown] = useState<boolean>(false);
   const {setUser} = useContext(UserContext);
+
   useEffect(() => {
     const keyboardShowSub = Keyboard.addListener(
       'keyboardDidShow',
@@ -92,9 +93,11 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
         setUser(data);
         await setUserToAsyncStorage(data);
         await setToken(data.access_token);
-        navigation.navigate('Home');
+        navigation.navigate('App');
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log('Login failed', err);
+      });
   };
 
   const handlePasswrod = (
@@ -161,6 +164,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
         </ScrollView>
         <AppButton
           disableAsyncBehaviour
+          disabled={username.length < 6 || password.length < 6}
           variant="solid"
           type="PRIMARY"
           onPress={onPresHandler}
