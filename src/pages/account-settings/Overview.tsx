@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
 });
 
 const OverviewPage: React.FC<{}> = (): JSX.Element => {
-  const {phrases, getSelectedCategories, transactionType} =
+  const {phrases, getSelectedCategories, transactionType, amountConfiguration} =
     useContext(PhrasesContext);
   return (
     <AppPage>

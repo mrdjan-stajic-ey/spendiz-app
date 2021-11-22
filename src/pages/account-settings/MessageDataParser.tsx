@@ -30,10 +30,12 @@ const MessageParser: React.FC<T_Parser_Props> = ({
     useState<MessageDataParserMode>('KEYWORDS');
 
   const hardwareBackButton = useCallback((): boolean | null | undefined => {
+    console.log('hardware back handler');
     if (parserMode === 'AMOUNT_SELECTOR') {
       setParserMode('KEYWORDS');
       return true;
     }
+    setParserMode('KEYWORDS');
     return false;
   }, [parserMode]);
 
@@ -49,6 +51,7 @@ const MessageParser: React.FC<T_Parser_Props> = ({
 
   const onContinueHandler = () => {
     if (parserMode === 'AMOUNT_SELECTOR') {
+      setParserMode('KEYWORDS');
       navigation.navigate('Phrase');
     } else {
       setParserMode('AMOUNT_SELECTOR');
@@ -60,15 +63,12 @@ const MessageParser: React.FC<T_Parser_Props> = ({
       return (
         <AppText
           type="SUBTITLE"
-          text="Select the two words from the message that encapsulates the amount that will affect your budget."
+          text={getTextByLocale().transactionToExpenseMappingDescription}
         />
       );
     }
     return (
-      <AppText
-        type="SUBTITLE"
-        text="Select the words from message that will describe the category of expense."
-      />
+      <AppText type="SUBTITLE" text={getTextByLocale().amountAfixDescription} />
     );
   };
 

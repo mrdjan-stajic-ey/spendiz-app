@@ -11,6 +11,7 @@ export type PhrasePart = {
   id: string;
   text: string;
   selected?: boolean;
+  isSufixAfixPart?: boolean;
 };
 
 export interface Category {

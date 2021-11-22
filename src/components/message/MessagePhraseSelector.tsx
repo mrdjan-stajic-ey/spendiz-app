@@ -22,6 +22,9 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   ctaHolder: {},
+  buttonCustomStyle: {
+    borderColor: 'red', //TODO: HAAAAAACK HAAAAAACK HAAAAACK
+  },
 });
 
 const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
@@ -33,13 +36,18 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
     return tokenize(body);
   }, [body]);
 
-  const {phrases: selectedWords, addPhrase} = useContext(PhrasesContext);
+  const {
+    phrases: selectedWords,
+    addPhrase,
+    amountConfiguration,
+    addAmountConfiguration,
+  } = useContext(PhrasesContext);
 
   const buttonText = () => {
     if (phase === 'AMOUNT_SELECTOR') {
-      return 'Confirm amount selectors';
+      return getTextByLocale().amountSelectorTitle;
     } else {
-      return selectedWords.length === 0
+      return selectedWords.length === 0 // i will allow this giberish (pluralization of the words to be here)
         ? getTextByLocale().phrasesNextStepDisabled
         : `${getTextByLocale().phrasesNextStep} for ${
             selectedWords.length
@@ -51,6 +59,10 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
     addPhrase(item);
   };
 
+  const handlePrefixAndSufix = (item: PhrasePart) => {
+    addAmountConfiguration(item);
+  };
+
   return (
     <View style={styles.content}>
       <View style={styles.pillScrollViewContent}>
@@ -60,12 +72,20 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
               const isSelected = !!selectedWords.filter(
                 sw => sw.id === stringPart.id,
               )[0];
+              const isSufixOrPrefix =
+                amountConfiguration.find(sc => sc?.text === stringPart.text) ||
+                false;
               return (
                 <PillButton
                   onPress={() => {}}
                   key={stringPart.id}
                   selected={isSelected}
-                  onSelect={handlePillClick}
+                  customStyle={isSufixOrPrefix ? styles.buttonCustomStyle : {}}
+                  onSelect={
+                    phase === 'KEYWORDS'
+                      ? handlePillClick
+                      : handlePrefixAndSufix
+                  }
                   text={stringPart.text}
                   data={stringPart}
                 />
