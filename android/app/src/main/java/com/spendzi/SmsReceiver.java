@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class SmsReceiver extends BroadcastReceiver {
     private static final String LOG_TAG = "SMS_BROADCAST_RECEIVER";
     private static final String LOG_SMS_CONTENT = "SMS_CONTENT";
@@ -29,10 +34,11 @@ public class SmsReceiver extends BroadcastReceiver {
                 for (SmsMessage msg : messages) {
                     messageBundle.putString("pdus", msg.getPdu().toString());
                     messageBundle.putString("caller", msg.getDisplayOriginatingAddress());
-                    messageBundle.putString("content",msg.getDisplayMessageBody());
+                    messageBundle.putString("content", msg.getDisplayMessageBody());
+                    messageBundle.putLong("timestamp", Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis());
                     Log.d(LOG_SMS_CONTENT, msg.getDisplayMessageBody());
                 }
-                Intent service = new Intent(context,SmsDataTransfer.class);
+                Intent service = new Intent(context, SmsDataTransfer.class);
                 service.putExtras(messageBundle);
                 context.startService(service);
             }

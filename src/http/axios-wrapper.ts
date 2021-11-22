@@ -11,11 +11,21 @@ type TAxiosSuper<T extends any = null> = {
   data: T;
 };
 
+let defaultTimeoutInMS = 1000 * 60 * 2;
+
+if (__DEV__) {
+  defaultTimeoutInMS = 1000 * 5;
+}
+
 let baseUrl = 'http://10.0.2.2:3000';
 if (__DEV__) {
 } else {
   baseUrl = 'http://20.93.254.113:80';
 }
+
+export const getBaseUrl = () => {
+  return baseUrl;
+};
 
 export type T_LOG_Type = 'INFO' | 'VEBOSE' | 'ERROR' | 'WARNING';
 const API_LOG_ENDPOINT = 'log';
@@ -37,8 +47,6 @@ export const LOG_TO_BACKEND = (logType: T_LOG_Type, data: ILogData) => {
     });
 };
 
-const defaultTimeoutInMS = 1000 * 60 * 2;
-// const defaultTimeoutInMS = 1000 * 5;
 const timeoutErrorMessage = getErrorTextByLocal().axiosTimeoutExceptionText;
 abstract class HttpReq {
   static logErrToBackend = (error: string) => {
@@ -75,14 +83,24 @@ abstract class HttpReq {
     servicePath.charAt(0) === '/' ? servicePath.substring(1) : servicePath;
 
   public static async get<T>(servicePath: string): Promise<T | void> {
-    const {access_token} = await this.getAuthorisationToken();
+    let accessToken = null;
+    try {
+      accessToken = await this.getAuthorisationToken();
+    } catch (error) {
+      LOG_TO_BACKEND('ERROR', {
+        msg: 'GET_REQUEST_FAILED',
+        error: error,
+        servicePath,
+      });
+      return Promise.reject(error);
+    }
     return axios
       .get(`${baseUrl}/${this.alignServicePath(servicePath)}`, {
         method: 'GET',
         timeout: defaultTimeoutInMS,
         timeoutErrorMessage,
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${accessToken.access_token}`,
         },
       })
       .then(data => {
@@ -102,11 +120,17 @@ abstract class HttpReq {
     body?: Tbody,
     allowAnon: boolean = false,
   ): Promise<TReturn | null> {
-    let access_token = null;
+    let accessToken = null;
     try {
-      access_token = await this.getAuthorisationToken(allowAnon);
+      accessToken = await this.getAuthorisationToken(allowAnon);
     } catch (error) {
-      Alert.prompt('get auth token failed from post');
+      LOG_TO_BACKEND('ERROR', {
+        msg: 'TOKEN_FETCH_FAILED',
+        error: null,
+        servicePath,
+        body,
+      });
+      return Promise.reject(error);
     }
     return axios
       .post<Tbody, TAxiosSuper<TReturn>>(
@@ -116,7 +140,8 @@ abstract class HttpReq {
           timeout: defaultTimeoutInMS,
           timeoutErrorMessage,
           headers: {
-            Authorization: `Bearer ${access_token}`,
+            Authorization: `Bearer ${accessToken.access_token}`,
+            'content-type': 'application/json',
           },
         },
       )

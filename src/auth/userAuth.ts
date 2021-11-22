@@ -14,6 +14,7 @@ class UserAuth {
         return data;
       })
       .catch(err => {
+        console.log('error login');
         return Promise.reject(err);
       });
   }

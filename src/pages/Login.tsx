@@ -23,6 +23,7 @@ import {
   setToken,
   setUserToAsyncStorage,
 } from '../data-management/StorageManagement';
+// import {LOG_TO_BACKEND} from '../http/axios-wrapper';
 
 const styles = StyleSheet.create({
   content: {
@@ -97,8 +98,11 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
           navigation.navigate('App');
         }
       })
-      .catch(err => {
-        console.log('Login failed', err);
+      .catch(_err => {
+        // LOG_TO_BACKEND('ERROR', { //TODO: Fail gracefully
+        //   msg: 'Failed login?',
+        //   error: JSON.stringify(err),
+        // });
       });
   };
 
