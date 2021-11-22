@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Box, Center} from 'native-base';
 import {StyleSheet, View} from 'react-native';
 import getMoney, {Currency} from '../../app-resources/Currency';
@@ -7,8 +7,7 @@ import BalanceModuleItem from '../../components/balance/BalanceOverviewItem';
 import AppPage from '../../components/page/AppPage';
 import AppScrollableView from '../../components/scrollableView/ScrollableView';
 import AppText from '../../components/Text/AppText';
-import AppIcon from '../../components/Icon/AppIcon';
-import {faSms} from '@fortawesome/free-solid-svg-icons';
+
 import {MODULE_TYPES, T_Expenses_Props} from './type';
 import {listData as expenseData, MODULES_INFO} from './data';
 import AppList from '../../components/List/AppList';
@@ -56,18 +55,6 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
 }): JSX.Element => {
   const {userData} = useContext(UserContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [incomingMessage, setIncomingMessage] = useState<boolean>(false);
-  const messageStyle = incomingMessage ? 'red' : 'blue'; //TODO: get better indicator colors
-
-  useEffect(() => {
-    // HttpReq.get<{_id: string; name: string; description: string}>('/expense') //TODO:Remove this, was for testing purposes only
-    //   .then(data => {
-    //     console.log(data);
-    //   })
-    //   .catch(err => console.log('what', err));
-  }, []);
-
   const [currentModule, setCurrentModule] = useState<MODULE_TYPES>(
     MODULE_TYPES.BALANCE,
   );
@@ -81,10 +68,10 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
         );
       }
       case 'Trends': {
-        return <AppText text={'Chart sa onog ekrana'} />;
+        return <AppText text={'Chart sa onog ekrana'} />; //TODO IMplement this if needed
       }
       case 'Savings': {
-        return <AppText text={'Koliko mi ostaje posle svake plate'} />;
+        return <AppText text={'Koliko mi ostaje posle svake plate'} />; // TODO implement this if neede
       }
       case 'Expenses': {
         return (
@@ -137,9 +124,6 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
                 text={`${userData?.user.username}'s balance'`}
               />
               <AppText type="NORMAL" text={getMoney(25877.99, Currency.RSD)} />
-            </View>
-            <View style={styles.balanceMessage}>
-              <AppIcon style={{backgroundColor: messageStyle}} icon={faSms} />
             </View>
           </View>
           <View style={styles.balanceOverviewTotals}>

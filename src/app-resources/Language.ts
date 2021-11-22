@@ -26,6 +26,7 @@ export interface APP_TEXTS {
     confirmPasswordLabel: string;
     registerButtonLabel: string;
   };
+  login401: string;
   formValidationErrors: {
     minLenght: string;
   };
@@ -74,6 +75,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   loginLabel: 'Login',
   passwordLabel: 'Password',
   usernameLabel: 'Username',
+  login401: 'Invalid username or password',
   formValidationErrors: {
     minLenght: 'Must be at least 6 characters.',
   },

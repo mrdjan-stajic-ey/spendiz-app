@@ -21,6 +21,8 @@ export interface IOverviewInfoItem extends Partial<TouchableOpacity> {
   onPress?: () => void;
 }
 
+export type MessageDataParserMode = 'KEYWORDS' | 'AMOUNT_SELECTOR';
+
 export const SMSAppList: IAppListProps<ISmsState> = {
   data: [],
   keyExtractor: item => item.date + '_' + item.id,

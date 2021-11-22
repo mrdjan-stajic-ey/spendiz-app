@@ -23,6 +23,7 @@ import {
   setToken,
   setUserToAsyncStorage,
 } from '../data-management/StorageManagement';
+import {BUTTON_DANGER} from '../components/CONSTS';
 // import {LOG_TO_BACKEND} from '../http/axios-wrapper';
 
 const styles = StyleSheet.create({
@@ -50,6 +51,10 @@ const styles = StyleSheet.create({
     link: {
       marginLeft: 5,
     },
+  },
+  loginError: {
+    fontSize: 14,
+    color: BUTTON_DANGER,
   },
 });
 
@@ -85,8 +90,10 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
 
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [loginError, setLoginError] = useState<string>('');
 
   const onPresHandler = async () => {
+    setLoginError('');
     return userAuth
       .login({username, password})
       .then(async data => {
@@ -99,10 +106,9 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
         }
       })
       .catch(_err => {
-        // LOG_TO_BACKEND('ERROR', { //TODO: Fail gracefully
-        //   msg: 'Failed login?',
-        //   error: JSON.stringify(err),
-        // });
+        setUsername('');
+        setPassword('');
+        setLoginError(getTextByLocale().login401);
       });
   };
 
@@ -147,6 +153,9 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
                   base: 200,
                   lg: 600,
                 }}>
+                {loginError.length > 0 && (
+                  <AppText style={styles.loginError} text={loginError} />
+                )}
                 <UserForm
                   onChangePasswordHandler={handlePasswrod}
                   onChangeUsernameHandler={handleUsername}

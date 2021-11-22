@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
 const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
   body,
   onContinue,
+  phase,
 }): JSX.Element => {
   const bodyParts: PhrasePart[] = useMemo(() => {
     return tokenize(body);
@@ -34,12 +35,17 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
 
   const {phrases: selectedWords, addPhrase} = useContext(PhrasesContext);
 
-  const buttonText =
-    selectedWords.length === 0
-      ? getTextByLocale().phrasesNextStepDisabled
-      : `${getTextByLocale().phrasesNextStep} for ${selectedWords.length} word${
-          selectedWords.length > 1 ? 's' : ''
-        }`;
+  const buttonText = () => {
+    if (phase === 'AMOUNT_SELECTOR') {
+      return 'Confirm amount selectors';
+    } else {
+      return selectedWords.length === 0
+        ? getTextByLocale().phrasesNextStepDisabled
+        : `${getTextByLocale().phrasesNextStep} for ${
+            selectedWords.length
+          } word${selectedWords.length > 1 ? 's' : ''}`;
+    }
+  };
 
   const handlePillClick = (item: PhrasePart) => {
     addPhrase(item);
@@ -73,7 +79,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
           onPress={onContinue}
           disabled={selectedWords.length === 0}
           borderRadius={50}
-          text={buttonText}
+          text={buttonText()}
         />
       </View>
     </View>
