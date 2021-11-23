@@ -62,10 +62,6 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
         <AppDivider />
       </View>
       <View style={styles.confirmation}>
-        <AppText
-          type="LABEL"
-          text={getTextByLocale().overviewConfigurationQuestion}
-        />
         <View style={styles.ctas}>
           <AppButton onPress={onValid} icon={faCheckCircle} />
           <AppButton onPress={onInvalid} icon={faTimesCircle} />

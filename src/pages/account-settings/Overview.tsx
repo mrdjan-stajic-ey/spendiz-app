@@ -1,4 +1,5 @@
-import React, {useContext} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import AppButton from '../../components/button/AppButton';
@@ -9,6 +10,8 @@ import AppPage from '../../components/page/AppPage';
 import AppScrollView from '../../components/scrollview/AppScrollView';
 import AppText from '../../components/Text/AppText';
 import PhrasesContext from '../../data-management/PhraseContext';
+import HttpReq from '../../http/axios-wrapper';
+import {TRootNavigation} from '../../routing/types';
 import OverviewInfoItem from './OverviewInfoItem';
 
 const styles = StyleSheet.create({
@@ -31,8 +34,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-const OverviewPage: React.FC<{}> = (): JSX.Element => {
+type T_Overview_Props = NativeStackScreenProps<
+  TRootNavigation,
+  'Configuration'
+>;
+const OverviewPage: React.FC<T_Overview_Props> = ({
+  navigation,
+}): JSX.Element => {
   const {
     phrases,
     getSelectedCategories,
@@ -40,6 +48,9 @@ const OverviewPage: React.FC<{}> = (): JSX.Element => {
     amountConfiguration,
     rawSms,
   } = useContext(PhrasesContext);
+
+  const [finishDisabled, setFinishDisabled] = useState<boolean>(true);
+  const [amount, setAmount] = useState<number>(0);
   const getText = (): string => {
     const [first, second] = amountConfiguration;
     if (!first || !second) {
@@ -50,6 +61,62 @@ const OverviewPage: React.FC<{}> = (): JSX.Element => {
         rawSms.indexOf(second.text),
       );
     }
+  };
+
+  const journeyConfirmHandler = () => {
+    try {
+      const floatAmount = parseFloat(getText().replace(',', '.'));
+      setAmount(floatAmount);
+      setFinishDisabled(false);
+    } catch (error) {
+      console.log('error while parsing amount');
+    }
+  };
+
+  const journeyInvalidHandler = () => {
+    navigation.navigate('AccountSettings');
+  };
+
+  const createAndSendRequest = async () => {
+    //TODO prebaci sve na bekend sto se tice kreiranja keyworda i ostalih sranja, da li je uz svaku rec bitno koji je expanseType? (food,medical, transport? to se trenutno salje uz svaku izabranu frazu)
+    const keywordsRequestBody = phrases
+      .map(p => p.text)
+      .map(text => {
+        return {
+          name: text,
+          description: text,
+          expenseTypes: [...getSelectedCategories().map(ct => ct.id)],
+        };
+      });
+    const makeKeyWordRequest = (body: any) => {
+      return HttpReq.post('/keyword/create', body);
+    };
+    const keywordPromises = [];
+    for (let kRequest of keywordsRequestBody) {
+      keywordPromises.push(makeKeyWordRequest(kRequest));
+    }
+    const results = await Promise.all(keywordPromises);
+    const balanceItemRequest = {
+      amount,
+      phrasesInfluence: transactionType,
+      phrases: [...results.map((r: any) => r.id)],
+    };
+    await HttpReq.post('/balance-action/create', balanceItemRequest).catch(
+      err => {
+        console.log('Kreiranje greska', err);
+      },
+    );
+  };
+
+  const onFinishHandler = () => {
+    createAndSendRequest()
+      .then(() => {
+        navigation.navigate('AccountSettings');
+      })
+      .catch(err => {
+        console.log('Error while sending balance type');
+        return err;
+      });
   };
 
   return (
@@ -80,8 +147,8 @@ const OverviewPage: React.FC<{}> = (): JSX.Element => {
         {amountConfiguration && (
           <View style={styles.configuration}>
             <JourneyOverviewConfirmation
-              onInvalid={() => {}}
-              onValid={() => {}}
+              onInvalid={journeyInvalidHandler}
+              onValid={journeyConfirmHandler}
               amount={getText()}
               prefix={amountConfiguration[0]?.text || ''}
               sufix={amountConfiguration[1]?.text || ''}
@@ -107,9 +174,8 @@ const OverviewPage: React.FC<{}> = (): JSX.Element => {
         </AppScrollView>
         <AppButton
           type="PRIMARY"
-          onPress={() => {
-            //todo implement
-          }}
+          disabled={finishDisabled}
+          onPress={onFinishHandler}
           text={'Finish'}
         />
       </View>
