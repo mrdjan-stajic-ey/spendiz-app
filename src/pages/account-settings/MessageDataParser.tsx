@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {BackHandler, StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import {ISmsState} from '../../native-wrappers/types';
@@ -8,6 +8,7 @@ import {T_Parser_Props} from '../../components/message/types';
 import PageAppHeader from '../../components/header/AppPageHeader';
 import {MessageDataParserMode} from './types';
 import AppText from '../../components/Text/AppText';
+import PhrasesContext from '../../data-management/PhraseContext';
 
 const styles = StyleSheet.create({
   holder: {
@@ -25,10 +26,10 @@ const MessageParser: React.FC<T_Parser_Props> = ({
   navigation,
 }): JSX.Element => {
   const {body, date_sent, id, sender}: ISmsState = route.params;
-
+  const {setRawSms} = useContext(PhrasesContext);
   const [parserMode, setParserMode] =
     useState<MessageDataParserMode>('KEYWORDS');
-
+  const memoRawSms = useCallback(setRawSms, [setRawSms]);
   const hardwareBackButton = useCallback((): boolean | null | undefined => {
     console.log('hardware back handler');
     if (parserMode === 'AMOUNT_SELECTOR') {
@@ -44,10 +45,11 @@ const MessageParser: React.FC<T_Parser_Props> = ({
       'hardwareBackPress',
       hardwareBackButton,
     );
+    memoRawSms(body);
     return () => {
       backHandlerEvent.remove();
     };
-  }, [hardwareBackButton]);
+  }, [hardwareBackButton, body, memoRawSms]);
 
   const onContinueHandler = () => {
     if (parserMode === 'AMOUNT_SELECTOR') {

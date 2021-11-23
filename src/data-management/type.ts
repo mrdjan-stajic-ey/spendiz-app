@@ -19,6 +19,8 @@ export interface IPhraseContext {
   getSelectedCategories: () => Category[];
   transactionType: TransactionType;
   setTransactionType: (type: TransactionType) => void;
+  rawSms: string;
+  setRawSms: (sms: string) => void;
 }
 
 export interface IAppUser {

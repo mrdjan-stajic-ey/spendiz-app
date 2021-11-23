@@ -5,7 +5,6 @@ import getMoney, {Currency} from '../../app-resources/Currency';
 import getTextByLocale from '../../app-resources/Language';
 import BalanceModuleItem from '../../components/balance/BalanceOverviewItem';
 import AppPage from '../../components/page/AppPage';
-import AppScrollableView from '../../components/scrollableView/ScrollableView';
 import AppText from '../../components/Text/AppText';
 
 import {MODULE_TYPES, T_Expenses_Props} from './type';
@@ -16,11 +15,13 @@ import {BACKGROUND_ITEM_DEFAULT} from '../../components/CONSTS';
 import AppDivider from '../../components/divider/AppDivider';
 // import HttpReq from '../../http/axios-wrapper';
 import UserContext from '../../data-management/user/UserContext';
+import AppScrollView from '../../components/scrollview/AppScrollView';
 
 const styles = StyleSheet.create({
   scrollContent: {
     margin: 10,
     flexDirection: 'row',
+    flex: 1,
   },
   balanceOverviewTotals: {
     marginTop: 5,
@@ -99,46 +100,44 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
         <AppText type="TITLE" text={getTextByLocale().balanceOverview} />
         <AppDivider />
       </Center>
-      <View>
-        <AppScrollableView horizontal={true}>
-          <View style={styles.scrollContent}>
-            {MODULES_INFO.map(({src, name, type}, index) => {
-              return (
-                <BalanceModuleItem
-                  onPress={() => {
-                    onModulePressHandler(type);
-                  }}
-                  name={name}
-                  key={index}
-                  src={src}
-                />
-              );
-            })}
-          </View>
-        </AppScrollableView>
-        <Box style={styles.balanceBox} rounded={'xl'} padding={5} marginTop={5}>
-          <View style={styles.balanceBoxMyBalance}>
-            <View>
-              <AppText
-                type="SUBTITLE"
-                text={`${userData?.user.username}'s balance'`}
+      <AppScrollView horizontal={true}>
+        <View style={styles.scrollContent}>
+          {MODULES_INFO.map(({src, name, type}, index) => {
+            return (
+              <BalanceModuleItem
+                onPress={() => {
+                  onModulePressHandler(type);
+                }}
+                name={name}
+                key={index}
+                src={src}
               />
-              <AppText type="NORMAL" text={getMoney(25877.99, Currency.RSD)} />
-            </View>
+            );
+          })}
+        </View>
+      </AppScrollView>
+      <Box style={styles.balanceBox} rounded={'xl'} padding={5} marginTop={5}>
+        <View style={styles.balanceBoxMyBalance}>
+          <View>
+            <AppText
+              type="SUBTITLE"
+              text={`${userData?.user.username}'s balance'`}
+            />
+            <AppText type="NORMAL" text={getMoney(25877.99, Currency.RSD)} />
           </View>
-          <View style={styles.balanceOverviewTotals}>
-            <View style={styles.overviewSpent}>
-              <AppText type="NORMAL" text={'Monthly spending'} />
-              <AppText type="NORMAL" text={getMoney(1250, Currency.RSD)} />
-            </View>
-            <View>
-              <AppText type="NORMAL" text={'Monthly remaining'} />
-              <AppText type="NORMAL" text={getMoney(600, Currency.RSD)} />
-            </View>
+        </View>
+        <View style={styles.balanceOverviewTotals}>
+          <View style={styles.overviewSpent}>
+            <AppText type="NORMAL" text={'Monthly spending'} />
+            <AppText type="NORMAL" text={getMoney(1250, Currency.RSD)} />
           </View>
-        </Box>
-        <AppDivider />
-      </View>
+          <View>
+            <AppText type="NORMAL" text={'Monthly remaining'} />
+            <AppText type="NORMAL" text={getMoney(600, Currency.RSD)} />
+          </View>
+        </View>
+      </Box>
+      <AppDivider />
       <View style={styles.moduleStyle}>{renderModule()}</View>
     </AppPage>
   );

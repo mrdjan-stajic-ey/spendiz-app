@@ -10,6 +10,8 @@ const PhrasesContext = React.createContext<IPhraseContext>({
   getSelectedCategories: () => [],
   setTransactionType: () => {},
   transactionType: 'OUTBOUND',
+  rawSms: '',
+  setRawSms: () => {},
 });
 
 export default PhrasesContext;

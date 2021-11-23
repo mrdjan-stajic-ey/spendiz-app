@@ -8,8 +8,7 @@ import Expense from '../../components/expense/ExpenseItem';
 import {Divider} from 'native-base';
 import {MOCK_EXPENSE_TYPES} from './_mock';
 import {IExpenseProps} from './types';
-import AppScrollableView from '../../components/scrollableView/ScrollableView';
-import {DEFAULT_SCROLLVIEW_STYLES} from '../../components/scrollableView/type';
+import AppScrollView from '../../components/scrollview/AppScrollView';
 
 const styles = StyleSheet.create({
   chartContent: {
@@ -42,10 +41,7 @@ const Expenses: React.FC<IExpenseProps> = ({navigation}): JSX.Element => {
         <AppChart />
       </View>
       <AppText type="SUBTITLE" text={getTextByLocale().categoriesSubtitle} />
-      <AppScrollableView
-        horizontal={true}
-        _contentContainerStyle={DEFAULT_SCROLLVIEW_STYLES}
-        style={styles.categoryContent}>
+      <AppScrollView horizontal={true} style={styles.categoryContent}>
         {MOCK_EXPENSE_TYPES.map(({amount, displayName, icon, type}, index) => {
           //TODO :there will be and ID here (be creation)
           return (
@@ -69,7 +65,7 @@ const Expenses: React.FC<IExpenseProps> = ({navigation}): JSX.Element => {
             </React.Fragment>
           );
         })}
-      </AppScrollableView>
+      </AppScrollView>
     </AppPage>
   );
 };

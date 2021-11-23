@@ -65,6 +65,10 @@ export interface APP_TEXTS {
   };
   amountAfixDescription: string;
   transactionToExpenseMappingDescription: string;
+  overviewSignOffTitle: string;
+  overviewConfigConfirmation: (afix: string, prefix: boolean) => string;
+  overviewConfigurationAssumption: (amount: string) => string;
+  overviewConfigurationQuestion: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -134,9 +138,16 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   },
   noCategoriesMessage: 'No categories found',
   amountAfixDescription: `Select the words from message that will describe the category of expense.
-		 EG. Wolt tag will be asociated to Food category. Yandex to Transport`,
+		 EG. Wolt tag will be asociated to Food category. Yandex to Transport.`,
   transactionToExpenseMappingDescription:
     'Select the two words from the message that encapsulates the amount that will affect your budget.',
+  overviewSignOffTitle:
+    'And they parsed the selected template message as following.',
+  overviewConfigConfirmation: (afix: string, prefix: boolean) =>
+    `You have selected ${afix} as a ${prefix ? 'prefix' : 'sufix'} to amount.`,
+  overviewConfigurationAssumption: (amount: string) =>
+    `Amount extracted from SMS ${amount} .`,
+  overviewConfigurationQuestion: 'Is this correct?',
 };
 
 const LANGUAGES = {

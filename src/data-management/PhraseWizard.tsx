@@ -10,7 +10,7 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
   const [afixTouple, setAfixTouple] = useState<[PhrasePart?, PhrasePart?]>([]);
   const [transactionType, setTransactionType] =
     useState<TransactionType>('OUTBOUND');
-
+  const [rawSms, setRawSms] = useState<string>('');
   useEffect(() => {
     const getCategories = async () => {
       HttpReq.get<Category[]>('/expense').then(data => {
@@ -21,10 +21,6 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
     };
     getCategories();
   }, []);
-
-  useEffect(() => {
-    console.log('AAAA', afixTouple);
-  }, [afixTouple]);
 
   const addPhrase = (item: PhrasePart) => {
     const {id} = item;
@@ -99,6 +95,10 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
     }
   };
 
+  const rawSmsHandler = (sms: string) => {
+    setRawSms(sms);
+  };
+
   return (
     <PhrasesContext.Provider
       value={{
@@ -111,6 +111,8 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
         transactionType,
         amountConfiguration: afixTouple,
         addAmountConfiguration: handleAfixSufix,
+        rawSms: rawSms,
+        setRawSms: rawSmsHandler,
       }}>
       {children}
     </PhrasesContext.Provider>
