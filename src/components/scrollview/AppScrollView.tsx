@@ -6,6 +6,7 @@ import AppText from '../Text/AppText';
 import {TTextType} from '../Text/type';
 
 interface IScrollView {
+  fitContent?: boolean;
   heading?: {
     type: TTextType;
     text: string;
@@ -23,6 +24,8 @@ interface IScrollViewStyles {
   viewContent?: {
     flex: number;
   };
+  fitContent?: {};
+  [key: string]: any;
 }
 
 const styles = StyleSheet.create<IScrollViewStyles>({
@@ -31,6 +34,7 @@ const styles = StyleSheet.create<IScrollViewStyles>({
     marginTop: 5,
     marginBottom: 5,
   },
+  fitContent: {marginTop: 5, marginBottom: 5},
   viewContent: {flex: 1},
 });
 
@@ -40,9 +44,14 @@ const AppScrollView: React.FC<IScrollView & IScrollViewStyles> = ({
   horizontal,
   contentHolder,
   viewContent,
+  fitContent,
 }): JSX.Element => {
   return (
-    <View style={[styles.contentHolder, contentHolder]}>
+    <View
+      style={[
+        fitContent ? styles.fitContent : styles.contentHolder,
+        contentHolder,
+      ]}>
       {heading && (
         <>
           <AppText type={heading.type} text={heading.text} />

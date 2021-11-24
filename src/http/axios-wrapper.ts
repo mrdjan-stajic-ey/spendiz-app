@@ -30,8 +30,8 @@ export const getBaseUrl = () => {
 export type T_LOG_Type = 'INFO' | 'VEBOSE' | 'ERROR' | 'WARNING';
 const API_LOG_ENDPOINT = 'log';
 export interface ILogData {
-  msg: string;
-  error: any;
+  msg?: string;
+  error?: any;
   [key: string]: any;
 }
 export const LOG_TO_BACKEND = (logType: T_LOG_Type, data: ILogData) => {

@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   scrollContent: {
     margin: 10,
     flexDirection: 'row',
-    flex: 1,
   },
   balanceOverviewTotals: {
     marginTop: 5,
@@ -100,7 +99,7 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
         <AppText type="TITLE" text={getTextByLocale().balanceOverview} />
         <AppDivider />
       </Center>
-      <AppScrollView horizontal={true}>
+      <AppScrollView fitContent horizontal={true}>
         <View style={styles.scrollContent}>
           {MODULES_INFO.map(({src, name, type}, index) => {
             return (

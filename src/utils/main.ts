@@ -86,9 +86,5 @@ export const tokenize = (
       }
     }
   }
-  console.log(
-    'token rezult',
-    result.map(r => r.text),
-  );
   return result;
 };

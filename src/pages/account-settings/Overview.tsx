@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import AppButton from '../../components/button/AppButton';
 import {BACKGROUND_COLOR} from '../../components/CONSTS';
@@ -10,7 +10,7 @@ import AppPage from '../../components/page/AppPage';
 import AppScrollView from '../../components/scrollview/AppScrollView';
 import AppText from '../../components/Text/AppText';
 import PhrasesContext from '../../data-management/PhraseContext';
-import HttpReq from '../../http/axios-wrapper';
+import HttpReq, {LOG_TO_BACKEND} from '../../http/axios-wrapper';
 import {TRootNavigation} from '../../routing/types';
 import OverviewInfoItem from './OverviewInfoItem';
 
@@ -65,11 +65,18 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
 
   const journeyConfirmHandler = () => {
     try {
-      const floatAmount = parseFloat(getText().replace(',', '.'));
+      const _amount = getText();
+      const floatAmount = parseFloat(
+        _amount.replace('.', '').replace(',', '.'),
+      ); //some edge cases might fail here
       setAmount(floatAmount);
       setFinishDisabled(false);
     } catch (error) {
-      console.log('error while parsing amount');
+      Alert.alert('Parsing amount failed restart the journey and try again');
+      LOG_TO_BACKEND('ERROR', {
+        msg: 'Parsing amount failed restart the journey and try again',
+        error,
+      });
     }
   };
 
@@ -78,43 +85,32 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
   };
 
   const createAndSendRequest = async () => {
-    //TODO prebaci sve na bekend sto se tice kreiranja keyworda i ostalih sranja, da li je uz svaku rec bitno koji je expanseType? (food,medical, transport? to se trenutno salje uz svaku izabranu frazu)
-    const keywordsRequestBody = phrases
-      .map(p => p.text)
-      .map(text => {
-        return {
-          name: text,
-          description: text,
-          expenseTypes: [...getSelectedCategories().map(ct => ct.id)],
-        };
-      });
-    const makeKeyWordRequest = (body: any) => {
-      return HttpReq.post('/keyword/create', body);
-    };
-    const keywordPromises = [];
-    for (let kRequest of keywordsRequestBody) {
-      keywordPromises.push(makeKeyWordRequest(kRequest));
-    }
-    const results = await Promise.all(keywordPromises);
-    const balanceItemRequest = {
-      amount,
+    const requestObj = {
+      amount: amount,
       phrasesInfluence: transactionType,
-      phrases: [...results.map((r: any) => r.id)],
+      phrases: [...phrases.map(ph => ph.text)],
+      expenseTypes: [...getSelectedCategories().map(ct => ct.id)],
     };
-    await HttpReq.post('/balance-action/create', balanceItemRequest).catch(
-      err => {
-        console.log('Kreiranje greska', err);
-      },
-    );
+    LOG_TO_BACKEND('INFO', {
+      msg: 'Request preview',
+      json: JSON.stringify(requestObj),
+    });
+    return HttpReq.post('/balance-action/create', requestObj);
   };
 
   const onFinishHandler = () => {
-    createAndSendRequest()
+    return createAndSendRequest()
       .then(() => {
-        navigation.navigate('AccountSettings');
+        setTimeout(() => {
+          navigation.navigate('AccountSettings');
+        }, 200);
       })
       .catch(err => {
         console.log('Error while sending balance type');
+        LOG_TO_BACKEND('ERROR', {
+          msg: 'Balance action item failed',
+          json: JSON.stringify(err),
+        });
         return err;
       });
   };

@@ -70,7 +70,6 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
    */
   const handleAfixSufix = (phrase: PhrasePart) => {
     //
-    console.log('afix handling', phrase);
     switch (afixTouple.length) {
       case 0: {
         setAfixTouple([phrase]);
