@@ -41,8 +41,8 @@ const AppText: React.FC<IAppText> = ({
       style={[
         styles.text,
         {fontSize: font_size},
-        style,
         {color: getTextColor()},
+        style,
       ]}
       numberOfLines={numberOfLines}
       ellipsizeMode={ellipsizeMode}>

@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
   },
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const SELECTED_PILL_COLOR = '#7f03fc';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const NOT_SELECTED_PILL_COLOR = '#a30029';
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// const SELECTED_PILL_COLOR = '#7f03fc';
+// // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// const NOT_SELECTED_PILL_COLOR = '#a30029';
 
 const PillButton: React.FC<PillAppButton> = ({
   text,
@@ -39,6 +39,7 @@ const PillButton: React.FC<PillAppButton> = ({
   selected,
   data,
   disabled,
+  customStyle,
 }): JSX.Element => {
   const onPressHandler = () => {
     !disabled && onSelect && onSelect(data || text);
@@ -57,6 +58,7 @@ const PillButton: React.FC<PillAppButton> = ({
             : 'transparent',
           borderWidth: selected ? 0 : styles.content.borderWidth,
         },
+        customStyle,
       ]}>
       <View>
         <AppText

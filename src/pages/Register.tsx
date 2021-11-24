@@ -8,7 +8,7 @@ import AppDivider from '../components/divider/AppDivider';
 import RegisterForm from '../components/form/RegisterForm';
 import AppPage from '../components/page/AppPage';
 import AppText from '../components/Text/AppText';
-import {TRootNavigation} from '../routing/types';
+import {T_Auth_Stack} from '../routing/types';
 
 const styles = StyleSheet.create({
   content: {
@@ -26,11 +26,11 @@ const styles = StyleSheet.create({
   },
 });
 
-type T_Reg_Props = NativeStackScreenProps<TRootNavigation, 'Register'>;
+type T_Reg_Props = NativeStackScreenProps<T_Auth_Stack, 'Register'>;
 
 const RegisterPage: React.FC<T_Reg_Props> = ({navigation}): JSX.Element => {
   const handleRegister = () => {
-    navigation.navigate('Home');
+    navigation.navigate('App');
   };
   return (
     <AppPage>
@@ -38,6 +38,11 @@ const RegisterPage: React.FC<T_Reg_Props> = ({navigation}): JSX.Element => {
         <AppText
           type="SUBTITLE"
           text={getTextByLocale().welcomeRegisterSubtitle}
+        />
+        <AppText
+          color="red"
+          type="LABEL"
+          text={'This page is not functional yet'}
         />
         <AppDivider />
       </View>

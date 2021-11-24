@@ -1,3 +1,4 @@
+import {IconDefinition} from '@fortawesome/fontawesome-common-types';
 import {IButtonProps} from 'native-base';
 import {
   BUTTON_DANGER,
@@ -11,8 +12,9 @@ import {
 export type TButtonType = 'PRIMARY' | 'SECONDARY' | 'DANGER';
 
 export interface IAppButton extends IButtonProps {
-  text: string;
+  text?: string;
   type?: TButtonType;
+  icon?: IconDefinition;
   onPress: () => Promise<any> | void | null;
   disableAsyncBehaviour?: boolean;
 }

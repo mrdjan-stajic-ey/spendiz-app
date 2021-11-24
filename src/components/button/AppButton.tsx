@@ -2,6 +2,7 @@ import {Button} from 'native-base';
 import React, {useEffect, useMemo, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {BUTTON_TEXT_COLOR} from '../CONSTS';
+import AppIcon from '../Icon/AppIcon';
 import AppText from '../Text/AppText';
 import {getColorByType, IAppButton} from './type';
 
@@ -24,6 +25,7 @@ const AppButton: React.FC<IAppButton> = ({
   color,
   text,
   onPress,
+  icon,
   variant,
   disabled,
   type,
@@ -78,7 +80,8 @@ const AppButton: React.FC<IAppButton> = ({
         opacity: 0.5,
       }}
       color={color}>
-      <AppText text={text} style={style.textContent} />
+      {!icon && <AppText text={text} style={style.textContent} />}
+      {icon && <AppIcon icon={icon} />}
     </Button>
   );
 };

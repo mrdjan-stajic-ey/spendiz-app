@@ -26,6 +26,7 @@ export interface APP_TEXTS {
     confirmPasswordLabel: string;
     registerButtonLabel: string;
   };
+  login401: string;
   formValidationErrors: {
     minLenght: string;
   };
@@ -43,6 +44,7 @@ export interface APP_TEXTS {
   phraseCTA: string;
   phrasesListTitle: string;
   phrasesNextStep: string;
+  amountSelectorTitle: string;
   phrasesNextStepDisabled: string;
   phrasesAttributionTitle: string;
   phraseConfigurationTitle: string;
@@ -61,6 +63,12 @@ export interface APP_TEXTS {
     axiosTimeoutExceptionText: string;
     apiServiceFailed(path: string, error: string): string;
   };
+  amountAfixDescription: string;
+  transactionToExpenseMappingDescription: string;
+  overviewSignOffTitle: string;
+  overviewConfigConfirmation: (afix: string, prefix: boolean) => string;
+  overviewConfigurationAssumption: (amount: string) => string;
+  overviewConfigurationQuestion: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -74,6 +82,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   loginLabel: 'Login',
   passwordLabel: 'Password',
   usernameLabel: 'Username',
+  login401: 'Invalid username or password',
   formValidationErrors: {
     minLenght: 'Must be at least 6 characters.',
   },
@@ -97,6 +106,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   errorScreenMessage: 'Something went wrong, contact the developer.',
   accountSettingsTitle: 'Choose a relevant SMS',
   parserKeywordsTitle: 'Select keywords',
+  amountSelectorTitle: 'Confirm amount selectors',
   phraseCTA: 'Select a few words to create a phrase',
   phrasesListTitle: 'Selected phrases',
   phrasesNextStep: 'Define rules',
@@ -127,6 +137,17 @@ const ENGB_LANGUAGE: APP_TEXTS = {
       `Api service on path ${path} failed with error ${error}`,
   },
   noCategoriesMessage: 'No categories found',
+  amountAfixDescription: `Select the words from message that will describe the category of expense.
+		 EG. Wolt tag will be asociated to Food category. Yandex to Transport.`,
+  transactionToExpenseMappingDescription:
+    'Select the two words from the message that encapsulates the amount that will affect your budget.',
+  overviewSignOffTitle:
+    'And they parsed the selected template message as following.',
+  overviewConfigConfirmation: (afix: string, prefix: boolean) =>
+    `You have selected ${afix} as a ${prefix ? 'prefix' : 'sufix'} to amount.`,
+  overviewConfigurationAssumption: (amount: string) =>
+    `Amount extracted from SMS ${amount} .`,
+  overviewConfigurationQuestion: 'Is this correct?',
 };
 
 const LANGUAGES = {

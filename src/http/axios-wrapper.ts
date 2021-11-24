@@ -30,8 +30,8 @@ export const getBaseUrl = () => {
 export type T_LOG_Type = 'INFO' | 'VEBOSE' | 'ERROR' | 'WARNING';
 const API_LOG_ENDPOINT = 'log';
 export interface ILogData {
-  msg: string;
-  error: any;
+  msg?: string;
+  error?: any;
   [key: string]: any;
 }
 export const LOG_TO_BACKEND = (logType: T_LOG_Type, data: ILogData) => {
@@ -49,15 +49,6 @@ export const LOG_TO_BACKEND = (logType: T_LOG_Type, data: ILogData) => {
 
 const timeoutErrorMessage = getErrorTextByLocal().axiosTimeoutExceptionText;
 abstract class HttpReq {
-  static logErrToBackend = (error: string) => {
-    return new Promise((resolve, _) => {
-      setTimeout(() => {
-        console.log('Error logged to backend', error); //TODO; connect with bakcend;
-        resolve(null);
-      }, 200);
-    });
-  };
-
   static async getAuthorisationToken(
     allowAnon: boolean = false,
   ): Promise<IAuthToken> {

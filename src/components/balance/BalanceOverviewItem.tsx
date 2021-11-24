@@ -1,4 +1,3 @@
-import {Center} from 'native-base';
 import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import AppText from '../Text/AppText';
@@ -9,6 +8,8 @@ const style = StyleSheet.create({
     marginTop: 10,
     marginRight: 10,
     padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     marginBottom: 10,
@@ -26,10 +27,8 @@ const BalanceModuleItem: React.FC<IBalanceOverviewItem> = ({
 }): JSX.Element => {
   return (
     <TouchableOpacity style={style.holder} onPress={onPress}>
-      <Center>
-        <AppText text={name || 'Default name'} style={style.text} />
-        <Image style={style.image} source={src} />
-      </Center>
+      <AppText text={name || 'Default name'} style={style.text} />
+      <Image style={style.image} source={src} />
     </TouchableOpacity>
   );
 };

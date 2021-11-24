@@ -8,14 +8,19 @@ export enum StorageKeys {
 }
 
 export type TransactionType = 'INBOUND' | 'OUTBOUND';
+
 export interface IPhraseContext {
   phrases: PhrasePart[];
+  amountConfiguration: [PhrasePart?, PhrasePart?];
+  addAmountConfiguration: (word: PhrasePart) => void;
   addPhrase: (word: PhrasePart) => void;
   categories: Category[];
   toggleCategorySelection: (categoryId: string) => void;
   getSelectedCategories: () => Category[];
   transactionType: TransactionType;
   setTransactionType: (type: TransactionType) => void;
+  rawSms: string;
+  setRawSms: (sms: string) => void;
 }
 
 export interface IAppUser {

@@ -7,13 +7,16 @@ import {TransactionType} from './type';
 const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
   const [selectedWords, setSelectedWords] = useState<PhrasePart[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [afixTouple, setAfixTouple] = useState<[PhrasePart?, PhrasePart?]>([]);
   const [transactionType, setTransactionType] =
     useState<TransactionType>('OUTBOUND');
-
+  const [rawSms, setRawSms] = useState<string>('');
   useEffect(() => {
     const getCategories = async () => {
       HttpReq.get<Category[]>('/expense').then(data => {
-        setCategories(data);
+        if (data) {
+          setCategories(data);
+        }
       });
     };
     getCategories();
@@ -60,6 +63,41 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
     setTransactionType(data);
   };
 
+  /**
+   * Sets the touples of afix and sufix, in the case that user tries to add more than 2 elements
+	 the afix will become the suffix and the new word will become afix, last sufix is removed
+   * @param phrase
+   */
+  const handleAfixSufix = (phrase: PhrasePart) => {
+    //
+    switch (afixTouple.length) {
+      case 0: {
+        setAfixTouple([phrase]);
+        break;
+      }
+      case 1: {
+        const tmp = {...afixTouple[0]} as unknown as PhrasePart; //FML
+        setAfixTouple(() => {
+          return [tmp, phrase];
+        });
+        break;
+      }
+      case 2: {
+        setAfixTouple(() => {
+          return [afixTouple[1], phrase];
+        });
+        break;
+      }
+      default: {
+        break;
+      }
+    }
+  };
+
+  const rawSmsHandler = (sms: string) => {
+    setRawSms(sms);
+  };
+
   return (
     <PhrasesContext.Provider
       value={{
@@ -70,6 +108,10 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
         getSelectedCategories,
         setTransactionType: handleSwitchChange,
         transactionType,
+        amountConfiguration: afixTouple,
+        addAmountConfiguration: handleAfixSufix,
+        rawSms: rawSms,
+        setRawSms: rawSmsHandler,
       }}>
       {children}
     </PhrasesContext.Provider>
