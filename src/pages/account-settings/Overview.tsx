@@ -90,6 +90,7 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
       phrasesInfluence: transactionType,
       phrases: [...phrases.map(ph => ph.text)],
       expenseTypes: [...getSelectedCategories().map(ct => ct.id)],
+      amountLocators: amountConfiguration.map(al => al?.text),
     };
     LOG_TO_BACKEND('INFO', {
       msg: 'Request preview',

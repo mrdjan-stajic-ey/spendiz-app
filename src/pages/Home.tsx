@@ -25,8 +25,8 @@ const Home: React.FC<TExpensesProps> = ({navigation}): JSX.Element => {
         <AppButton text="Hello" onPress={() => {}} />
         <AppButton text="Get token" onPress={handleTokenRegistration} />
         <AppButton text="Chart and breakdown" onPress={onBreakdownHandler} />
-        <AppButton text="Categories" />
-        <AppButton text="SMS Handler" />
+        <AppButton onPress={() => {}} text="Categories" />
+        <AppButton onPress={() => {}} text="SMS Handler" />
       </AppPage>
     </>
   );
