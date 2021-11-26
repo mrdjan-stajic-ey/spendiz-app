@@ -1,19 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {LOG_TO_BACKEND} from '../http/axios-wrapper';
+import {LOG_ERROR} from '../http/axios-wrapper';
 import {IAppUser, StorageKeys} from './type';
 
 export const clearUser = async () => {
   try {
     await AsyncStorage.removeItem(StorageKeys.USER);
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {msg: 'Async storage user clear failed', error});
+    LOG_ERROR('CLEAR_USER_FAILED', {
+      msg: 'Async storage clear user failed',
+      error: error,
+    });
   }
 };
 export const setUserToAsyncStorage = async (user: IAppUser) => {
   try {
     await AsyncStorage.setItem(StorageKeys.USER, JSON.stringify(user));
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {msg: 'Async storage SET user failed', error});
+    LOG_ERROR('SET_USER_FAILED', {msg: 'Async Set user fail', error: error});
   }
 };
 
@@ -25,7 +28,7 @@ export const getUserFromStorage = async () => {
     }
     return null;
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {msg: 'Async storage GET user failed', error});
+    LOG_ERROR('GET USER FAILED', {msg: 'Async storage get user failed', error});
   }
 };
 
@@ -34,7 +37,10 @@ export const setToken = async (token: string) => {
     console.log('SET TOKEN??', token);
     return await AsyncStorage.setItem(StorageKeys.JWT_TOKEN, token);
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {msg: 'Async storage token SET failed', error});
+    LOG_ERROR('SET TOKEN FAILED', {
+      msg: 'Async storage SET Token failed',
+      error,
+    });
   }
 };
 
@@ -43,7 +49,10 @@ export const getToken = async () => {
     const jwt_token = await AsyncStorage.getItem(StorageKeys.JWT_TOKEN);
     return jwt_token;
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {msg: 'Async storage token GET failed', error});
+    LOG_ERROR('GET TOKEN FAILED', {
+      msg: 'Async storage GET Token failed',
+      error,
+    });
   }
 };
 
@@ -51,7 +60,10 @@ export const clearToken = async () => {
   try {
     await AsyncStorage.removeItem(StorageKeys.JWT_TOKEN);
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {msg: 'Async storage token CLEAR failed', error});
+    LOG_ERROR('CLEAR TOKEN FAILED', {
+      msg: 'Async storage CLEAR Token failed',
+      error,
+    });
   }
 };
 
@@ -67,13 +79,13 @@ export const setToAsyncStorage = async (
     };
     await AsyncStorage.setItem(key, JSON.stringify(objectToSet));
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {
-    //   msg: 'Async storage SET ITEM',
-    //   error,
-    //   key,
-    //   value,
-    //   expirationTime,
-    // });
+    LOG_ERROR('ERROR_SET_STORAGE', {
+      msg: 'Async storage SET ITEM',
+      error,
+      key,
+      value,
+      expirationTime,
+    });
   }
 };
 
@@ -94,10 +106,10 @@ export const getFromAsyncStorage = async (key: string) => {
       return result;
     }
   } catch (error) {
-    // LOG_TO_BACKEND('ERROR', {
-    //   msg: 'Async storage GET ITEM',
-    //   error,
-    //   key,
-    // });
+    LOG_ERROR('ERROR GET STORAGE', {
+      msg: 'Async storage GET ITEM',
+      error,
+      key,
+    });
   }
 };

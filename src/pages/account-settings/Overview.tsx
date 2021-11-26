@@ -10,7 +10,7 @@ import AppPage from '../../components/page/AppPage';
 import AppScrollView from '../../components/scrollview/AppScrollView';
 import AppText from '../../components/Text/AppText';
 import PhrasesContext from '../../data-management/PhraseContext';
-import HttpReq from '../../http/axios-wrapper';
+import HttpReq, {LOG_ERROR} from '../../http/axios-wrapper';
 import {TRootNavigation} from '../../routing/types';
 import OverviewInfoItem from './OverviewInfoItem';
 
@@ -71,10 +71,11 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
       setFinishDisabled(false);
     } catch (error) {
       Alert.alert('Parsing amount failed restart the journey and try again');
-      //   LOG_TO_BACKEND('ERROR', {
-      //     msg: 'Parsing amount failed restart the journey and try again',
-      //     error,
-      //   });
+      LOG_ERROR('ERROR_CONFIRMING_JOURNEY', {
+        msg: 'Parsing amount failed restart the journey and try again',
+        error,
+        amount: amount,
+      });
     }
   };
 
@@ -91,28 +92,19 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
       amountLocators: amountConfiguration.map(al => al?.text),
       template: true,
     };
-    // LOG_TO_BACKEND('INFO', {
-    //   msg: 'Request preview',
-    //   json: JSON.stringify(requestObj),
-    // });
     return HttpReq.post('/balance-action/create', requestObj);
   };
 
-  const onFinishHandler = () => {
-    return createAndSendRequest()
-      .then(() => {
-        setTimeout(() => {
-          navigation.navigate('AccountSettings');
-        }, 200);
-      })
-      .catch(err => {
-        console.log('Error while sending balance type');
-        // LOG_TO_BACKEND('ERROR', {
-        //   msg: 'Balance action item failed',
-        //   json: JSON.stringify(err),
-        // });
-        return err;
-      });
+  const onFinishHandler = async () => {
+    try {
+      await createAndSendRequest();
+      setTimeout(() => {
+        navigation.navigate('AccountSettings');
+      }, 200);
+    } catch (err) {
+      console.log('Error while sending balance type');
+      return err;
+    }
   };
 
   return (
