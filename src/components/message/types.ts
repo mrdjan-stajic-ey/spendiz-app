@@ -17,7 +17,7 @@ export type PhrasePart = {
 export interface Category {
   name: string;
   description: string;
-  id: string;
+  _id: string;
   selected?: boolean;
 }
 

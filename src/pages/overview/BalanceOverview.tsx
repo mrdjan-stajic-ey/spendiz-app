@@ -8,14 +8,14 @@ import AppPage from '../../components/page/AppPage';
 import AppText from '../../components/Text/AppText';
 
 import {MODULE_TYPES, T_Expenses_Props} from './type';
-import {listData as expenseData, MODULES_INFO} from './data';
-import AppList from '../../components/List/AppList';
+import {MODULES_INFO} from './data';
 import AppChart from '../../components/chart/AppChart';
 import {BACKGROUND_ITEM_DEFAULT} from '../../components/CONSTS';
 import AppDivider from '../../components/divider/AppDivider';
 // import HttpReq from '../../http/axios-wrapper';
 import UserContext from '../../data-management/user/UserContext';
 import AppScrollView from '../../components/scrollview/AppScrollView';
+import ExpensesListPreview from '../../components/expense/ExpansesPreview';
 
 const styles = StyleSheet.create({
   scrollContent: {
@@ -54,7 +54,6 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
   navigation,
 }): JSX.Element => {
   const {userData} = useContext(UserContext);
-
   const [currentModule, setCurrentModule] = useState<MODULE_TYPES>(
     MODULE_TYPES.BALANCE,
   );
@@ -74,13 +73,7 @@ const BalanceOverview: React.FC<T_Expenses_Props> = ({
         return <AppText text={'Koliko mi ostaje posle svake plate'} />; // TODO implement this if neede
       }
       case 'Expenses': {
-        return (
-          <AppList
-            data={expenseData.data}
-            keyExtractor={expenseData.keyExtractor}
-            renderItem={expenseData.renderItem}
-          />
-        );
+        return <ExpensesListPreview />;
       }
       default: {
         return null;

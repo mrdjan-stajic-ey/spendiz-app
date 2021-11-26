@@ -28,19 +28,19 @@ interface ExpanseCategory extends Category {
 }
 const CategoryExpenseItem: React.FC<ExpanseCategory> = ({
   description,
-  id,
+  _id,
   name,
   selected,
   onPress,
 }): JSX.Element => {
   const onPressHandlerEvent = () => {
-    onPress(id);
+    onPress(_id);
   };
 
   return (
     <TouchableOpacity
       onPress={onPressHandlerEvent}
-      key={id}
+      key={_id}
       style={[styles.content]}>
       <View style={styles.categoryInfo}>
         <AppText type="NORMAL" text={name} />

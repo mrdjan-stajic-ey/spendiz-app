@@ -36,14 +36,14 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
   };
 
   const toggleCategory = (categoryID: string) => {
-    const categoryToToggle = categories.find(ct => ct.id === categoryID);
+    const categoryToToggle = categories.find(ct => ct._id === categoryID);
     if (categoryToToggle) {
       const _new_category: Category = {
         ...categoryToToggle,
         selected: !categoryToToggle?.selected,
       };
       const arrayIndexToReplace = categories
-        .map(ct => ct.id)
+        .map(ct => ct._id)
         .indexOf(categoryID);
       setCategories(() => {
         return [
