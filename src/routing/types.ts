@@ -1,4 +1,6 @@
-import {NavigatorScreenParams} from '@react-navigation/core';
+import {CompositeNavigationProp} from '@react-navigation/core';
+import {NavigatorScreenParams} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
 import {IAppUser} from '../data-management/type';
 import {ISmsState} from '../native-wrappers/types';
 
@@ -39,5 +41,16 @@ export type TTabOverviewLayout = {
   PredictionChart: undefined;
   ExpansesOverview: undefined;
 };
+
+export type TTabNavigator = StackNavigationProp<
+  TRootNavigation,
+  'AccountSettings'
+>;
+
+export type PrimaryNavigator = StackNavigationProp<TRootNavigation, 'Home'>;
+export type PrimaryNavigatorParent = CompositeNavigationProp<
+  TTabNavigator,
+  PrimaryNavigator
+>;
 
 //END Router Exports for type checking

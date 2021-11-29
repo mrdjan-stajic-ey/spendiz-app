@@ -11,8 +11,7 @@ import ExpensesListPreview from '../../components/expense/ExpansesPreview';
 import AppPage from '../../components/page/AppPage';
 import AppScrollView from '../../components/scrollview/AppScrollView';
 import AppText from '../../components/Text/AppText';
-import {TTabOverviewLayout} from '../../routing/types';
-import {T_Account_Settins} from '../account-settings/types';
+import {TTabNavigator, TTabOverviewLayout} from '../../routing/types';
 
 import {MODULES_INFO} from './data';
 import {MODULE_TYPES, T_Tab_Layout} from './type';
@@ -52,10 +51,16 @@ const styles = StyleSheet.create({
 const OverviewTabsNavigation =
   createMaterialTopTabNavigator<TTabOverviewLayout>();
 
+export const TAB_SCREENS = {
+  PREDICTION: 'PREDICTION',
+  EXPENSEOVERVIEW: 'EXPENSE_OVERVIEW',
+};
+
 const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
   navigation,
 }): JSX.Element => {
-  const outerNavigation = useNavigation<T_Account_Settins>();
+  const _navigation = useNavigation<TTabNavigator>();
+
   const onModulePressHandler = (_type: MODULE_TYPES) => {
     switch (_type) {
       case MODULE_TYPES.BALANCE: {
@@ -67,7 +72,7 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
         break;
       }
       case MODULE_TYPES.SETTINGS: {
-        outerNavigation.navigation.navigate('AccountSettings');
+        _navigation.navigate('AccountSettings');
         break;
       }
       default:
