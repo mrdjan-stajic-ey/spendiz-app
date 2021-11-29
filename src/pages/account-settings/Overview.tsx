@@ -66,8 +66,8 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
   const journeyConfirmHandler = () => {
     try {
       const _amount = getText();
-      const floatAmount = _amount.replace('.', '').replace(',', ''); //some edge cases might fail here
-      setAmount(floatAmount);
+      //   const floatAmount = _amount.replace('.', '').replace(',', ''); //some edge cases might fail here
+      setAmount(_amount);
       setFinishDisabled(false);
     } catch (error) {
       Alert.alert('Parsing amount failed restart the journey and try again');

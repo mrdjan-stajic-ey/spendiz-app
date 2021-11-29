@@ -1,7 +1,3 @@
-export const splitByWordsWithInterpuction = (rawSms: string): string[] => {
-  return rawSms.replace(/([ ]+)/g, '$1§sep§').split('§sep§');
-};
-
 //I copied this from interwebz / remove punctiations singes and returns all the substrings from message, (eg: price: 15,22456.00  will be 15 22456 00)
 export const tokenize = (
   str: string,
