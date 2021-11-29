@@ -10,7 +10,7 @@ import AppPage from '../../components/page/AppPage';
 import AppScrollView from '../../components/scrollview/AppScrollView';
 import AppText from '../../components/Text/AppText';
 import PhrasesContext from '../../data-management/PhraseContext';
-import HttpReq, {LOG_TO_BACKEND} from '../../http/axios-wrapper';
+import HttpReq, {LOG_ERROR} from '../../http/axios-wrapper';
 import {TRootNavigation} from '../../routing/types';
 import OverviewInfoItem from './OverviewInfoItem';
 
@@ -50,7 +50,7 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
   } = useContext(PhrasesContext);
 
   const [finishDisabled, setFinishDisabled] = useState<boolean>(true);
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<string>('');
   const getText = (): string => {
     const [first, second] = amountConfiguration;
     if (!first || !second) {
@@ -66,16 +66,15 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
   const journeyConfirmHandler = () => {
     try {
       const _amount = getText();
-      const floatAmount = parseFloat(
-        _amount.replace('.', '').replace(',', '.'),
-      ); //some edge cases might fail here
-      setAmount(floatAmount);
+      //   const floatAmount = _amount.replace('.', '').replace(',', ''); //some edge cases might fail here
+      setAmount(_amount);
       setFinishDisabled(false);
     } catch (error) {
       Alert.alert('Parsing amount failed restart the journey and try again');
-      LOG_TO_BACKEND('ERROR', {
+      LOG_ERROR('ERROR_CONFIRMING_JOURNEY', {
         msg: 'Parsing amount failed restart the journey and try again',
         error,
+        amount: amount,
       });
     }
   };
@@ -89,31 +88,23 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
       amount: amount,
       phrasesInfluence: transactionType,
       phrases: [...phrases.map(ph => ph.text)],
-      expenseTypes: [...getSelectedCategories().map(ct => ct.id)],
+      expenseTypes: [...getSelectedCategories().map(ct => ct._id)],
       amountLocators: amountConfiguration.map(al => al?.text),
+      template: true,
     };
-    LOG_TO_BACKEND('INFO', {
-      msg: 'Request preview',
-      json: JSON.stringify(requestObj),
-    });
     return HttpReq.post('/balance-action/create', requestObj);
   };
 
-  const onFinishHandler = () => {
-    return createAndSendRequest()
-      .then(() => {
-        setTimeout(() => {
-          navigation.navigate('AccountSettings');
-        }, 200);
-      })
-      .catch(err => {
-        console.log('Error while sending balance type');
-        LOG_TO_BACKEND('ERROR', {
-          msg: 'Balance action item failed',
-          json: JSON.stringify(err),
-        });
-        return err;
-      });
+  const onFinishHandler = async () => {
+    try {
+      await createAndSendRequest();
+      setTimeout(() => {
+        navigation.navigate('AccountSettings');
+      }, 200);
+    } catch (err) {
+      console.log('Error while sending balance type');
+      return err;
+    }
   };
 
   return (
@@ -157,7 +148,7 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
           <View style={styles.balanceType}>
             {getSelectedCategories().map(cat => {
               return (
-                <OverviewInfoItem key={cat.id}>
+                <OverviewInfoItem key={cat._id}>
                   <AppText
                     style={styles.overviewFontStyle}
                     color={BACKGROUND_COLOR}

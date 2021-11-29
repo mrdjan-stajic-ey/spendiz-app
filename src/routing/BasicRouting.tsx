@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../pages/Login';
 import SplashScreen from '../pages/SplashScreen';
-import Expenses from '../pages/expenses/Expenses';
 import BalanceOverview from '../pages/overview/BalanceOverview';
 import {TConfigurationNavigation, TRootNavigation, T_Auth_Stack} from './types';
 import AccountSettings from '../pages/account-settings/AccountSettings';
@@ -48,7 +47,6 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
           animation: 'none',
         }}>
         <Stack.Screen name="Home" component={BalanceOverview} />
-        <Stack.Screen name="Expenses" component={Expenses} />
         <Stack.Screen name="BalanceOverview" component={BalanceOverview} />
         <Stack.Screen name="AccountSettings" component={AccountSettings} />
         <Stack.Screen name="Configuration" component={AppConfigurationRoutes} />

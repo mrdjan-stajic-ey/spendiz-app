@@ -3,12 +3,17 @@ import React from 'react';
 import {DEFAULT_ICON_SIZE} from '../CONSTS';
 import {I_AppIcon} from './types';
 
-const AppIcon: React.FC<I_AppIcon> = ({icon, size, style}): JSX.Element => {
+const AppIcon: React.FC<I_AppIcon> = ({
+  icon,
+  size,
+  style,
+  color,
+}): JSX.Element => {
   return (
     <FontAwesomeIcon
       size={size || DEFAULT_ICON_SIZE}
       icon={icon}
-      color="white"
+      color={color || 'white'}
       style={style}
     />
   );

@@ -1,10 +1,10 @@
 import {IconDefinition} from '@fortawesome/fontawesome-common-types';
-import {IconProp} from '@fortawesome/fontawesome-svg-core';
 import {
   faCoffee,
   faMusic,
   faPlaneSlash,
 } from '@fortawesome/free-solid-svg-icons';
+import {TransactionType} from '../../data-management/type';
 import {T_IconType} from '../CONSTS';
 
 console.warn('TODO://Create font awesome library');
@@ -37,9 +37,14 @@ export const getIconByType = (type: string): IconDefinition => {
 };
 
 export interface IExpenseType {
-  type: string;
-  amount: number;
-  icon?: IconProp;
-  displayName?: string;
-  navigationHandler: () => void;
+  id: string;
+  name: string;
+  description: string;
+}
+
+export interface IExpenseListItem {
+  id: string;
+  phrasesInfluence: TransactionType;
+  amount: string;
+  expenseTypes: IExpenseType[];
 }

@@ -24,7 +24,6 @@ import {
   setUserToAsyncStorage,
 } from '../data-management/StorageManagement';
 import {BUTTON_DANGER} from '../components/CONSTS';
-// import {LOG_TO_BACKEND} from '../http/axios-wrapper';
 
 const styles = StyleSheet.create({
   content: {

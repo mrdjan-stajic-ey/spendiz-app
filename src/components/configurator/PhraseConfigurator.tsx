@@ -96,9 +96,9 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
           {categories.length > 0 &&
             categories.map(t => (
               <CategoryExpenseItem
-                key={t.id}
+                key={t._id}
+                _id={t._id}
                 description={t.description}
-                id={t.id}
                 name={t.name}
                 selected={t.selected || false}
                 onPress={toggleCategorySelection}

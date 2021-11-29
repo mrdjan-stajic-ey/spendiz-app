@@ -11,6 +11,11 @@ type TAxiosSuper<T extends any = null> = {
   data: T;
 };
 
+export const REQUEST_ERRORS = {
+  GET_FAILED: 'GET_REQUEST_FAILED',
+  POST_FAILED: 'POST_REQUEST_FAILED',
+};
+
 let defaultTimeoutInMS = 1000 * 60 * 2;
 
 if (__DEV__) {
@@ -34,17 +39,39 @@ export interface ILogData {
   error?: any;
   [key: string]: any;
 }
-export const LOG_TO_BACKEND = (logType: T_LOG_Type, data: ILogData) => {
+export const LOG_TO_BACKEND = (options: {
+  logType: T_LOG_Type;
+  MESSAGE: string;
+  body?: {[key: string]: any};
+  data?: ILogData;
+}) => {
   if (__DEV__) {
-    console.log({LOG: `LOG-${logType}`, ...data});
+    console.log(
+      {LOG: `LOG-${options.logType} :MSG-${options.MESSAGE} `},
+      'options ',
+      JSON.stringify(options.body),
+    );
     return;
   }
   axios
-    .post(`${baseUrl}/${API_LOG_ENDPOINT}`, {log: logType, data})
+    .post(`${baseUrl}/${API_LOG_ENDPOINT}`, {
+      LOG_LEVEL: options.logType,
+      body: options.body,
+      MESSAGE: options.MESSAGE,
+      data: options.data || null,
+    })
     .catch(err => {
       console.log('sending log failed not much we can do here');
       return err;
     });
+};
+
+export const LOG_ERROR = (
+  message: string,
+  body?: {[key: string]: any},
+  data?: any,
+) => {
+  LOG_TO_BACKEND({MESSAGE: message, logType: 'ERROR', body, data});
 };
 
 const timeoutErrorMessage = getErrorTextByLocal().axiosTimeoutExceptionText;
@@ -62,10 +89,11 @@ abstract class HttpReq {
         access_token: jwt_token || undefined,
       };
     } catch (error) {
-      LOG_TO_BACKEND('ERROR', {
-        msg: 'getting token from storage failed in auth',
-        error: error,
-      });
+      LOG_ERROR(
+        'Getting token from storage faild in auth',
+        undefined,
+        JSON.stringify(error),
+      );
     }
     return {access_token: undefined, remember_me_code: undefined};
   }
@@ -73,20 +101,16 @@ abstract class HttpReq {
   static alignServicePath = (servicePath: string) =>
     servicePath.charAt(0) === '/' ? servicePath.substring(1) : servicePath;
 
-  public static async get<T>(servicePath: string): Promise<T | void> {
+  public static async get<T>(servicePath: string): Promise<T | null> {
     let accessToken = null;
     try {
       accessToken = await this.getAuthorisationToken();
     } catch (error) {
-      LOG_TO_BACKEND('ERROR', {
-        msg: 'GET_REQUEST_FAILED',
-        error: error,
-        servicePath,
-      });
+      LOG_ERROR('GET_REQUEST FAILED', {error, servicePath});
       return Promise.reject(error);
     }
-    return axios
-      .get(`${baseUrl}/${this.alignServicePath(servicePath)}`, {
+    return await axios
+      .get<T>(`${baseUrl}/${this.alignServicePath(servicePath)}`, {
         method: 'GET',
         timeout: defaultTimeoutInMS,
         timeoutErrorMessage,
@@ -97,13 +121,9 @@ abstract class HttpReq {
       .then(data => {
         return Promise.resolve(data.data);
       })
-      .catch(err => {
-        LOG_TO_BACKEND('ERROR', {
-          msg: 'GET_REQUEST_FAILED',
-          error: err,
-          servicePath,
-        });
-        return Promise.reject(err);
+      .catch(error => {
+        LOG_ERROR(REQUEST_ERRORS.GET_FAILED, {error, servicePath});
+        return Promise.reject(error);
       });
   }
   public static async post<TReturn, Tbody extends any = any>(
@@ -115,12 +135,7 @@ abstract class HttpReq {
     try {
       accessToken = await this.getAuthorisationToken(allowAnon);
     } catch (error) {
-      LOG_TO_BACKEND('ERROR', {
-        msg: 'TOKEN_FETCH_FAILED',
-        error: null,
-        servicePath,
-        body,
-      });
+      LOG_ERROR('TOKEN_FETCH_FAILED', {error});
       return Promise.reject(error);
     }
     return axios
@@ -143,14 +158,9 @@ abstract class HttpReq {
           return Promise.resolve(null);
         }
       })
-      .catch(err => {
-        LOG_TO_BACKEND('ERROR', {
-          msg: 'POST_REQUEST_FAILED',
-          error: err,
-          servicePath,
-          body,
-        });
-        return Promise.reject(err);
+      .catch(error => {
+        LOG_ERROR(REQUEST_ERRORS.POST_FAILED, {error, body, servicePath});
+        return Promise.reject(error);
       });
   }
 }
