@@ -8,6 +8,7 @@ import {BACKGROUND_ITEM_DEFAULT} from '../CONSTS';
 import AppIcon from '../Icon/AppIcon';
 import AppList from '../List/AppList';
 import {AppLoader} from '../loading/loader';
+import AppPage from '../page/AppPage';
 import AppText from '../Text/AppText';
 import {IExpenseListItem} from './types';
 
@@ -43,7 +44,7 @@ const formatMoney = (amount: number) => {
 const ICON_COLOR_INBOUND = '#426e40';
 const ICON_COLOR_OUTBOUND = '#742525';
 
-const ExpensesListPreview: React.FC<{}> = (): JSX.Element => {
+const ExpensesListPreview: React.FC<any> = ({}): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<IExpenseListItem[] | null>(null);
   useEffect(() => {
@@ -76,8 +77,12 @@ const ExpensesListPreview: React.FC<{}> = (): JSX.Element => {
   const keyExtractor = () => {};
   const renderItem = (item: IExpenseListItem) => {
     return (
-      <TouchableOpacity key={item.id}>
-        <Box padding={5} style={styles.expenseItemHolder}>
+      <TouchableOpacity
+        onPress={() => {
+          //   navigation.navigate('PredictionChart', null);
+        }}
+        key={item.id}>
+        <Box borderRadius={5} padding={5} style={styles.expenseItemHolder}>
           <AppText
             type="LABEL"
             style={styles.expanseListItem}
@@ -106,18 +111,20 @@ const ExpensesListPreview: React.FC<{}> = (): JSX.Element => {
     );
   };
   return (
-    <View style={styles.content}>
-      {isLoading && <AppLoader />}
-      {!isLoading && (
-        <AppList
-          data={data || []}
-          renderItem={({item}) => {
-            return renderItem(item);
-          }}
-          keyExtractor={keyExtractor}
-        />
-      )}
-    </View>
+    <AppPage>
+      <View style={styles.content}>
+        {isLoading && <AppLoader />}
+        {!isLoading && (
+          <AppList
+            data={data || []}
+            renderItem={({item}) => {
+              return renderItem(item);
+            }}
+            keyExtractor={keyExtractor}
+          />
+        )}
+      </View>
+    </AppPage>
   );
 };
 

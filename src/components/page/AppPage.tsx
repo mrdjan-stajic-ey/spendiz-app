@@ -27,7 +27,8 @@ const AppPageContentHolder: React.FC<{}> = ({children}): JSX.Element => {
       backgroundColor={PRIMARY_BACKGRORUND_COLOR}
       //   bg={_boxHolderDefaultProps}
       flex={1}
-      padding={5}>
+      padding={5}
+      paddingBottom={0}>
       {children}
     </Box>
   );

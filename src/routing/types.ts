@@ -19,9 +19,8 @@ export type T_Auth_Stack = {
   Register: undefined;
 };
 
-//END Router Exports for type checking
 export type TRootNavigation = {
-  Home: undefined;
+  Home: NavigatorScreenParams<TTabOverviewLayout>;
   Login: undefined;
   Expenses: undefined;
   BalanceOverview: BalanceOverviewRouteProps | undefined;
@@ -35,3 +34,10 @@ export type TConfigurationNavigation = {
   Phrase: undefined;
   Overview: undefined;
 };
+
+export type TTabOverviewLayout = {
+  PredictionChart: undefined;
+  ExpansesOverview: undefined;
+};
+
+//END Router Exports for type checking
