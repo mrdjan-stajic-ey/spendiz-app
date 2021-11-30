@@ -5,9 +5,9 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import BalanceModuleItem from '../../components/balance/BalanceOverviewItem';
-import AppChart from '../../components/chart/AppChart';
 import AppDivider from '../../components/divider/AppDivider';
 import ExpensesListPreview from '../../components/expense/ExpansesPreview';
+import {ExpensesSummed} from '../../components/expense/sum/ExpanseLineBar';
 import AppPage from '../../components/page/AppPage';
 import AppScrollView from '../../components/scrollview/AppScrollView';
 import AppText from '../../components/Text/AppText';
@@ -113,7 +113,7 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
         }}>
         <OverviewTabsNavigation.Screen
           name="PredictionChart"
-          component={AppChart}
+          component={ExpensesSummed}
         />
         <OverviewTabsNavigation.Screen
           name="ExpansesOverview"
