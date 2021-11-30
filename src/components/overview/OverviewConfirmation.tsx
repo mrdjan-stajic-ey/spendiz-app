@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  heading: {
+    alignItems: 'center',
+  },
   words: {flex: 1},
   ctas: {
     flex: 1,
@@ -27,7 +30,7 @@ const styles = StyleSheet.create({
 interface IJourneryCofirmation {
   prefix: string;
   sufix: string;
-  amount: string;
+  amount: number;
   onValid: () => void;
   onInvalid: () => void;
 }
@@ -41,10 +44,12 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
 }): JSX.Element => {
   return (
     <View style={styles.content}>
-      <AppText
-        type="SUBTITLE"
-        text={getTextByLocale().overviewConfigurationQuestion}
-      />
+      <View style={styles.heading}>
+        <AppText
+          type="SUBTITLE"
+          text={getTextByLocale().overviewConfigurationQuestion}
+        />
+      </View>
       <AppDivider />
       <View style={styles.words}>
         <TextHighlit
@@ -56,8 +61,10 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
           sentence={getTextByLocale().overviewConfigConfirmation(sufix, false)}
         />
         <TextHighlit
-          highlightWord={amount}
-          sentence={getTextByLocale().overviewConfigurationAssumption(amount)}
+          highlightWord={amount + ''}
+          sentence={getTextByLocale().overviewConfigurationAssumption(
+            amount + '',
+          )}
         />
         <AppDivider />
       </View>

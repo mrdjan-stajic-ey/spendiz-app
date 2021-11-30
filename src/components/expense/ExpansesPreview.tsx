@@ -36,11 +36,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const formatMoney = (amount: number) => {
-  console.log(amount);
-  return amount.toLocaleString('en-US', {style: 'currency', currency: 'RSD'});
-};
-
 const ICON_COLOR_INBOUND = '#426e40';
 const ICON_COLOR_OUTBOUND = '#742525';
 
@@ -53,16 +48,8 @@ const ExpensesListPreview: React.FC<any> = ({}): JSX.Element => {
         // eslint-disable-next-line no-shadow
         HttpReq.get<IExpenseListItem[]>('/balance-action/user').then(data => {
           if (data) {
-            setData([
-              ...data.map(di => {
-                return {
-                  ...di,
-                  amount: formatMoney(
-                    parseInt(di.amount.replace(',', '').trim(), 10), //TODO: not not not not here
-                  ),
-                };
-              }),
-            ]);
+            console.log('DATA', data);
+            setData(data);
           }
           setIsLoading(false);
         });
@@ -79,14 +66,14 @@ const ExpensesListPreview: React.FC<any> = ({}): JSX.Element => {
     return (
       <TouchableOpacity
         onPress={() => {
-          //   navigation.navigate('PredictionChart', null);
+          // navigation.navigate('PredictionChart', null);
         }}
         key={item.id}>
         <Box borderRadius={5} padding={5} style={styles.expenseItemHolder}>
           <AppText
             type="LABEL"
             style={styles.expanseListItem}
-            text={item.amount}
+            text={item.amount + ''}
           />
           <View style={styles.expenseCategories}>
             {item.expenseTypes.map(et => {

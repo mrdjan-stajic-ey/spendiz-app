@@ -7,7 +7,7 @@ import {TransactionType} from './type';
 const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
   const [selectedWords, setSelectedWords] = useState<PhrasePart[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [afixTouple, setAfixTouple] = useState<[PhrasePart?, PhrasePart?]>([]);
+  const [afixTouple, setAfixTouple] = useState<[number?, number?]>([]);
   const [transactionType, setTransactionType] =
     useState<TransactionType>('OUTBOUND');
   const [rawSms, setRawSms] = useState<string>('');
@@ -24,13 +24,14 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
 
   const addPhrase = (item: PhrasePart) => {
     const {id} = item;
+    const _newItem = {...item, text: item.text};
     if (selectedWords.find(sw => sw.id === id)) {
       setSelectedWords(() => {
         return selectedWords.filter(f => f.id !== id);
       });
     } else {
       setSelectedWords(() => {
-        return [...selectedWords, item];
+        return [...selectedWords, _newItem];
       });
     }
   };
@@ -68,23 +69,22 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
 	 the afix will become the suffix and the new word will become afix, last sufix is removed
    * @param phrase
    */
-  const handleAfixSufix = (phrase: PhrasePart) => {
-    //
+  const handleAfixSufix = (phraseIndex: number) => {
     switch (afixTouple.length) {
       case 0: {
-        setAfixTouple([phrase]);
+        setAfixTouple([phraseIndex]);
         break;
       }
       case 1: {
-        const tmp = {...afixTouple[0]} as unknown as PhrasePart; //FML
+        const tmp = afixTouple[0];
         setAfixTouple(() => {
-          return [tmp, phrase];
+          return [tmp, phraseIndex];
         });
         break;
       }
       case 2: {
         setAfixTouple(() => {
-          return [afixTouple[1], phrase];
+          return [afixTouple[1], phraseIndex];
         });
         break;
       }

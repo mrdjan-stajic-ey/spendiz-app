@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import AppButton from '../../components/button/AppButton';
@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
   },
   configuration: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 type T_Overview_Props = NativeStackScreenProps<
@@ -50,24 +53,25 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
   } = useContext(PhrasesContext);
 
   const [finishDisabled, setFinishDisabled] = useState<boolean>(true);
-  const [amount, setAmount] = useState<string>('');
-  const getText = (): string => {
-    const [first, second] = amountConfiguration;
-    if (!first || !second) {
-      return '';
-    } else {
-      return rawSms.slice(
-        rawSms.indexOf(first.text) + 1 + first.text.length,
-        rawSms.indexOf(second.text),
-      );
-    }
-  };
+  const [amount, setAmount] = useState<number>(-1);
+
+  useEffect(() => {
+    const amountReq = async () => {
+      HttpReq.post<{amount: number}>('text/assume-amount', {
+        smsContent: rawSms,
+        prefixIndex: amountConfiguration[0],
+        sufixIndex: amountConfiguration[1],
+      }).then(res => {
+        if (res) {
+          setAmount(res.amount);
+        }
+      });
+    };
+    amountReq();
+  }, [rawSms, amountConfiguration]);
 
   const journeyConfirmHandler = () => {
     try {
-      const _amount = getText();
-      //   const floatAmount = _amount.replace('.', '').replace(',', ''); //some edge cases might fail here
-      setAmount(_amount);
       setFinishDisabled(false);
     } catch (error) {
       Alert.alert('Parsing amount failed restart the journey and try again');
@@ -89,7 +93,7 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
       phrasesInfluence: transactionType,
       phrases: [...phrases.map(ph => ph.text)],
       expenseTypes: [...getSelectedCategories().map(ct => ct._id)],
-      amountLocators: amountConfiguration.map(al => al?.text),
+      amountLocators: [amountConfiguration[0], amountConfiguration[1]],
       template: true,
     };
     return HttpReq.post('/balance-action/create', requestObj);
@@ -105,6 +109,13 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
       console.log('Error while sending balance type');
       return err;
     }
+  };
+
+  const getAmountConfig = (index: number) => {
+    if (!phrases[index]) {
+      throw 'PHRASE_NOT_FOUND';
+    }
+    return phrases[index].text;
   };
 
   return (
@@ -137,9 +148,9 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
             <JourneyOverviewConfirmation
               onInvalid={journeyInvalidHandler}
               onValid={journeyConfirmHandler}
-              amount={getText()}
-              prefix={amountConfiguration[0]?.text || ''}
-              sufix={amountConfiguration[1]?.text || ''}
+              amount={amount}
+              prefix={getAmountConfig(0)}
+              sufix={getAmountConfig(1)}
             />
           </View>
         )}

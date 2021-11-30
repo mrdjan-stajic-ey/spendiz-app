@@ -44,6 +44,7 @@ const PhraseConfiguration: React.FC<T_PhraseProps> = ({
         <PageAppHeader text={getTextByLocale().phraseConfigurationTitle} />
         <PhraseConfigurator />
         <AppButton
+          type="PRIMARY"
           disabled={getSelectedCategories().length === 0}
           onPress={toOverviewHandler}
           text={getTextByLocale().phraseBalanceOverviewTitle}

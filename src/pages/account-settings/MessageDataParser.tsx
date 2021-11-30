@@ -29,7 +29,9 @@ const MessageParser: React.FC<T_Parser_Props> = ({
   const {setRawSms} = useContext(PhrasesContext);
   const [parserMode, setParserMode] =
     useState<MessageDataParserMode>('KEYWORDS');
+
   const memoRawSms = useCallback(setRawSms, [setRawSms]);
+
   const hardwareBackButton = useCallback((): boolean | null | undefined => {
     console.log('hardware back handler');
     if (parserMode === 'AMOUNT_SELECTOR') {

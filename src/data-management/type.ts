@@ -11,8 +11,8 @@ export type TransactionType = 'INBOUND' | 'OUTBOUND';
 
 export interface IPhraseContext {
   phrases: PhrasePart[];
-  amountConfiguration: [PhrasePart?, PhrasePart?];
-  addAmountConfiguration: (word: PhrasePart) => void;
+  amountConfiguration: [number?, number?];
+  addAmountConfiguration: (wordIndex: number) => void;
   addPhrase: (word: PhrasePart) => void;
   categories: Category[];
   toggleCategorySelection: (categoryId: string) => void;

@@ -5,6 +5,7 @@ import {ITextHighlit, ITextHighlitStyles} from './type';
 
 const styles = StyleSheet.create({
   content: {
+    flexWrap: 'wrap',
     flexDirection: 'row',
     flex: 1,
   },
@@ -23,16 +24,19 @@ const TextHighlit: React.FC<ITextHighlit & ITextHighlitStyles> = ({
     <View style={styles.content}>
       {texts.map((t, index) => {
         return (
-          <AppText
-            type="LABEL"
-            key={t + index}
-            text={`${t} `}
-            style={[
-              highlightWord === t
-                ? {...styles.hightlitStyle, ...hightlitStyle}
-                : {},
-            ]}
-          />
+          <View key={t + index}>
+            <AppText
+              numberOfLines={2}
+              ellipsizeMode={'head'}
+              type="LABEL"
+              text={`${t} `}
+              style={[
+                highlightWord === t
+                  ? {...styles.hightlitStyle, ...hightlitStyle}
+                  : {},
+              ]}
+            />
+          </View>
         );
       })}
     </View>

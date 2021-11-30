@@ -43,6 +43,7 @@ export type TTabOverviewLayout = {
 };
 
 export type TTabNavigator = StackNavigationProp<
+  //I really dont know what i am doing here // https://stackoverflow.com/questions/61389095/react-navigation-v5-how-to-navigate-between-tabs-with-typescript
   TRootNavigation,
   'AccountSettings'
 >;
