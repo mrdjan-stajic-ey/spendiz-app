@@ -5,6 +5,7 @@ import getTextByLocale from '../../app-resources/Language';
 import AppButton from '../../components/button/AppButton';
 import {BACKGROUND_COLOR} from '../../components/CONSTS';
 import PageAppHeader from '../../components/header/AppPageHeader';
+import {AppLoader} from '../../components/loading/loader';
 import JourneyOverviewConfirmation from '../../components/overview/OverviewConfirmation';
 import AppPage from '../../components/page/AppPage';
 import AppScrollView from '../../components/scrollview/AppScrollView';
@@ -54,16 +55,25 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
 
   const [finishDisabled, setFinishDisabled] = useState<boolean>(true);
   const [amount, setAmount] = useState<number>(-1);
-
+  const [afixes, setAfixes] = useState<{prefix: string; sufix: string}>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
     const amountReq = async () => {
-      HttpReq.post<{amount: number}>('text/assume-amount', {
-        smsContent: rawSms,
-        prefixIndex: amountConfiguration[0],
-        sufixIndex: amountConfiguration[1],
-      }).then(res => {
+      setIsLoading(true);
+      HttpReq.post<{amount: number; prefix: string; sufix: string}>(
+        'text/assume-amount',
+        {
+          smsContent: rawSms,
+          prefixIndex: amountConfiguration[0],
+          sufixIndex: amountConfiguration[1],
+        },
+      ).then(res => {
+        console.log('amount res ovo ono', res);
         if (res) {
+          const {prefix, sufix} = res;
+          setAfixes({prefix: prefix, sufix: sufix});
           setAmount(res.amount);
+          setIsLoading(false);
         }
       });
     };
@@ -111,72 +121,79 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
     }
   };
 
-  const getAmountConfig = (index: number) => {
-    if (!phrases[index]) {
-      throw 'PHRASE_NOT_FOUND';
-    }
-    return phrases[index].text;
-  };
+  //   const getAmountConfig = (index: number) => {
+  //     // console.log('Phrases', phrases);
+  //     if (!phrases[index]) {
+  //       //   throw 'PHRASE_NOT_FOUND';
+  //     }
+  //     console.log(phrases);
+  //     return phrases[index].text || 'Error';
+  //   };
 
   return (
     <AppPage>
       <View style={styles.content}>
         <PageAppHeader text={getTextByLocale().phraseBalanceOverviewTitle} />
-        <AppScrollView
-          heading={{
-            text: getTextByLocale().overviewKeywords(transactionType),
-            type: 'LABEL',
-          }}>
-          <View style={styles.balanceType}>
-            {phrases.map(p => {
-              return (
-                <OverviewInfoItem key={p.id}>
-                  <AppText
-                    style={styles.overviewFontStyle}
-                    color={BACKGROUND_COLOR}
-                    type="NORMAL"
-                    text={p.text}
-                  />
-                </OverviewInfoItem>
-              );
-            })}
-          </View>
-        </AppScrollView>
-
-        {amountConfiguration && (
-          <View style={styles.configuration}>
-            <JourneyOverviewConfirmation
-              onInvalid={journeyInvalidHandler}
-              onValid={journeyConfirmHandler}
-              amount={amount}
-              prefix={getAmountConfig(0)}
-              sufix={getAmountConfig(1)}
+        {!isLoading && (
+          <>
+            <AppScrollView
+              heading={{
+                text: getTextByLocale().overviewKeywords(transactionType),
+                type: 'LABEL',
+              }}>
+              <View style={styles.balanceType}>
+                {phrases.map(p => {
+                  return (
+                    <OverviewInfoItem key={p.id}>
+                      <AppText
+                        style={styles.overviewFontStyle}
+                        color={BACKGROUND_COLOR}
+                        type="NORMAL"
+                        text={p.text}
+                      />
+                    </OverviewInfoItem>
+                  );
+                })}
+              </View>
+            </AppScrollView>
+            <View style={styles.configuration}>
+              <JourneyOverviewConfirmation
+                onInvalid={journeyInvalidHandler}
+                onValid={journeyConfirmHandler}
+                amount={amount}
+                prefix={afixes?.prefix || 'Error'}
+                sufix={afixes?.sufix || 'Error'}
+              />
+            </View>
+            <AppScrollView
+              heading={{
+                type: 'LABEL',
+                text: getTextByLocale().overviewCategories,
+              }}>
+              <View style={styles.balanceType}>
+                {getSelectedCategories().map(cat => {
+                  return (
+                    <OverviewInfoItem key={cat._id}>
+                      <AppText
+                        style={styles.overviewFontStyle}
+                        color={BACKGROUND_COLOR}
+                        text={cat.name}
+                        type="NORMAL"
+                      />
+                    </OverviewInfoItem>
+                  );
+                })}
+              </View>
+            </AppScrollView>
+            <AppButton
+              type="PRIMARY"
+              disabled={finishDisabled}
+              onPress={onFinishHandler}
+              text={'Finish'}
             />
-          </View>
+          </>
         )}
-        <AppScrollView
-          heading={{type: 'LABEL', text: getTextByLocale().overviewCategories}}>
-          <View style={styles.balanceType}>
-            {getSelectedCategories().map(cat => {
-              return (
-                <OverviewInfoItem key={cat._id}>
-                  <AppText
-                    style={styles.overviewFontStyle}
-                    color={BACKGROUND_COLOR}
-                    text={cat.name}
-                    type="NORMAL"
-                  />
-                </OverviewInfoItem>
-              );
-            })}
-          </View>
-        </AppScrollView>
-        <AppButton
-          type="PRIMARY"
-          disabled={finishDisabled}
-          onPress={onFinishHandler}
-          text={'Finish'}
-        />
+        {isLoading && <AppLoader />}
       </View>
     </AppPage>
   );

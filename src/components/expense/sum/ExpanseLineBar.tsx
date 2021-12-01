@@ -30,7 +30,6 @@ export const ExpensesSummed: React.FC<{}> = (): JSX.Element => {
           const marker = key;
           resultData.push({x, y, marker});
         }
-        console.log(resultData);
         setBarChartData(resultData);
       } catch (error) {
         LOG_ERROR('Failed getting bar chart data');

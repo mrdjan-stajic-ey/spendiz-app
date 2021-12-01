@@ -23,8 +23,8 @@ const ExpensesListPreview: React.FC<{}> = ({}): JSX.Element => {
           data => {
             if (data) {
               setData(data);
+              setIsLoading(false);
             }
-            setIsLoading(false);
           },
         );
       } catch (error) {

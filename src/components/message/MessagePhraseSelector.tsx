@@ -77,6 +77,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
   };
 
   const handlePrefixAndSufix = (item: number) => {
+    console.log('index for prefix/sufix', item);
     addAmountConfiguration(item);
   };
 
