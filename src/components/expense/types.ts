@@ -45,6 +45,6 @@ export interface IExpenseType {
 export interface IExpenseListItem {
   id: string;
   phrasesInfluence: TransactionType;
-  amount: string;
+  amount: number;
   expenseTypes: IExpenseType[];
 }

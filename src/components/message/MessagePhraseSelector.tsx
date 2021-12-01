@@ -1,9 +1,10 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
 import PhrasesContext from '../../data-management/PhraseContext';
-import {tokenize} from '../../utils/main';
+import HttpReq, {LOG_ERROR} from '../../http/axios-wrapper';
 import AppButton from '../button/AppButton';
+import {AppLoader} from '../loading/loader';
 import PillButton from '../pill/Pill';
 import {IMessagePhraseSelector, PhrasePart} from './types';
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   },
   ctaHolder: {},
   buttonCustomStyle: {
-    borderColor: 'red', //TODO: HAAAAAACK HAAAAAACK HAAAAACK
+    borderColor: 'red',
   },
 });
 
@@ -32,8 +33,24 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
   onContinue,
   phase,
 }): JSX.Element => {
-  const bodyParts: PhrasePart[] = useMemo(() => {
-    return tokenize(body);
+  const [bodyParts, setBodyParts] = useState<PhrasePart[]>([]);
+
+  useEffect(() => {
+    const getBodyParts = async () => {
+      return HttpReq.post<PhrasePart[]>('text/split', {
+        text: body,
+        onlyUniques: true,
+      })
+        .then(data => {
+          if (data) {
+            setBodyParts(data);
+          }
+        })
+        .catch(error => {
+          LOG_ERROR('SPLIT_WORDS_FAILED', {error});
+        });
+    };
+    getBodyParts();
   }, [body]);
 
   const {
@@ -59,7 +76,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
     addPhrase(item);
   };
 
-  const handlePrefixAndSufix = (item: PhrasePart) => {
+  const handlePrefixAndSufix = (item: number) => {
     addAmountConfiguration(item);
   };
 
@@ -68,29 +85,33 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
       <View style={styles.pillScrollViewContent}>
         <ScrollView>
           <View style={styles.pillContent}>
-            {bodyParts.map(stringPart => {
-              const isSelected = !!selectedWords.filter(
-                sw => sw.id === stringPart.id,
-              )[0];
-              const isSufixOrPrefix =
-                amountConfiguration.find(sc => sc?.text === stringPart.text) ||
-                false;
-              return (
-                <PillButton
-                  onPress={() => {}}
-                  key={stringPart.id}
-                  selected={isSelected}
-                  customStyle={isSufixOrPrefix ? styles.buttonCustomStyle : {}}
-                  onSelect={
-                    phase === 'KEYWORDS'
-                      ? handlePillClick
-                      : handlePrefixAndSufix
-                  }
-                  text={stringPart.text}
-                  data={stringPart}
-                />
-              );
-            })}
+            {bodyParts.length > 0 &&
+              bodyParts.map((stringPart, index) => {
+                const isSelected = !!selectedWords.filter(
+                  sw => sw.id === stringPart.id,
+                )[0];
+                const isSufixOrPrefix =
+                  amountConfiguration[0] === index ||
+                  amountConfiguration[1] === index;
+                return (
+                  <PillButton
+                    onPress={() => {}}
+                    key={stringPart.id}
+                    selected={isSelected}
+                    customStyle={
+                      isSufixOrPrefix ? styles.buttonCustomStyle : {}
+                    }
+                    onSelect={
+                      phase === 'KEYWORDS'
+                        ? handlePillClick
+                        : handlePrefixAndSufix
+                    }
+                    text={stringPart.text}
+                    data={phase === 'KEYWORDS' ? stringPart : index}
+                  />
+                );
+              })}
+            {bodyParts.length === 0 && <AppLoader />}
           </View>
         </ScrollView>
       </View>

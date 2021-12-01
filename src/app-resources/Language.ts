@@ -144,7 +144,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   overviewSignOffTitle:
     'And they parsed the selected template message as following.',
   overviewConfigConfirmation: (afix: string, prefix: boolean) =>
-    `You have selected ${afix} as a ${prefix ? 'prefix' : 'sufix'} to amount.`,
+    `Selected ${afix} as a ${prefix ? 'prefix' : 'sufix'}.`,
   overviewConfigurationAssumption: (amount: string) =>
     `Amount extracted from SMS ${amount} .`,
   overviewConfigurationQuestion: 'Is this correct?',

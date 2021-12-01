@@ -7,14 +7,14 @@ import {MODULE_TYPES} from './type';
 const IMAGE_BASE_URL = '../../app-resources/pictures/';
 export const MODULES_INFO = [
   {
-    src: require(`${IMAGE_BASE_URL}calcmoney.png`),
-    name: MODULE_TYPES.BALANCE,
-    type: MODULE_TYPES.BALANCE,
-  },
-  {
     src: require(`${IMAGE_BASE_URL}piepresentation.png`),
     name: MODULE_TYPES.EXPENESE,
     type: MODULE_TYPES.EXPENESE,
+  },
+  {
+    src: require(`${IMAGE_BASE_URL}calcmoney.png`),
+    name: MODULE_TYPES.BALANCE,
+    type: MODULE_TYPES.BALANCE,
   },
   {
     src: require(`${IMAGE_BASE_URL}chart.png`),
@@ -22,14 +22,14 @@ export const MODULES_INFO = [
     type: MODULE_TYPES.TRENDS,
   },
   {
-    src: require(`${IMAGE_BASE_URL}coins.png`),
-    name: MODULE_TYPES.SAVINGS,
-    type: MODULE_TYPES.SAVINGS,
-  },
-  {
     src: require(`${IMAGE_BASE_URL}creditcard.png`),
     name: MODULE_TYPES.SETTINGS,
     type: MODULE_TYPES.SETTINGS,
+  },
+  {
+    src: require(`${IMAGE_BASE_URL}coins.png`),
+    name: MODULE_TYPES.SAVINGS,
+    type: MODULE_TYPES.SAVINGS,
   },
 ];
 

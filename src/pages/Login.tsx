@@ -77,7 +77,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
       keyboardHideSub.remove();
       keyboardShowSub.remove();
     };
-  });
+  }, []);
 
   const handleKeyboardShow = () => {
     setIskeyboardShown(true);
@@ -91,13 +91,12 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
   const [password, setPassword] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
 
-  const onPresHandler = async () => {
+  const onPresHandler = () => {
     setLoginError('');
     return userAuth
       .login({username, password})
       .then(async data => {
         if (data) {
-          console.log('Login result', data);
           setUser(data);
           await setUserToAsyncStorage(data);
           await setToken(data.access_token);

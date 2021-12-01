@@ -12,6 +12,7 @@ import PhraseWizard from '../data-management/PhraseWizard';
 import OverviewPage from '../pages/account-settings/Overview';
 import RegisterPage from '../pages/Register';
 import UserContext from '../data-management/user/UserContext';
+import BalanceOverviewTabs from '../pages/overview/TabOverview';
 
 const AuthStackNavigator = createStackNavigator<T_Auth_Stack>(); //auth stack
 const Stack = createNativeStackNavigator<TRootNavigation>(); //app stack so back button exits the app if the user is logged in
@@ -46,7 +47,7 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
           headerShown: false,
           animation: 'none',
         }}>
-        <Stack.Screen name="Home" component={BalanceOverview} />
+        <Stack.Screen name="Home" component={BalanceOverviewTabs} />
         <Stack.Screen name="BalanceOverview" component={BalanceOverview} />
         <Stack.Screen name="AccountSettings" component={AccountSettings} />
         <Stack.Screen name="Configuration" component={AppConfigurationRoutes} />

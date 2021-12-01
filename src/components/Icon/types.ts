@@ -5,5 +5,5 @@ export interface I_AppIcon {
   icon: IconDefinition;
   size?: number;
   style?: FontAwesomeIconStyle;
-  color: string;
+  color?: string;
 }
