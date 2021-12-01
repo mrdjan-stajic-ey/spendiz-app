@@ -56,8 +56,8 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
     }
   };
 
-  const getSelectedCategories = () => {
-    return categories.filter(ct => ct.selected);
+  const getSelectedCategory = () => {
+    return categories.filter(ct => ct.selected)[0];
   };
 
   const handleSwitchChange = (data: TransactionType) => {
@@ -105,7 +105,7 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
         addPhrase: addPhrase,
         categories: categories,
         toggleCategorySelection: toggleCategory,
-        getSelectedCategories,
+        getSelectedCategory: getSelectedCategory,
         setTransactionType: handleSwitchChange,
         transactionType,
         amountConfiguration: afixTouple,

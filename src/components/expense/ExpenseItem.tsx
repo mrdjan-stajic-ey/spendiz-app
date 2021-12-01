@@ -37,7 +37,7 @@ const ICON_COLOR_OUTBOUND = '#742525';
 
 export const ExpenseListItem: React.FC<IExpenseListItem> = ({
   amount,
-  expenseTypes,
+  expenseType,
   id,
   phrasesInfluence,
 }): JSX.Element => {
@@ -55,13 +55,9 @@ export const ExpenseListItem: React.FC<IExpenseListItem> = ({
             text={amount + ''}
           />
           <View style={styles.expenseCategories}>
-            {expenseTypes.map(et => {
-              return (
-                <View style={styles.expenseCategory} key={et.id}>
-                  <AppText text={et.name} />
-                </View>
-              );
-            })}
+            <View style={styles.expenseCategory}>
+              <AppText text={expenseType.name} />
+            </View>
           </View>
           <AppIcon
             style={styles.expenseIconItem}

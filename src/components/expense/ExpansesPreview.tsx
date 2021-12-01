@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
-import HttpReq, {LOG_ERROR, REQUEST_ERRORS} from '../../http/axios-wrapper';
+import {StyleSheet, View} from 'react-native';
+import HttpReq from '../../http/axios-wrapper';
 import AppList from '../List/AppList';
 import {AppLoader} from '../loading/loader';
 import AppPage from '../page/AppPage';
@@ -17,20 +17,17 @@ const ExpensesListPreview: React.FC<{}> = ({}): JSX.Element => {
   const [data, setData] = useState<IExpenseListItem[] | null>(null);
   useEffect(() => {
     const fetchExpenses = async () => {
-      try {
-        // eslint-disable-next-line no-shadow
-        return HttpReq.get<IExpenseListItem[]>('/balance-action/user').then(
-          data => {
-            if (data) {
-              setData(data);
-              setIsLoading(false);
-            }
-          },
-        );
-      } catch (error) {
-        Alert.alert('Something went wrong');
-        LOG_ERROR(REQUEST_ERRORS.GET_FAILED, {error});
-      }
+      // eslint-disable-next-line no-shadow
+      return HttpReq.get<IExpenseListItem[]>('/balance-action/user')
+        .then(data => {
+          if (data) {
+            setData(data);
+          }
+          setIsLoading(false);
+        })
+        .catch(err => {
+          console.log('Failed expense fetch', err);
+        });
     };
     fetchExpenses();
   }, []);
@@ -40,7 +37,7 @@ const ExpensesListPreview: React.FC<{}> = ({}): JSX.Element => {
     return (
       <ExpenseListItem
         amount={item.amount}
-        expenseTypes={item.expenseTypes}
+        expenseType={item.expenseType}
         id={item.id}
         phrasesInfluence={item.phrasesInfluence}
         key={item.id}

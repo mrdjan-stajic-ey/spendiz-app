@@ -32,16 +32,18 @@ export const getUserFromStorage = async () => {
   }
 };
 
-export const setToken = async (token: string) => {
-  try {
-    console.log('SET TOKEN??', token);
-    return await AsyncStorage.setItem(StorageKeys.JWT_TOKEN, token);
-  } catch (error) {
-    LOG_ERROR('SET TOKEN FAILED', {
-      msg: 'Async storage SET Token failed',
-      error,
-    });
-  }
+export const setToken = (token: string) => {
+  return new Promise((resolve, reject) => {
+    AsyncStorage.setItem(StorageKeys.JWT_TOKEN, token)
+      .then(resolve)
+      .catch(err => {
+        LOG_ERROR('SET TOKEN FAILED', {
+          msg: 'Async storage SET Token failed',
+          err,
+        });
+        reject(err);
+      });
+  });
 };
 
 export const getToken = async () => {

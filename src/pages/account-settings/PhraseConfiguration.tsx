@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
 const PhraseConfiguration: React.FC<T_PhraseProps> = ({
   navigation,
 }): JSX.Element => {
-  const {getSelectedCategories} = useContext(PhrasesContext);
+  const {getSelectedCategory} = useContext(PhrasesContext);
   const toOverviewHandler = () => {
     navigation.navigate('Overview');
   };
@@ -45,7 +45,7 @@ const PhraseConfiguration: React.FC<T_PhraseProps> = ({
         <PhraseConfigurator />
         <AppButton
           type="PRIMARY"
-          disabled={getSelectedCategories().length === 0}
+          disabled={!getSelectedCategory()?.id}
           onPress={toOverviewHandler}
           text={getTextByLocale().phraseBalanceOverviewTitle}
         />
