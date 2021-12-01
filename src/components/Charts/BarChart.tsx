@@ -38,9 +38,13 @@ export const AppBarChart: React.FC<IBarChart> = ({data}): JSX.Element => {
       {chartWidth && (
         <BarChart
           style={[styles.chart, {width: chartWidth - 40}]}
+          pinchZoom={false} //TODO: revise this;
+          doubleTapToZoomEnabled={false}
           data={{
             dataSets,
-            config,
+            config: {
+              ...config,
+            },
           }}
         />
       )}

@@ -106,11 +106,13 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
       <OverviewTabsNavigation.Navigator
         initialRouteName={'ExpansesOverview'}
         tabBar={() => null}
-        screenListeners={{
-          state: (e: any) => {
-            console.log('on swipe', e);
-          },
-        }}>
+        screenListeners={
+          {
+            //   state: (e: any) => {
+            //     console.log('on swipe', e);
+            //   },
+          }
+        }>
         <OverviewTabsNavigation.Screen
           name="PredictionChart"
           component={ExpensesSummed}
