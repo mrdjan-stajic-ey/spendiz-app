@@ -31,6 +31,7 @@ const AppDivider: React.FC<IAppDivider> = ({
 }): JSX.Element => {
   return (
     <Divider
+      //   display={'none'}
       marginBottom={marginBottom || null}
       marginTop={marginTop || null}
       margin={margin || null}

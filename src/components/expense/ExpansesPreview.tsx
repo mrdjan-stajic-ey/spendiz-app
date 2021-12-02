@@ -1,9 +1,13 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Center} from 'native-base';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import HttpReq from '../../http/axios-wrapper';
+import {TTabOverviewLayout} from '../../routing/types';
 import AppList from '../List/AppList';
 import {AppLoader} from '../loading/loader';
 import AppPage from '../page/AppPage';
+import AppText from '../Text/AppText';
 import {ExpenseListItem} from './ExpenseItem';
 import {IExpenseListItem} from './types';
 const styles = StyleSheet.create({
@@ -12,13 +16,35 @@ const styles = StyleSheet.create({
   },
 });
 
-const ExpensesListPreview: React.FC<{}> = ({}): JSX.Element => {
+type T_Nav_Tab_Props = NativeStackScreenProps<
+  TTabOverviewLayout,
+  'ExpansesOverview'
+>;
+
+const ExpensesListPreview: React.FC<T_Nav_Tab_Props> = ({
+  navigation,
+}): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<IExpenseListItem[] | null>(null);
+
   useEffect(() => {
-    const fetchExpenses = async () => {
-      // eslint-disable-next-line no-shadow
-      return HttpReq.get<IExpenseListItem[]>('/balance-action/user')
+    const blurSubscriber = navigation.addListener('blur', () => {
+      setIsLoading(true);
+      setData(null);
+    });
+    const focusSubscriber = navigation.addListener('focus', () => {
+      fetchExpenses();
+    });
+    return () => {
+      focusSubscriber;
+      blurSubscriber;
+    };
+  }, [navigation]);
+
+  const fetchExpenses = async () => {
+    return (
+      HttpReq.get<IExpenseListItem[]>('/balance-action/user')
+        // eslint-disable-next-line no-shadow
         .then(data => {
           if (data) {
             setData(data);
@@ -27,9 +53,13 @@ const ExpensesListPreview: React.FC<{}> = ({}): JSX.Element => {
         })
         .catch(err => {
           console.log('Failed expense fetch', err);
-        });
-    };
-    fetchExpenses();
+        })
+    );
+  };
+  useEffect(() => {
+    setTimeout(() => {
+      fetchExpenses();
+    }, 200);
   }, []);
 
   const keyExtractor = (item: IExpenseListItem) => item.id;
@@ -46,9 +76,12 @@ const ExpensesListPreview: React.FC<{}> = ({}): JSX.Element => {
   };
   return (
     <AppPage>
+      <Center mb={5}>
+        <AppText type="SUBTITLE" text="Your most recent transactions" />
+      </Center>
       <View style={styles.listHolder}>
         {isLoading && <AppLoader />}
-        {!isLoading && (
+        {!isLoading && data.length > 0 && (
           <AppList
             data={data || []}
             renderItem={({item}) => {

@@ -14,16 +14,21 @@ const styles = StyleSheet.create({
   heading: {
     alignItems: 'center',
   },
-  words: {flex: 1},
+  words: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+  },
   ctas: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
   },
   confirmation: {
     flex: 1,
     alignItems: 'center',
+    flexDirection: 'row',
   },
 });
 
@@ -45,10 +50,7 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
   return (
     <View style={styles.content}>
       <View style={styles.heading}>
-        <AppText
-          type="SUBTITLE"
-          text={getTextByLocale().overviewConfigurationQuestion}
-        />
+        <AppText type="SUBTITLE" text={'Review configuration!'} />
       </View>
       <AppDivider />
       <View style={styles.words}>
@@ -66,12 +68,15 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
             amount + '',
           )}
         />
-        <AppDivider />
       </View>
       <View style={styles.confirmation}>
         <View style={styles.ctas}>
+          <AppText type="LABEL" text={'This is correct'} />
           <AppButton onPress={onValid} icon={faCheckCircle} />
-          <AppButton onPress={onInvalid} icon={faTimesCircle} />
+        </View>
+        <View style={styles.ctas}>
+          <AppText type="LABEL" text={'Try again'} />
+          <AppButton type="DANGER" onPress={onInvalid} icon={faTimesCircle} />
         </View>
       </View>
     </View>

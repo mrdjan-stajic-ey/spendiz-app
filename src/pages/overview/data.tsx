@@ -17,20 +17,20 @@ export const MODULES_INFO = [
     type: MODULE_TYPES.BALANCE,
   },
   {
-    src: require(`${IMAGE_BASE_URL}chart.png`),
-    name: MODULE_TYPES.TRENDS,
-    type: MODULE_TYPES.TRENDS,
-  },
-  {
     src: require(`${IMAGE_BASE_URL}creditcard.png`),
     name: MODULE_TYPES.SETTINGS,
     type: MODULE_TYPES.SETTINGS,
   },
-  {
-    src: require(`${IMAGE_BASE_URL}coins.png`),
-    name: MODULE_TYPES.SAVINGS,
-    type: MODULE_TYPES.SAVINGS,
-  },
+  //   {
+  //     src: require(`${IMAGE_BASE_URL}chart.png`),
+  //     name: MODULE_TYPES.TRENDS,
+  //     type: MODULE_TYPES.TRENDS,
+  //   },
+  //   {
+  //     src: require(`${IMAGE_BASE_URL}coins.png`),
+  //     name: MODULE_TYPES.SAVINGS,
+  //     type: MODULE_TYPES.SAVINGS,
+  //   },
 ];
 
 export const listData: IAppListProps<IExpenseItemV2> = {

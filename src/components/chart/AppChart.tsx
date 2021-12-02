@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {LineChart} from 'react-native-charts-wrapper';
 import AppPage from '../page/AppPage';
 
 const styles = StyleSheet.create({
@@ -26,7 +25,7 @@ const AppChart: React.FC<{}> = (): JSX.Element => {
   return (
     <AppPage>
       <View style={styles.container}>
-        {chartWidth && (
+        {/* {chartWidth && (
           <LineChart
             style={[styles.chart, {width: chartWidth - 40}]}
             data={{
@@ -49,7 +48,7 @@ const AppChart: React.FC<{}> = (): JSX.Element => {
               ],
             }}
           />
-        )}
+        )} */}
       </View>
     </AppPage>
   );
