@@ -1,5 +1,5 @@
 import {FormControl, Input} from 'native-base';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   NativeSyntheticEvent,
   StyleSheet,
@@ -18,12 +18,27 @@ const styles = StyleSheet.create({
   },
 });
 
-const RegisterForm: React.FC<{}> = (): JSX.Element => {
-  const [email, setEmail] = useState<string>('');
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+export interface IRegisterData {
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+  setEmail: (text: string) => void;
+  setUsername: (text: string) => void;
+  setPassword: (text: string) => void;
+  setConfirmPassword: (text: string) => void;
+}
 
+const RegisterForm: React.FC<IRegisterData> = ({
+  email,
+  password,
+  username,
+  setEmail,
+  setPassword,
+  setUsername,
+  setConfirmPassword,
+  confirmPassword,
+}): JSX.Element => {
   const handleEmailEvent = (
     event: NativeSyntheticEvent<TextInputChangeEventData>,
   ) => {
@@ -96,7 +111,7 @@ const RegisterForm: React.FC<{}> = (): JSX.Element => {
         </FormControl.Label>
         <Input
           backgroundColor="white"
-          type="text"
+          type="password"
           onChange={handlePasswordEvent}
           value={password}
           placeholder={getTextByLocale().formLabels.passwordLabel}
@@ -116,7 +131,7 @@ const RegisterForm: React.FC<{}> = (): JSX.Element => {
         </FormControl.Label>
         <Input
           backgroundColor="white"
-          type="text"
+          type="password"
           onChange={handleConfirmPassswordEvent}
           value={confirmPassword}
           placeholder={getTextByLocale().formLabels.confirmPasswordLabel}

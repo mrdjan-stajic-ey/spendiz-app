@@ -16,7 +16,7 @@ export interface IPhraseContext {
   addPhrase: (word: PhrasePart) => void;
   categories: Category[];
   toggleCategorySelection: (categoryId: string) => void;
-  getSelectedCategories: () => Category[];
+  getSelectedCategory: () => Category | undefined;
   transactionType: TransactionType;
   setTransactionType: (type: TransactionType) => void;
   rawSms: string;

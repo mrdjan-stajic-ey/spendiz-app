@@ -79,23 +79,33 @@ abstract class HttpReq {
   static async getAuthorisationToken(
     allowAnon: boolean = false,
   ): Promise<IAuthToken> {
-    try {
-      const jwt_token = await getToken();
-      if (!jwt_token && !allowAnon) {
-        Alert.alert('Not authorized for this request');
-        return Promise.reject(getErrorTextByLocal().noJwtTokenFound);
+    return new Promise((resolve, reject) => {
+      try {
+        getToken()
+          .then(data => {
+            if (data) {
+              resolve({access_token: data});
+            }
+            if (allowAnon) {
+              resolve({});
+            }
+          })
+          .catch(_error => {
+            if (allowAnon) {
+              return Promise.resolve(null);
+            }
+            Alert.alert('Not authorized for this request');
+            reject(getErrorTextByLocal().noJwtTokenFound);
+          });
+      } catch (error) {
+        LOG_ERROR(
+          'Getting token from storage faild in auth',
+          undefined,
+          JSON.stringify(error),
+        );
       }
-      return {
-        access_token: jwt_token || undefined,
-      };
-    } catch (error) {
-      LOG_ERROR(
-        'Getting token from storage faild in auth',
-        undefined,
-        JSON.stringify(error),
-      );
-    }
-    return {access_token: undefined, remember_me_code: undefined};
+      return {access_token: undefined, remember_me_code: undefined};
+    });
   }
 
   static alignServicePath = (servicePath: string) =>

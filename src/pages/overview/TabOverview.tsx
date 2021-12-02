@@ -102,17 +102,10 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
         </View>
       </AppScrollView>
       <AppDivider />
-
       <OverviewTabsNavigation.Navigator
-        initialRouteName={'ExpansesOverview'}
         tabBar={() => null}
-        screenListeners={
-          {
-            //   state: (e: any) => {
-            //     console.log('on swipe', e);
-            //   },
-          }
-        }>
+        initialRouteName={'ExpansesOverview'}
+        defaultScreenOptions={{lazy: false}}>
         <OverviewTabsNavigation.Screen
           name="PredictionChart"
           component={ExpensesSummed}

@@ -47,9 +47,10 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
 }): JSX.Element => {
   const {
     phrases,
-    getSelectedCategories,
+    getSelectedCategory,
     transactionType,
     amountConfiguration,
+
     rawSms,
   } = useContext(PhrasesContext);
 
@@ -102,7 +103,7 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
       amount: amount,
       phrasesInfluence: transactionType,
       phrases: [...phrases.map(ph => ph.text)],
-      expenseTypes: [...getSelectedCategories().map(ct => ct._id)],
+      expenseType: getSelectedCategory()?._id,
       amountLocators: [amountConfiguration[0], amountConfiguration[1]],
       template: true,
     };
@@ -171,18 +172,14 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
                 text: getTextByLocale().overviewCategories,
               }}>
               <View style={styles.balanceType}>
-                {getSelectedCategories().map(cat => {
-                  return (
-                    <OverviewInfoItem key={cat._id}>
-                      <AppText
-                        style={styles.overviewFontStyle}
-                        color={BACKGROUND_COLOR}
-                        text={cat.name}
-                        type="NORMAL"
-                      />
-                    </OverviewInfoItem>
-                  );
-                })}
+                <OverviewInfoItem key={getSelectedCategory()?._id}>
+                  <AppText
+                    style={styles.overviewFontStyle}
+                    color={BACKGROUND_COLOR}
+                    text={getSelectedCategory()?.name}
+                    type="NORMAL"
+                  />
+                </OverviewInfoItem>
               </View>
             </AppScrollView>
             <AppButton

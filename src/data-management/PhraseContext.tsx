@@ -7,7 +7,7 @@ const PhrasesContext = React.createContext<IPhraseContext>({
   addPhrase: () => {},
   categories: [],
   toggleCategorySelection: () => {},
-  getSelectedCategories: () => [],
+  getSelectedCategory: () => undefined,
   setTransactionType: () => {},
   transactionType: 'OUTBOUND',
   rawSms: '',
