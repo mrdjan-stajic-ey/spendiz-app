@@ -8,6 +8,7 @@ const screenWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   content: {
     flex: 1,
+    padding: 10,
   },
   chart: {
     flex: 1,
@@ -31,18 +32,27 @@ const chartConfig = {
   backgroundGradientFrom: BACKGROUND_COLOR,
   backgroundGradientFromOpacity: 0,
   backgroundGradientTo: '#f0f5f2',
-  backgroundGradientToOpacity: 0.3,
+  backgroundGradientToOpacity: 0.0,
+  fillShadowGradient: 'skyblue', //TODO props this
+  fillShadowGradientOpacity: 1,
   color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  style: {
+    borderRadius: 16,
+  },
+
   strokeWidth: 2, // optional, default 3
   barPercentage: 0.5,
   useShadowColorFromDataset: false, // optional
+  formatYLabel: (e: any) => {
+    return Math.floor(e);
+  },
 };
 
 export const AppBarChart: React.FC<IGroupedExpensesBarChart> = ({
   datasets,
   labels,
 }): JSX.Element => {
-  console.log('Labels', labels);
   const [chartWidth, setChartWidth] = useState<number | null>(null);
   useEffect(() => {
     setChartWidth(screenWidth);
@@ -52,12 +62,12 @@ export const AppBarChart: React.FC<IGroupedExpensesBarChart> = ({
     <View style={styles.content}>
       {chartWidth && (
         <BarChart
-          style={{}}
           width={screenWidth}
+          //@ts-ignore ajde odjebi
           chartConfig={chartConfig}
+          fromZero
+          yAxisInterval={1} // optional, defaults to 1
           height={280}
-          yAxisLabel={'RSD'}
-          yAxisSuffix={''}
           data={{labels, datasets}}
         />
       )}

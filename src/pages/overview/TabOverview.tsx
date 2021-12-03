@@ -85,18 +85,20 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
         <AppDivider />
       </Center>
       <View style={styles.scrollContent}>
-        {MODULES_INFO.map(({src, name, type}, index) => {
-          return (
-            <BalanceModuleItem
-              onPress={() => {
-                onModulePressHandler(type);
-              }}
-              name={name}
-              key={index}
-              src={src}
-            />
-          );
-        })}
+        <Center flex={1} flexDirection={'row'}>
+          {MODULES_INFO.map(({src, name, type}, index) => {
+            return (
+              <BalanceModuleItem
+                onPress={() => {
+                  onModulePressHandler(type);
+                }}
+                name={name}
+                key={index}
+                src={src}
+              />
+            );
+          })}
+        </Center>
       </View>
       <Box flex={1}>
         <AppDivider />

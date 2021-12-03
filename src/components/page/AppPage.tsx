@@ -38,7 +38,8 @@ const AppPageContentHolder: React.FC<IAppPageContainer> = ({
     <Box
       backgroundColor={PRIMARY_BACKGRORUND_COLOR}
       flex={1}
-      padding={hasCustomStyle ? style.padding : 5}
+      padding={hasCustomStyle ? style.padding : 1}
+      paddingTop={2}
       paddingBottom={hasCustomStyle ? style.paddingBottom : 0}>
       {children}
     </Box>

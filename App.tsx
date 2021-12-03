@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {SafeAreaView, AppRegistry, StyleSheet, View} from 'react-native';
+import {SafeAreaView, AppRegistry, StyleSheet} from 'react-native';
 import NotificationHandlerInstance from './src/app-resources/notificationHandler';
 import {NativeBaseProvider} from 'native-base';
 import {configureIconLibrary} from './src/components/icons-library/library';
