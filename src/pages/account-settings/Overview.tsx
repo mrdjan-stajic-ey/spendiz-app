@@ -186,7 +186,7 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
               type="PRIMARY"
               disabled={finishDisabled}
               onPress={onFinishHandler}
-              text={'Finish'}
+              text={getTextByLocale().overviewCTA}
             />
           </>
         )}

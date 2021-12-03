@@ -1,13 +1,14 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
-import {SafeAreaView, AppRegistry, StyleSheet} from 'react-native';
+import {SafeAreaView, AppRegistry, StyleSheet, View} from 'react-native';
 import NotificationHandlerInstance from './src/app-resources/notificationHandler';
 import {NativeBaseProvider} from 'native-base';
 import {configureIconLibrary} from './src/components/icons-library/library';
 import ErrorBoundary from 'react-native-error-boundary';
 import ErrorScreen from './src/pages/ErrorScreen';
 import UserWrapper from './src/data-management/user/UserHoc';
-import AuthStack from './src/routing/BasicRouting';
+import AuthStack from './src/routing/AuthStack';
+import {BACKGROUND_COLOR} from './src/components/CONSTS';
 
 if (!__DEV__) {
   //stop all the logs for performance since we can`t see them in prod
@@ -43,7 +44,18 @@ const App = () => {
   return (
     <NativeBaseProvider config={nb_config}>
       <ErrorBoundary FallbackComponent={ErrorScreen}>
-        <NavigationContainer>
+        <NavigationContainer
+          theme={{
+            colors: {
+              background: BACKGROUND_COLOR,
+              border: null,
+              card: null,
+              notification: null,
+              primary: null,
+              text: null,
+            },
+            dark: false,
+          }}>
           <SafeAreaView style={root_style.root}>
             <UserWrapper>
               <AuthStack />

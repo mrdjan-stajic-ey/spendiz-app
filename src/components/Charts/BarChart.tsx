@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import {BarChart} from 'react-native-chart-kit';
 import {BACKGROUND_COLOR} from '../CONSTS';
+
+const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   content: {
@@ -40,17 +42,18 @@ export const AppBarChart: React.FC<IGroupedExpensesBarChart> = ({
   datasets,
   labels,
 }): JSX.Element => {
+  console.log('Labels', labels);
   const [chartWidth, setChartWidth] = useState<number | null>(null);
-  const width = useWindowDimensions().width;
   useEffect(() => {
-    setChartWidth(width);
+    setChartWidth(screenWidth);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <View style={styles.content}>
       {chartWidth && (
         <BarChart
-          width={width}
+          style={{}}
+          width={screenWidth}
           chartConfig={chartConfig}
           height={280}
           yAxisLabel={'RSD'}

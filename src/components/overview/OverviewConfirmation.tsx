@@ -50,7 +50,7 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
   return (
     <View style={styles.content}>
       <View style={styles.heading}>
-        <AppText type="SUBTITLE" text={'Review configuration!'} />
+        <AppText type="SUBTITLE" text={getTextByLocale().reviewConfiguration} />
       </View>
       <AppDivider />
       <View style={styles.words}>
@@ -71,11 +71,11 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
       </View>
       <View style={styles.confirmation}>
         <View style={styles.ctas}>
-          <AppText type="LABEL" text={'This is correct'} />
+          <AppText type="LABEL" text={getTextByLocale().configurationCorrect} />
           <AppButton onPress={onValid} icon={faCheckCircle} />
         </View>
         <View style={styles.ctas}>
-          <AppText type="LABEL" text={'Try again'} />
+          <AppText type="LABEL" text={getTextByLocale().configurationWrong} />
           <AppButton type="DANGER" onPress={onInvalid} icon={faTimesCircle} />
         </View>
       </View>

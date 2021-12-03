@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Center} from 'native-base';
+import {Box, Center} from 'native-base';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
@@ -9,7 +9,6 @@ import AppDivider from '../../components/divider/AppDivider';
 import ExpensesListPreview from '../../components/expense/ExpansesPreview';
 import {ExpensesSummed} from '../../components/expense/sum/ExpanseLineBar';
 import AppPage from '../../components/page/AppPage';
-import AppScrollView from '../../components/scrollview/AppScrollView';
 import AppText from '../../components/Text/AppText';
 import {TTabNavigator, TTabOverviewLayout} from '../../routing/types';
 
@@ -85,36 +84,36 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
         <AppText type="TITLE" text={getTextByLocale().balanceOverview} />
         <AppDivider />
       </Center>
-      <AppScrollView fitContent horizontal={true}>
-        <View style={styles.scrollContent}>
-          {MODULES_INFO.map(({src, name, type}, index) => {
-            return (
-              <BalanceModuleItem
-                onPress={() => {
-                  onModulePressHandler(type);
-                }}
-                name={name}
-                key={index}
-                src={src}
-              />
-            );
-          })}
-        </View>
-      </AppScrollView>
-      <AppDivider />
-      <OverviewTabsNavigation.Navigator
-        tabBar={() => null}
-        initialRouteName={'ExpansesOverview'}
-        defaultScreenOptions={{lazy: false}}>
-        <OverviewTabsNavigation.Screen
-          name="PredictionChart"
-          component={ExpensesSummed}
-        />
-        <OverviewTabsNavigation.Screen
-          name="ExpansesOverview"
-          component={ExpensesListPreview}
-        />
-      </OverviewTabsNavigation.Navigator>
+      <View style={styles.scrollContent}>
+        {MODULES_INFO.map(({src, name, type}, index) => {
+          return (
+            <BalanceModuleItem
+              onPress={() => {
+                onModulePressHandler(type);
+              }}
+              name={name}
+              key={index}
+              src={src}
+            />
+          );
+        })}
+      </View>
+      <Box flex={1}>
+        <AppDivider />
+        <OverviewTabsNavigation.Navigator
+          tabBar={() => null}
+          initialRouteName={'ExpansesOverview'}
+          defaultScreenOptions={{lazy: true}}>
+          <OverviewTabsNavigation.Screen
+            name="PredictionChart"
+            component={ExpensesSummed}
+          />
+          <OverviewTabsNavigation.Screen
+            name="ExpansesOverview"
+            component={ExpensesListPreview}
+          />
+        </OverviewTabsNavigation.Navigator>
+      </Box>
     </AppPage>
   );
 };

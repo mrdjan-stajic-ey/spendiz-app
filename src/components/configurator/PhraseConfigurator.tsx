@@ -70,7 +70,7 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
           text={getTextByLocale().phraseBalanceActionLabel}
         />
         <View style={styles.toggleAction}>
-          <AppText type="LABEL" text={'Add'} />
+          <AppText type="LABEL" text={getTextByLocale().categoryInfluenceAdd} />
           <Switch
             trackColor={{
               true: TRACK_SWITCH_COLOR_TRUE,
@@ -82,7 +82,10 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
             onValueChange={toggleSwitchHandler}
             value={isSubtract}
           />
-          <AppText type="LABEL" text={'Subtract'} />
+          <AppText
+            type="LABEL"
+            text={getTextByLocale().categoryInfluenceSubtract}
+          />
         </View>
         <AppDivider />
         <AppText
@@ -96,6 +99,7 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
           {categories.length > 0 &&
             categories.map(t => (
               <CategoryExpenseItem
+                id={t.id}
                 key={t._id}
                 _id={t._id}
                 description={t.description}

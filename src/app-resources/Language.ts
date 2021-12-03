@@ -69,6 +69,12 @@ export interface APP_TEXTS {
   overviewConfigConfirmation: (afix: string, prefix: boolean) => string;
   overviewConfigurationAssumption: (amount: string) => string;
   overviewConfigurationQuestion: string;
+  categoryInfluenceAdd: string;
+  categoryInfluenceSubtract: string;
+  reviewConfiguration: string;
+  configurationCorrect: string;
+  configurationWrong: string;
+  overviewCTA: string;
 }
 
 const ENGB_LANGUAGE: APP_TEXTS = {
@@ -78,7 +84,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   registerCta: 'Register',
   welcomeTitle: 'Welcome to Spendzi',
   welcomeSubtitle: 'Track expenses, and spend money wisely!',
-  welcomeRegisterSubtitle: 'Sign up to maximise your savings',
+  welcomeRegisterSubtitle: 'Sign up to maximize your savings',
   loginLabel: 'Login',
   passwordLabel: 'Password',
   usernameLabel: 'Username',
@@ -111,10 +117,10 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   phrasesListTitle: 'Selected phrases',
   phrasesNextStep: 'Define rules',
   phrasesNextStepDisabled: 'Please select at least one word',
-  phrasesAttributionTitle: 'Define rules for selcted keywords',
+  phrasesAttributionTitle: 'Define rules for selected keywords',
   phraseConfigurationTitle: 'Map a keyword to action',
   phraseConfigurationDescription:
-    'Map the colected phrase to the apropriate action on your bank account, then assing the category of expense or income',
+    'Map the collected phrase to the appropriate action on your bank account, then assign the category of expense or income',
   phraseBankAccActionAdd: 'Add to balance',
   phraseBankAccActionSubtract: 'Subtract from balance',
   phraseBankAccTypeLabel: 'Transaction type',
@@ -125,29 +131,35 @@ const ENGB_LANGUAGE: APP_TEXTS = {
       transactionType === 'INBOUND' ? ' increase' : 'lower'
     } your balance amount`;
   },
-  overviewCategories: 'And they are asociated with categories',
+  overviewCategories: 'And they are associated with categories',
   registerDontHaveAnAcc: 'Register here',
   registerQuestion: 'Dont have an account',
   errorText: {
     localStorageErr:
       'Local storage operation failed, clear local storage and try running the app again',
     noJwtTokenFound: 'Jwt token not found, redirecting to login',
-    axiosTimeoutExceptionText: 'Http client timeout exceded',
+    axiosTimeoutExceptionText: 'Http client timeout exceeded',
     apiServiceFailed: (path: string, error: string) =>
       `Api service on path ${path} failed with error ${error}`,
   },
   noCategoriesMessage: 'No categories found',
   amountAfixDescription: `Select the words from message that will describe the category of expense.
-		 EG. Wolt tag will be asociated to Food category. Yandex to Transport.`,
+		 EG. Wolt tag will be associated to Food category. Yandex to Transport.`,
   transactionToExpenseMappingDescription:
     'Select the two words from the message that encapsulates the amount that will affect your budget.',
   overviewSignOffTitle:
     'And they parsed the selected template message as following.',
-  overviewConfigConfirmation: (afix: string, prefix: boolean) =>
-    `Selected ${afix} as a ${prefix ? 'prefix' : 'sufix'}.`,
+  overviewConfigConfirmation: (affix: string, prefix: boolean) =>
+    `Selected ${affix} as a ${prefix ? 'prefix' : 'suffix'}.`,
   overviewConfigurationAssumption: (amount: string) =>
     `Amount extracted from SMS ${amount} .`,
   overviewConfigurationQuestion: 'Is this correct?',
+  categoryInfluenceAdd: 'Add',
+  categoryInfluenceSubtract: 'Subtract',
+  reviewConfiguration: 'Review configuration',
+  configurationCorrect: 'This is correct',
+  configurationWrong: 'Try again',
+  overviewCTA: 'Finish',
 };
 
 const LANGUAGES = {
