@@ -56,7 +56,6 @@ export const AppBarChart: React.FC<IGroupedExpensesBarChart> = ({
   const [chartWidth, setChartWidth] = useState<number | null>(null);
   useEffect(() => {
     setChartWidth(screenWidth);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <View style={styles.content}>

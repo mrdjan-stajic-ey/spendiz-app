@@ -13,6 +13,7 @@ import PhrasesContext from '../../data-management/PhraseContext';
 const styles = StyleSheet.create({
   holder: {
     flex: 1,
+    justifyContent: 'center',
   },
   title: {},
   explanation: {

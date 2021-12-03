@@ -1,3 +1,4 @@
+import {Center} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet, View, ScrollView} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
@@ -20,6 +21,8 @@ const styles = StyleSheet.create({
   },
   pillContent: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     flexWrap: 'wrap',
   },
   ctaHolder: {},
@@ -64,7 +67,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
     if (phase === 'AMOUNT_SELECTOR') {
       return getTextByLocale().amountSelectorTitle;
     } else {
-      return selectedWords.length === 0 // i will allow this giberish (pluralization of the words to be here)
+      return selectedWords.length === 0 // i will allow this gibberish (pluralization of the words to be here)
         ? getTextByLocale().phrasesNextStepDisabled
         : `${getTextByLocale().phrasesNextStep} for ${
             selectedWords.length
@@ -76,13 +79,13 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
     addPhrase(item);
   };
 
-  const handlePrefixAndSufix = (item: number) => {
+  const handlePrefixAndSuffix = (item: number) => {
     console.log('index for prefix/sufix', item);
     addAmountConfiguration(item);
   };
 
   return (
-    <View style={styles.content}>
+    <Center style={styles.content}>
       <View style={styles.pillScrollViewContent}>
         <ScrollView>
           <View style={styles.pillContent}>
@@ -105,7 +108,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
                     onSelect={
                       phase === 'KEYWORDS'
                         ? handlePillClick
-                        : handlePrefixAndSufix
+                        : handlePrefixAndSuffix
                     }
                     text={stringPart.text}
                     data={phase === 'KEYWORDS' ? stringPart : index}
@@ -124,7 +127,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
           text={buttonText()}
         />
       </View>
-    </View>
+    </Center>
   );
 };
 
