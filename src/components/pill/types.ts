@@ -5,4 +5,5 @@ export interface PillAppButton extends IAppButton {
   selected: boolean;
   data?: any;
   customStyle?: {[key: string]: any};
+  isMarked?: boolean;
 }

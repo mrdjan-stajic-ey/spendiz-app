@@ -41,6 +41,7 @@ export const ExpenseListItem: React.FC<IExpenseListItem> = ({
   id,
   phrasesInfluence,
 }): JSX.Element => {
+  console.log('aman aman', expenseType);
   return (
     <>
       <TouchableOpacity

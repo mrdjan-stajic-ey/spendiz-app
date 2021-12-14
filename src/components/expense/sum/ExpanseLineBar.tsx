@@ -41,6 +41,7 @@ export const ExpensesSummed: React.FC<T_Nav_Tab_Props> = ({
       }
       setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       LOG_ERROR('Failed getting bar chart data');
     }
   };
@@ -65,7 +66,7 @@ export const ExpensesSummed: React.FC<T_Nav_Tab_Props> = ({
         <AppText type="SUBTITLE" text="Grouped expenses by category" />
       </Center>
       <View style={styles.content}>
-        {!isLoading && data.labels && (
+        {!isLoading && data?.labels && (
           <AppBarChart labels={data.labels} datasets={data.datasets} />
         )}
         {isLoading && <AppLoader />}

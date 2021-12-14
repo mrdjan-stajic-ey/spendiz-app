@@ -120,7 +120,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   phrasesAttributionTitle: 'Define rules for selected keywords',
   phraseConfigurationTitle: 'Map a keyword to action',
   phraseConfigurationDescription:
-    'Map the collected phrase to the appropriate action on your bank account, then assign the category of expense or income',
+    'Set the relations of the action, select food for food expenses, medical for medical, dont forget the paycheck!',
   phraseBankAccActionAdd: 'Add to balance',
   phraseBankAccActionSubtract: 'Subtract from balance',
   phraseBankAccTypeLabel: 'Transaction type',
@@ -143,8 +143,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
       `Api service on path ${path} failed with error ${error}`,
   },
   noCategoriesMessage: 'No categories found',
-  amountAfixDescription: `Select the words from message that will describe the category of expense.
-		 EG. Wolt tag will be associated to Food category. Yandex to Transport.`,
+  amountAfixDescription: 'Select key words from message to tag the expense',
   transactionToExpenseMappingDescription:
     'Select the two words from the message that encapsulates the amount that will affect your budget.',
   overviewSignOffTitle:

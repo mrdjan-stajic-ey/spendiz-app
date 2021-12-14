@@ -1,14 +1,14 @@
 import {FlatList, View} from 'native-base';
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {IAppListProps} from './type';
-
+const width = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   listHolder: {
-    padding: 5,
+    padding: 10,
   },
   listContent: {
-    marginRight: 15,
+    maxWidth: width - 40, //Le magical number
   },
 });
 

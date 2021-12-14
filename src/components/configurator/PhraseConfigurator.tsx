@@ -1,3 +1,4 @@
+import {Center} from 'native-base';
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Switch, ScrollView} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
   holder: {
     flex: 1,
     marginTop: 10,
+    justifyContent: 'center',
   },
   controls: {
     marginTop: 5,
@@ -88,12 +90,14 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
           />
         </View>
         <AppDivider />
+      </View>
+      <Center>
         <AppText
           style={styles.transactionTypeHeader}
           text={getTextByLocale().phraseBankAccTypeLabel}
           type="LABEL"
         />
-      </View>
+      </Center>
       <ScrollView>
         <View style={styles.balanceType}>
           {categories.length > 0 &&

@@ -13,6 +13,8 @@ const style = StyleSheet.create({
     padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    minWidth: 250,
+    maxWidth: 350,
   },
   textContent: {
     color: BUTTON_TEXT_COLOR,
@@ -31,6 +33,7 @@ const AppButton: React.FC<IAppButton> = ({
   type,
   borderRadius,
   disableAsyncBehaviour = false,
+  customStyle = {},
 }): JSX.Element => {
   const [isDisabled, setIsDisabled] = useState(disabled);
 
@@ -49,21 +52,24 @@ const AppButton: React.FC<IAppButton> = ({
   const asyncPressHandler = () => {
     if (onPress) {
       const _f = onPress();
-      if (_f?.then) {
-        setIsDisabled(true);
+      if (_f && _f.then) {
+        //TODO: to satisfy the tsc, probably could avoid it by generalizing async handler with some <T extends {more specific keys}> maybe later
+        if (_f?.then) {
+          setIsDisabled(true);
+        }
+        _f?.then(() => {
+          setIsDisabled(false);
+        });
+        _f?.catch(() => {
+          setIsDisabled(false);
+        });
       }
-      _f?.then(() => {
-        setIsDisabled(false);
-      });
-      _f?.catch(() => {
-        setIsDisabled(false);
-      });
     }
   };
   //15.11.2021
   //Since there can be navigation that will remove the screen from the navigation options,
   //disable and enable of the button can it can  cause 'cannot update state on unmounted component'
-  // "fix" (read. Hack is to manualy disable that on the buttons that navigate off the screen) bug found when the navigation was spilt into Auth and App navigation;
+  // "fix" (read. Hack is to manually disable that on the buttons that navigate off the screen) bug found when the navigation was spilt into Auth and App navigation;
   const syncPressHandler = () => {
     onPress();
   };
@@ -73,7 +79,7 @@ const AppButton: React.FC<IAppButton> = ({
       disabled={isDisabled}
       variant={variant ? variant : 'solid'}
       borderRadius={borderRadius || 50}
-      style={[style.holder, {backgroundColor: buttonColor || ''}]}
+      style={[style.holder, {backgroundColor: buttonColor || ''}, customStyle]}
       onPress={disableAsyncBehaviour ? syncPressHandler : asyncPressHandler}
       size={size}
       _pressed={{

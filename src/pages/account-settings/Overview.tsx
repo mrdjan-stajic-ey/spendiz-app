@@ -1,4 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Center} from 'native-base';
 import React, {useContext, useEffect, useState} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
@@ -69,7 +70,6 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
           sufixIndex: amountConfiguration[1],
         },
       ).then(res => {
-        console.log('amount res ovo ono', res);
         if (res) {
           const {prefix, sufix} = res;
           setAfixes({prefix: prefix, sufix: sufix});
@@ -122,15 +122,6 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
     }
   };
 
-  //   const getAmountConfig = (index: number) => {
-  //     // console.log('Phrases', phrases);
-  //     if (!phrases[index]) {
-  //       //   throw 'PHRASE_NOT_FOUND';
-  //     }
-  //     console.log(phrases);
-  //     return phrases[index].text || 'Error';
-  //   };
-
   return (
     <AppPage>
       <View style={styles.content}>
@@ -182,12 +173,14 @@ const OverviewPage: React.FC<T_Overview_Props> = ({
                 </OverviewInfoItem>
               </View>
             </AppScrollView>
-            <AppButton
-              type="PRIMARY"
-              disabled={finishDisabled}
-              onPress={onFinishHandler}
-              text={getTextByLocale().overviewCTA}
-            />
+            <Center>
+              <AppButton
+                type="PRIMARY"
+                disabled={finishDisabled}
+                onPress={onFinishHandler}
+                text={getTextByLocale().overviewCTA}
+              />
+            </Center>
           </>
         )}
         {isLoading && <AppLoader />}

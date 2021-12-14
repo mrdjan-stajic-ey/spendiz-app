@@ -25,7 +25,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
   },
-  ctaHolder: {},
+  ctaHolder: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   buttonCustomStyle: {
     borderColor: 'red',
   },
@@ -105,6 +108,7 @@ const MessagePhraseSelector: React.FC<IMessagePhraseSelector> = ({
                     customStyle={
                       isSufixOrPrefix ? styles.buttonCustomStyle : {}
                     }
+                    isMarked={isSufixOrPrefix}
                     onSelect={
                       phase === 'KEYWORDS'
                         ? handlePillClick

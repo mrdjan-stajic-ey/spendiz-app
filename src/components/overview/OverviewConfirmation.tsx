@@ -72,11 +72,24 @@ const JourneyOverviewConfirmation: React.FC<IJourneryCofirmation> = ({
       <View style={styles.confirmation}>
         <View style={styles.ctas}>
           <AppText type="LABEL" text={getTextByLocale().configurationCorrect} />
-          <AppButton onPress={onValid} icon={faCheckCircle} />
+          <AppButton
+            //todo make a button for this
+            // eslint-disable-next-line react-native/no-inline-styles
+            customStyle={{minWidth: 'auto', maxWidth: 'auto'}}
+            onPress={onValid}
+            icon={faCheckCircle}
+          />
         </View>
         <View style={styles.ctas}>
           <AppText type="LABEL" text={getTextByLocale().configurationWrong} />
-          <AppButton type="DANGER" onPress={onInvalid} icon={faTimesCircle} />
+          <AppButton
+            //todo make a button for this
+            // eslint-disable-next-line react-native/no-inline-styles
+            customStyle={{minWidth: 'auto', maxWidth: 'auto'}}
+            type="DANGER"
+            onPress={onInvalid}
+            icon={faTimesCircle}
+          />
         </View>
       </View>
     </View>
