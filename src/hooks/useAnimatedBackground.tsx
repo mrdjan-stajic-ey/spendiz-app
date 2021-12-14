@@ -2,7 +2,10 @@ import {useState} from 'react';
 import {Animated} from 'react-native';
 
 type TDirection = 'FORWARD' | 'BACKWARD';
-
+interface IInterpolation {
+  inputRange: number[];
+  outputRange: string[];
+}
 const animationForward = (animation: any) => {
   return Animated.timing(animation, {
     toValue: 1,
@@ -20,16 +23,22 @@ const animationBackward = (animation: any) => {
 };
 
 const useAnimatedBackground = (direction: TDirection) => {
+  //TODO: add more props for timing, interpolation, easing and such
   let handler = null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [animation, _] = useState(new Animated.Value(0));
 
   if (direction === 'FORWARD') {
-    handler = animationForward.call(null, animation);
+    handler = animationForward.bind(null, animation);
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    handler = animationBackward.call(null, animation);
+    handler = animationBackward.bind(null, animation);
   }
-  return [handler, animation];
+  handler().start();
+  const getStyles = (props: IInterpolation) => {
+    return animation.interpolate(props);
+  };
+
+  return [getStyles];
 };
 
 export default useAnimatedBackground;
