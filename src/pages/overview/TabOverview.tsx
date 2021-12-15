@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/core';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {Center} from 'native-base';
+import {Box, Center} from 'native-base';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
@@ -8,9 +8,8 @@ import BalanceModuleItem from '../../components/balance/BalanceOverviewItem';
 import AppDivider from '../../components/divider/AppDivider';
 import ExpensesListPreview from '../../components/expense/ExpansesPreview';
 import {ExpensesSummed} from '../../components/expense/sum/ExpanseLineBar';
+import PageAppHeader from '../../components/header/AppPageHeader';
 import AppPage from '../../components/page/AppPage';
-import AppScrollView from '../../components/scrollview/AppScrollView';
-import AppText from '../../components/Text/AppText';
 import {TTabNavigator, TTabOverviewLayout} from '../../routing/types';
 
 import {MODULES_INFO} from './data';
@@ -81,12 +80,9 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
   };
   return (
     <AppPage>
-      <Center>
-        <AppText type="TITLE" text={getTextByLocale().balanceOverview} />
-        <AppDivider />
-      </Center>
-      <AppScrollView fitContent horizontal={true}>
-        <View style={styles.scrollContent}>
+      <PageAppHeader text={getTextByLocale().balanceOverview} />
+      <View style={styles.scrollContent}>
+        <Center flex={1} flexDirection={'row'}>
           {MODULES_INFO.map(({src, name, type}, index) => {
             return (
               <BalanceModuleItem
@@ -99,22 +95,24 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
               />
             );
           })}
-        </View>
-      </AppScrollView>
-      <AppDivider />
-      <OverviewTabsNavigation.Navigator
-        tabBar={() => null}
-        initialRouteName={'ExpansesOverview'}
-        defaultScreenOptions={{lazy: false}}>
-        <OverviewTabsNavigation.Screen
-          name="PredictionChart"
-          component={ExpensesSummed}
-        />
-        <OverviewTabsNavigation.Screen
-          name="ExpansesOverview"
-          component={ExpensesListPreview}
-        />
-      </OverviewTabsNavigation.Navigator>
+        </Center>
+      </View>
+      <Box flex={1}>
+        <AppDivider />
+        <OverviewTabsNavigation.Navigator
+          tabBar={() => null}
+          initialRouteName={'ExpansesOverview'}
+          defaultScreenOptions={{lazy: true}}>
+          <OverviewTabsNavigation.Screen
+            name="PredictionChart"
+            component={ExpensesSummed}
+          />
+          <OverviewTabsNavigation.Screen
+            name="ExpansesOverview"
+            component={ExpensesListPreview}
+          />
+        </OverviewTabsNavigation.Navigator>
+      </Box>
     </AppPage>
   );
 };

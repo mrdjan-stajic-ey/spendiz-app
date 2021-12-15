@@ -1,3 +1,4 @@
+import {Center} from 'native-base';
 import React, {useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
@@ -43,12 +44,14 @@ const PhraseConfiguration: React.FC<T_PhraseProps> = ({
       <View style={styles.content}>
         <PageAppHeader text={getTextByLocale().phraseConfigurationTitle} />
         <PhraseConfigurator />
-        <AppButton
-          type="PRIMARY"
-          disabled={!getSelectedCategory()?.id}
-          onPress={toOverviewHandler}
-          text={getTextByLocale().phraseBalanceOverviewTitle}
-        />
+        <Center>
+          <AppButton
+            type="PRIMARY"
+            disabled={!getSelectedCategory()?.id}
+            onPress={toOverviewHandler}
+            text={getTextByLocale().phraseBalanceOverviewTitle}
+          />
+        </Center>
       </View>
     </AppPage>
   );

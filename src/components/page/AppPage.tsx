@@ -9,6 +9,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+interface IAppPageContainer {
+  style?: {
+    [key: string]: any;
+  };
+}
+
 //Default settings for lineargradient
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _boxHolderDefaultProps = {
@@ -21,22 +28,30 @@ const _boxHolderDefaultProps = {
 };
 
 //native base box as a basic page content holder
-const AppPageContentHolder: React.FC<{}> = ({children}): JSX.Element => {
+const AppPageContentHolder: React.FC<IAppPageContainer> = ({
+  children,
+  style,
+}): JSX.Element => {
+  const hasCustomStyle = Object.keys(style || {}).length > 0;
+
   return (
     <Box
       backgroundColor={PRIMARY_BACKGRORUND_COLOR}
-      //   bg={_boxHolderDefaultProps}
       flex={1}
-      padding={5}
-      paddingBottom={0}>
+      padding={hasCustomStyle ? style.padding : 1}
+      paddingTop={2}
+      paddingBottom={hasCustomStyle ? style.paddingBottom : 0}>
       {children}
     </Box>
   );
 };
 
-const AppPage: React.FC<IAppPage> = ({children}): JSX.Element => {
+const AppPage: React.FC<IAppPage & IAppPageContainer> = ({
+  children,
+  style,
+}): JSX.Element => {
   return (
-    <AppPageContentHolder>
+    <AppPageContentHolder style={style}>
       <View style={styles.content}>{children}</View>
     </AppPageContentHolder>
   );

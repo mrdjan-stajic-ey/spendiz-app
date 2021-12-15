@@ -7,7 +7,7 @@ import {TransactionType} from './type';
 const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
   const [selectedWords, setSelectedWords] = useState<PhrasePart[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [afixTouple, setAfixTouple] = useState<[number?, number?]>([]);
+  const [affixTuple, setAffixTuple] = useState<[number?, number?]>([]);
   const [transactionType, setTransactionType] =
     useState<TransactionType>('OUTBOUND');
   const [rawSms, setRawSms] = useState<string>('');
@@ -37,23 +37,16 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
   };
 
   const toggleCategory = (categoryID: string) => {
-    const categoryToToggle = categories.find(ct => ct._id === categoryID);
-    if (categoryToToggle) {
-      const _new_category: Category = {
-        ...categoryToToggle,
-        selected: !categoryToToggle?.selected,
-      };
-      const arrayIndexToReplace = categories
-        .map(ct => ct._id)
-        .indexOf(categoryID);
-      setCategories(() => {
-        return [
-          ...categories.slice(0, arrayIndexToReplace),
-          _new_category,
-          ...categories.slice(arrayIndexToReplace + 1),
-        ];
-      });
-    }
+    setCategories(() => {
+      return [
+        ...categories.map(c => {
+          return {
+            ...c,
+            selected: categoryID === c.id,
+          };
+        }),
+      ];
+    });
   };
 
   const getSelectedCategory = () => {
@@ -70,21 +63,21 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
    * @param phrase
    */
   const handleAfixSufix = (phraseIndex: number) => {
-    switch (afixTouple.length) {
+    switch (affixTuple.length) {
       case 0: {
-        setAfixTouple([phraseIndex]);
+        setAffixTuple([phraseIndex]);
         break;
       }
       case 1: {
-        const tmp = afixTouple[0];
-        setAfixTouple(() => {
+        const tmp = affixTuple[0];
+        setAffixTuple(() => {
           return [tmp, phraseIndex];
         });
         break;
       }
       case 2: {
-        setAfixTouple(() => {
-          return [afixTouple[1], phraseIndex];
+        setAffixTuple(() => {
+          return [affixTuple[1], phraseIndex];
         });
         break;
       }
@@ -108,7 +101,7 @@ const PhraseWizard: React.FC<{}> = ({children}): JSX.Element => {
         getSelectedCategory: getSelectedCategory,
         setTransactionType: handleSwitchChange,
         transactionType,
-        amountConfiguration: afixTouple,
+        amountConfiguration: affixTuple,
         addAmountConfiguration: handleAfixSufix,
         rawSms: rawSms,
         setRawSms: rawSmsHandler,

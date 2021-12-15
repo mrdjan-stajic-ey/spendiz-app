@@ -1,3 +1,4 @@
+import {Center} from 'native-base';
 import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Switch, ScrollView} from 'react-native';
 import getTextByLocale from '../../app-resources/Language';
@@ -16,6 +17,7 @@ const styles = StyleSheet.create({
   holder: {
     flex: 1,
     marginTop: 10,
+    justifyContent: 'center',
   },
   controls: {
     marginTop: 5,
@@ -70,7 +72,7 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
           text={getTextByLocale().phraseBalanceActionLabel}
         />
         <View style={styles.toggleAction}>
-          <AppText type="LABEL" text={'Add'} />
+          <AppText type="LABEL" text={getTextByLocale().categoryInfluenceAdd} />
           <Switch
             trackColor={{
               true: TRACK_SWITCH_COLOR_TRUE,
@@ -82,20 +84,26 @@ const PhraseConfigurator: React.FC<{}> = (): JSX.Element => {
             onValueChange={toggleSwitchHandler}
             value={isSubtract}
           />
-          <AppText type="LABEL" text={'Subtract'} />
+          <AppText
+            type="LABEL"
+            text={getTextByLocale().categoryInfluenceSubtract}
+          />
         </View>
         <AppDivider />
+      </View>
+      <Center>
         <AppText
           style={styles.transactionTypeHeader}
           text={getTextByLocale().phraseBankAccTypeLabel}
           type="LABEL"
         />
-      </View>
+      </Center>
       <ScrollView>
         <View style={styles.balanceType}>
           {categories.length > 0 &&
             categories.map(t => (
               <CategoryExpenseItem
+                id={t.id}
                 key={t._id}
                 _id={t._id}
                 description={t.description}

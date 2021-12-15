@@ -15,8 +15,9 @@ export interface IAppButton extends IButtonProps {
   text?: string;
   type?: TButtonType;
   icon?: IconDefinition;
-  onPress: () => Promise<any> | void | null;
+  onPress: () => Promise<any> | Promise<void> | null | void;
   disableAsyncBehaviour?: boolean;
+  customStyle?: {[key: string]: any};
 }
 
 export const getColorByType = (

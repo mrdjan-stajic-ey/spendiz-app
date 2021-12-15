@@ -1,5 +1,6 @@
 import React from 'react';
-import {Dimensions, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Animated, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
+import useAnimatedBackground from '../../hooks/useAnimatedBackground';
 import {BUTTON_PRIMARY, THIRD_BACKGROUND_COLOR} from '../CONSTS';
 import AppText from '../Text/AppText';
 import {PillAppButton} from './types';
@@ -28,46 +29,38 @@ const styles = StyleSheet.create({
   },
 });
 
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const SELECTED_PILL_COLOR = '#7f03fc';
-// // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const NOT_SELECTED_PILL_COLOR = '#a30029';
-
 const PillButton: React.FC<PillAppButton> = ({
   text,
   onSelect,
   selected,
   data,
   disabled,
-  customStyle,
+  isMarked = false,
 }): JSX.Element => {
   const onPressHandler = () => {
     !disabled && onSelect && onSelect(data || text);
   };
+  const [getStyles] = useAnimatedBackground(isMarked ? 'FORWARD' : 'BACKWARD');
+  const animatedStyle = {
+    borderWidth: selected ? 0 : styles.content.borderWidth,
+    backgroundColor: selected
+      ? styles.content.backgroundColor
+      : getStyles({
+          inputRange: [0, 1],
+          outputRange: ['transparent', 'rgb(224,82,99)'],
+        }),
+  };
+
   return (
-    <TouchableOpacity
-      disabled={disabled}
-      onPress={onPressHandler}
-      style={[
-        styles.content,
-        //need inline styles here dynamic stuff
-        // eslint-disable-next-line react-native/no-inline-styles
-        {
-          backgroundColor: selected
-            ? styles.content.backgroundColor
-            : 'transparent',
-          borderWidth: selected ? 0 : styles.content.borderWidth,
-        },
-        customStyle,
-      ]}>
-      <View>
+    <TouchableOpacity disabled={disabled} onPress={onPressHandler}>
+      <Animated.View style={[styles.content, animatedStyle]}>
         <AppText
           text={text}
           style={[styles.text]}
           numberOfLines={1}
           ellipsizeMode={'tail'}
         />
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   );
 };
