@@ -13,7 +13,6 @@ const AppStack: React.FC<{}> = (): JSX.Element => {
         initialRouteName="Home"
         screenOptions={{
           headerShown: false,
-          //   animation: 'none',
         }}>
         <Stack.Screen name="Home" component={BalanceOverviewTabs} />
         <Stack.Screen name="AccountSettings" component={AccountSettings} />

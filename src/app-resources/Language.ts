@@ -145,7 +145,7 @@ const ENGB_LANGUAGE: APP_TEXTS = {
   noCategoriesMessage: 'No categories found',
   amountAfixDescription: 'Select key words from message to tag the expense',
   transactionToExpenseMappingDescription:
-    'Select the two words from the message that encapsulates the amount that will affect your budget.',
+    'Select the two words from the message that just before and just after the amount that will affect your budget.',
   overviewSignOffTitle:
     'And they parsed the selected template message as following.',
   overviewConfigConfirmation: (affix: string, prefix: boolean) =>

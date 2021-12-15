@@ -8,8 +8,8 @@ import BalanceModuleItem from '../../components/balance/BalanceOverviewItem';
 import AppDivider from '../../components/divider/AppDivider';
 import ExpensesListPreview from '../../components/expense/ExpansesPreview';
 import {ExpensesSummed} from '../../components/expense/sum/ExpanseLineBar';
+import PageAppHeader from '../../components/header/AppPageHeader';
 import AppPage from '../../components/page/AppPage';
-import AppText from '../../components/Text/AppText';
 import {TTabNavigator, TTabOverviewLayout} from '../../routing/types';
 
 import {MODULES_INFO} from './data';
@@ -80,10 +80,7 @@ const BalanceOverviewTabs: React.FC<T_Tab_Layout> = ({
   };
   return (
     <AppPage>
-      <Center>
-        <AppText type="TITLE" text={getTextByLocale().balanceOverview} />
-        <AppDivider />
-      </Center>
+      <PageAppHeader text={getTextByLocale().balanceOverview} />
       <View style={styles.scrollContent}>
         <Center flex={1} flexDirection={'row'}>
           {MODULES_INFO.map(({src, name, type}, index) => {
