@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {SafeAreaView, AppRegistry, StyleSheet} from 'react-native';
@@ -15,6 +16,7 @@ if (!__DEV__) {
   console.log = () => {};
   console.warn = () => {};
   console.error = () => {};
+  //TODO FYI Mrdjane ovo je i dalje sranje, ne treba da postoje console log/warn/err negde
 }
 
 //Headlless js registration needs to be here;
