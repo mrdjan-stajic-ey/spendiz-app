@@ -1,4 +1,5 @@
 import {faCogs} from '@fortawesome/free-solid-svg-icons';
+import {DrawerActions, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -33,13 +34,18 @@ const PageAppHeader: React.FC<IAppPageHeader> = ({
   text,
   onCogClick,
 }): JSX.Element => {
+  const navigation = useNavigation();
+  const _onCogHandler = () => {
+    onCogClick && onCogClick();
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
   return (
     <>
       <View style={styles.content}>
         <View style={styles.contentTitle}>
           <AppText type="TITLE" text={text} />
         </View>
-        <TouchableOpacity onPress={onCogClick} style={styles.menuHolder}>
+        <TouchableOpacity onPress={_onCogHandler} style={styles.menuHolder}>
           <AppIcon icon={faCogs} />
         </TouchableOpacity>
       </View>

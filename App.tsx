@@ -1,4 +1,3 @@
-import 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {SafeAreaView, AppRegistry, StyleSheet} from 'react-native';
@@ -10,6 +9,7 @@ import ErrorScreen from './src/pages/ErrorScreen';
 import UserWrapper from './src/data-management/user/UserHoc';
 import AuthStack from './src/routing/AuthStack';
 import {BACKGROUND_COLOR} from './src/components/CONSTS';
+import {AppDrawer} from './src/routing/AppStack';
 
 if (!__DEV__) {
   //stop all the logs for performance since we can`t see them in prod
@@ -58,11 +58,7 @@ const App = () => {
             },
             dark: false,
           }}>
-          <SafeAreaView style={root_style.root}>
-            <UserWrapper>
-              <AuthStack />
-            </UserWrapper>
-          </SafeAreaView>
+          <AppDrawer />
         </NavigationContainer>
       </ErrorBoundary>
     </NativeBaseProvider>

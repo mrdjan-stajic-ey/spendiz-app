@@ -31,6 +31,12 @@ export type TRootNavigation = {
   Configuration: NavigatorScreenParams<TConfigurationNavigation>;
 };
 
+export type TDrawerNavigation = {
+  App: TRootNavigation;
+  Profile: undefined;
+  Settings: undefined;
+};
+
 export type TConfigurationNavigation = {
   Parser: ISmsState;
   Phrase: undefined;
