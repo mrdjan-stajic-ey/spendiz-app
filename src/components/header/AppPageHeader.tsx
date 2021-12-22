@@ -45,9 +45,9 @@ const PageAppHeader: React.FC<IAppPageHeader> = ({
         <View style={styles.contentTitle}>
           <AppText type="TITLE" text={text} />
         </View>
-        <TouchableOpacity onPress={_onCogHandler} style={styles.menuHolder}>
+        {/* <TouchableOpacity onPress={_onCogHandler} style={styles.menuHolder}>
           <AppIcon icon={faCogs} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <AppDivider />
     </>
