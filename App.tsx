@@ -9,7 +9,7 @@ import ErrorScreen from './src/pages/ErrorScreen';
 import UserWrapper from './src/data-management/user/UserHoc';
 import AuthStack from './src/routing/AuthStack';
 import {BACKGROUND_COLOR} from './src/components/CONSTS';
-import {AppDrawer} from './src/routing/AppStack';
+import {AppDrawer, ApplicationRouter} from './src/routing/AppStack';
 
 if (!__DEV__) {
   //stop all the logs for performance since we can`t see them in prod
@@ -58,7 +58,11 @@ const App = () => {
             },
             dark: false,
           }}>
-          <AppDrawer />
+          <SafeAreaView style={root_style.root}>
+            <UserWrapper>
+              <ApplicationRouter />
+            </UserWrapper>
+          </SafeAreaView>
         </NavigationContainer>
       </ErrorBoundary>
     </NativeBaseProvider>

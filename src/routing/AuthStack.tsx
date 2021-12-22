@@ -5,7 +5,7 @@ import UserContext from '../data-management/user/UserContext';
 import SplashScreen from '../pages/SplashScreen';
 import Login from '../pages/Login';
 import RegisterPage from '../pages/Register';
-import AppStack from './AppStack';
+import {AppDrawer} from './AppStack';
 
 export const AuthStackNavigator = createStackNavigator<T_Auth_Stack>(); //auth stack
 
@@ -27,7 +27,7 @@ const AuthStack: React.FC<{}> = (): JSX.Element => {
       )}
 
       {userData?.user && (
-        <AuthStackNavigator.Screen name="App" component={AppStack} />
+        <AuthStackNavigator.Screen name="App" component={AppDrawer} />
       )}
     </AuthStackNavigator.Navigator>
   );

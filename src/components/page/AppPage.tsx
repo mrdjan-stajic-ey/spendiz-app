@@ -1,7 +1,7 @@
 import {Box, View} from 'native-base';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {PRIMARY_BACKGRORUND_COLOR} from '../CONSTS';
+import {PRIMARY_BACKGROUND_COLOR} from '../CONSTS';
 import {IAppPage} from './types';
 
 const styles = StyleSheet.create({
@@ -36,7 +36,7 @@ const AppPageContentHolder: React.FC<IAppPageContainer> = ({
 
   return (
     <Box
-      backgroundColor={PRIMARY_BACKGRORUND_COLOR}
+      backgroundColor={PRIMARY_BACKGROUND_COLOR}
       flex={1}
       padding={hasCustomStyle ? style.padding : 1}
       paddingTop={2}

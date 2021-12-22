@@ -15,7 +15,7 @@ import getTextByLocale from '../app-resources/Language';
 import {Button, Stack} from 'native-base';
 import UserForm from '../components/form/UserForm';
 import AppLogo from '../components/Logo';
-import {T_Auth_Stack} from '../routing/types';
+import {TDrawerNavigation, T_Auth_Stack} from '../routing/types';
 import PageAppHeader from '../components/header/AppPageHeader';
 import userAuth from '../auth/userAuth';
 import UserContext from '../data-management/user/UserContext';
@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
   },
 });
 
-type T_Login_Props = NativeStackScreenProps<T_Auth_Stack, 'Login'>;
+type T_Login_Props = NativeStackScreenProps<TDrawerNavigation, 'App'> &
+  T_Auth_Stack;
 
 const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
   const [isKeyboardShowm, setIskeyboardShown] = useState<boolean>(false);
@@ -97,10 +98,10 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
       .login({username, password})
       .then(async data => {
         if (data) {
-          setUser(data);
           await setUserToAsyncStorage(data);
           await setToken(data.access_token);
-          navigation.navigate('App');
+          setUser(data);
+          //   navigation.navigate('App');
         }
       })
       .catch(_err => {
@@ -123,6 +124,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
   };
 
   const onRegisterHandler = () => {
+    //@ts-ignore
     navigation.navigate('Register');
   };
 
@@ -130,7 +132,7 @@ const Login: React.FC<T_Login_Props> = ({navigation}): JSX.Element => {
     <>
       <AppPage>
         <View style={styles.header}>
-          <PageAppHeader text={getTextByLocale().welcomeTitle} />
+          <PageAppHeader textOnly text={getTextByLocale().welcomeTitle} />
           {__DEV__ && <AppText type="SUBTITLE" text="Development version" />}
           {!isKeyboardShowm && (
             <>

@@ -7,8 +7,8 @@ import userAuth from '../auth/userAuth';
 import AppButton from '../components/button/AppButton';
 import AppDivider from '../components/divider/AppDivider';
 import RegisterForm from '../components/form/RegisterForm';
+import PageAppHeader from '../components/header/AppPageHeader';
 import AppPage from '../components/page/AppPage';
-import AppText from '../components/Text/AppText';
 import {LOG_ERROR} from '../http/axios-wrapper';
 import {T_Auth_Stack} from '../routing/types';
 
@@ -49,8 +49,9 @@ const RegisterPage: React.FC<T_Reg_Props> = ({navigation}): JSX.Element => {
   return (
     <AppPage>
       <View style={styles.content}>
-        <AppText
-          type="SUBTITLE"
+        <PageAppHeader
+          textOnly
+          textSize={'SMALL'}
           text={getTextByLocale().welcomeRegisterSubtitle}
         />
         <AppDivider />
